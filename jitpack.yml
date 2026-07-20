@@ -1,0 +1,7 @@
+# JitPack builds this repo as com.github.Nyora-Manga:nyora-data-driven:<tag>.
+# The engine runtime targets JDK 17; pin it so JitPack doesn't default to an
+# older JDK and fail the Kotlin 2.0 / jvmToolchain(17) build.
+jdk:
+  - openjdk17
+install:
+  - ./gradlew publishToMavenLocal -x test --no-daemon

@@ -2,10 +2,32 @@ plugins {
     kotlin("jvm") version "2.0.21"
     kotlin("plugin.serialization") version "2.0.21"
     application
+    `maven-publish`
 }
+
+group = "com.github.Nyora-Manga"
+version = "0.1.0"
 
 repositories {
     mavenCentral()
+}
+
+java {
+    // Publish a sources jar too so consumers (nyora-android) get readable engine code.
+    withSourcesJar()
+}
+
+// Consumed as a library by nyora-android (the data-driven runtime — 35 generic
+// engines + models + EngineRegistry), and buildable on JitPack as
+// com.github.Nyora-Manga:nyora-data-driven:<tag>. The `application` block below is
+// only the local verification harness and is not part of the published artifact.
+publishing {
+    publications {
+        create<MavenPublication>("engine") {
+            from(components["java"])
+            artifactId = "nyora-data-driven"
+        }
+    }
 }
 
 dependencies {

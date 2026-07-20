@@ -1,0 +1,60 @@
+name: CI
+
+# Two guarantees on every push:
+#   1. the data-driven engine runtime still compiles (it's a published library —
+#      nyora-android and JitPack build against it),
+#   2. catalogue.json stays in sync with repo/*.json (the single-fetch manifest
+#      that nyora-android's runtime catalogue pulls).
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  engine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v6
+      - name: Compile the engine runtime
+        run: ./gradlew compileKotlin --no-daemon --console=plain
+      - name: Publish artifact to local maven (smoke test)
+        run: ./gradlew publishToMavenLocal -x test --no-daemon --console=plain
+
+  catalogue:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      # Regenerate the manifest from repo/*.json and commit it if it drifted, so
+      # catalogue.json is never stale after a source edit. GITHUB_TOKEN commits
+      # don't retrigger CI, so this can't loop.
+      - name: Rebuild catalogue.json
+        run: python3 tools/build-catalogue.py
+      - name: Commit if changed
+        run: |
+          git config user.name  "hasan72341"
+          git config user.email "hasan72341@users.noreply.github.com"
+          if git diff --quiet catalogue.json; then
+            echo "catalogue.json already in sync"
+          else
+            git add catalogue.json
+            git commit -m "chore: sync catalogue.json with repo/"
+            git push
+          fi
