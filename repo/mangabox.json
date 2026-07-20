@@ -1,0 +1,137 @@
+[
+ {
+  "id": "manganato",
+  "name": "Manganato",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "mangabox",
+  "domain": "natomanga.com",
+  "needsCustomLogic": false,
+  "broken": true,
+  "config": {
+   "otherDomain": "manganato.gg",
+   "authorUrl": "/author/story",
+   "selectors": {
+    "page": ".container-chapter-reader > img"
+   }
+  },
+  "pageSize": 24
+ },
+ {
+  "id": "manganelo",
+  "name": "MangaNelo.com",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "mangabox",
+  "domain": "www.nelomanga.net",
+  "needsCustomLogic": false,
+  "broken": false,
+  "config": {
+   "otherDomain": "chapmanganelo.com"
+  },
+  "pageSize": 24
+ },
+ {
+  "id": "mangabat",
+  "name": "MangaBat",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "mangabox",
+  "domain": "mangabats.com",
+  "needsCustomLogic": true,
+  "customLogicReason": "Overrides getListPage (bespoke `div.list-comic-item-wrap`/`div.itemupdate` list markup + `?type=&state=&page=` genre grammar), fetchAvailableTags (`td a[href*=/genre/]`), and getChapters (paginated JSON `/api/manga/{slug}/chapters` API with ISO `updated_at` dates + limit/offset). Also strips gzip Accept-Encoding via an OkHttp interceptor. The generic HTML pipeline cannot express the JSON chapter API or the custom card markup — needs a per-source escape hatch.",
+  "config": {
+   "listUrl": "/genre/all",
+   "searchUrl": "/search/story",
+   "sortOrders": [
+    "UPDATED",
+    "POPULARITY",
+    "NEWEST"
+   ]
+  },
+  "pageSize": 24,
+  "broken": false
+ },
+ {
+  "id": "mangairo",
+  "name": "MangaIro",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "mangabox",
+  "domain": "w.mangairo.com",
+  "needsCustomLogic": true,
+  "broken": true,
+  "customLogicReason": "Overrides getListPage (bespoke `/manga-list/type-{sort}/ctg-{tag}/state-{state}/page-{n}` path grammar + `div.story-item` markup), fetchAvailableTags (`div.panel_category a`, ctg- key extraction), and getDetails (`ul.story_info_right` layout + `page-` tag-key quirk). The generic listing/genre URL grammar and detail selectors do not match — needs a per-source escape hatch. Selectors below are recorded for reference but the URL/tag grammar is not selector-expressible.",
+  "config": {
+   "otherDomain": "chap.mangairo.com",
+   "datePattern": "MMM-dd-yy",
+   "listUrl": "/manga-list",
+   "searchUrl": "/list/search/",
+   "sortOrders": [
+    "UPDATED",
+    "POPULARITY",
+    "NEWEST"
+   ],
+   "selectors": {
+    "desc": "div#story_discription p",
+    "state": "ul.story_info_right li:contains(Status) a",
+    "alt": "ul.story_info_right li:contains(Alter) h2",
+    "author": "ul.story_info_right li:contains(Author) a",
+    "tag": "ul.story_info_right li:contains(Genres) a",
+    "chapter": "div.chapter_list li",
+    "date": "p",
+    "page": "div.panel-read-story img"
+   }
+  },
+  "pageSize": 24,
+  "antiBot": "cloudflare"
+ },
+ {
+  "id": "mangakakalot",
+  "name": "Mangakakalot.gg",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "mangabox",
+  "domain": "www.mangakakalot.gg",
+  "needsCustomLogic": true,
+  "customLogicReason": "Overrides getListPage (Vietnamese-diacritic `change_alias` search normaliser + `/genre/{tag}?page=&type=&state=` grammar), fetchAvailableTags (with a hard-coded FALLBACK_TAGS list of ~40 genres), and getChapters (per-row date-format sniffing: `MMM-dd-yy` when the date contains '-', else base pattern). The search normaliser and per-row date sniffing are imperative, not selector-expressible — needs a per-source escape hatch.",
+  "config": {
+   "otherDomain": "chapmanganato.com",
+   "listUrl": "/genre/all",
+   "sortOrders": [
+    "UPDATED",
+    "POPULARITY",
+    "NEWEST"
+   ]
+  },
+  "pageSize": 24,
+  "broken": false
+ },
+ {
+  "id": "mangakakalottv",
+  "name": "Mangakakalot.tv",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "mangabox",
+  "domain": "www.mangakakalot.gg",
+  "needsCustomLogic": true,
+  "customLogicReason": "Overrides getListPage (empty listUrl/searchUrl + bespoke `div.list-comic-item-wrap` markup), getDetails (`div#contentBox` description scrub + JSON chapter API), fetchChaptersApi (paginated `/api/manga/{slug}/chapters` limit/offset with ISO `updated_at`), and fetchAvailableTags (`ul.tag.tag-name li a`). The JSON chapter API and empty-listUrl browse path are not expressible in the generic HTML pipeline — needs a per-source escape hatch.",
+  "config": {
+   "listUrl": "",
+   "searchUrl": "",
+   "sortOrders": [
+    "UPDATED",
+    "POPULARITY",
+    "NEWEST"
+   ]
+  },
+  "pageSize": 24,
+  "broken": false
+ }
+]

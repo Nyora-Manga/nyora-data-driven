@@ -1,0 +1,74 @@
+[
+ {
+  "id": "hensekai",
+  "name": "Hensekai",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "zmanga",
+  "domain": "hensekai.com",
+  "broken": true,
+  "config": {
+   "locale": "en"
+  },
+  "pageSize": 16
+ },
+ {
+  "id": "komikindo-info",
+  "name": "KomikIndo.info",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "zmanga",
+  "domain": "mangasusuku.com",
+  "broken": true,
+  "config": {
+   "datePattern": "dd MMM yyyy"
+  },
+  "pageSize": 16
+ },
+ {
+  "id": "maid-id",
+  "name": "MaidId",
+  "lang": "id",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "zmanga",
+  "domain": "www.maid.my.id",
+  "needsCustomLogic": true,
+  "config": {
+   "nullChapterTitle": true
+  },
+  "pageSize": 16,
+  "broken": false
+ },
+ {
+  "id": "shiro-doujin",
+  "name": "ShiroDoujin",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "zmanga",
+  "domain": "shirodoujin.com",
+  "needsCustomLogic": true,
+  "config": {
+   "nullChapterTitle": true
+  },
+  "pageSize": 16,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "yuramanga",
+  "name": "YuraManga",
+  "lang": "id",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "zmanga",
+  "domain": "www.yuramanga.my.id",
+  "broken": true,
+  "config": {},
+  "pageSize": 16
+ }
+]

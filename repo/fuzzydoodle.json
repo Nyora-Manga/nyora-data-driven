@@ -1,0 +1,105 @@
+[
+ {
+  "id": "SCYLLACOMICS",
+  "name": "ScyllaComics",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "fuzzydoodle",
+  "domain": "scyllacomics.xyz",
+  "altDomains": [],
+  "className": "ScyllaComics",
+  "file": "en/ScyllaComics.kt",
+  "config": {
+   "fetchTags": false,
+   "availableStates": [],
+   "availableContentTypes": [
+    "MANGA",
+    "MANHWA",
+    "MANHUA"
+   ]
+  },
+  "configComplex": {},
+  "overriddenMethods": [
+   "getFilterOptions"
+  ],
+  "parsingOverrides": [],
+  "needsCustomLogic": false,
+  "warnings": [
+   "getFilterOptions is replaced wholesale (not super.copy): exposes NO tags and NO states, only content types. Datafied via fetchTags=false + availableStates=[]."
+  ],
+  "pageSize": 24,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "LELSCANVF",
+  "name": "LelScanFr",
+  "lang": "fr",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "fuzzydoodle",
+  "domain": "lelscanfr.com",
+  "altDomains": [],
+  "className": "LelScanVf",
+  "file": "fr/LelScanVf.kt",
+  "config": {
+   "ongoingValue": "en-cours",
+   "finishedValue": "termin",
+   "availableStates": [
+    "ONGOING",
+    "FINISHED"
+   ]
+  },
+  "configComplex": {},
+  "overriddenMethods": [
+   "getFilterOptions"
+  ],
+  "parsingOverrides": [],
+  "needsCustomLogic": false,
+  "warnings": [],
+  "pageSize": 24,
+  "broken": false
+ },
+ {
+  "id": "HENTAISLAYER",
+  "name": "HentaiSlayer",
+  "lang": "ar",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "fuzzydoodle",
+  "domain": "hentaislayer.net",
+  "altDomains": [],
+  "className": "HentaiSlayer",
+  "file": "ar/HentaiSlayer.kt",
+  "config": {
+   "ongoingValue": "مستمر",
+   "finishedValue": "مكتمل",
+   "abandonedValue": "متوقف",
+   "mangaValue": "مانجا",
+   "manhuaValue": "مانهوا",
+   "comicsValue": "كوميكس",
+   "availableStates": [
+    "ONGOING",
+    "FINISHED",
+    "ABANDONED"
+   ],
+   "availableContentTypes": [
+    "MANGA",
+    "MANHUA",
+    "COMICS"
+   ]
+  },
+  "configComplex": {},
+  "overriddenMethods": [
+   "getFilterOptions"
+  ],
+  "parsingOverrides": [],
+  "needsCustomLogic": false,
+  "warnings": [
+   "nsfw derived from @MangaSourceParser ContentType.HENTAI (isNsfwSource=true)."
+  ],
+  "pageSize": 24,
+  "broken": false
+ }
+]

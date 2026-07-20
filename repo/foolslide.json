@@ -1,0 +1,162 @@
+[
+ {
+  "id": "ramareader",
+  "name": "RamaReader",
+  "lang": "it",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "foolslide",
+  "domain": "www.ramareader.it",
+  "config": {
+   "listUrl": "read/directory/",
+   "searchUrl": "read/search/"
+  },
+  "pageSize": 25,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "readnifteam",
+  "name": "ReadNifTeam",
+  "lang": "it",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "foolslide",
+  "domain": "read-nifteam.info",
+  "config": {
+   "listUrl": "slide/directory/",
+   "searchUrl": "slide/search/"
+  },
+  "pageSize": 25,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "powermanga",
+  "name": "PowerManga",
+  "lang": "it",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "foolslide",
+  "domain": "reader.powermanga.org",
+  "config": {
+   "pagination": false
+  },
+  "needsCustomLogic": false,
+  "notes": "@Broken upstream (site dead); pure-config row, pagination=false.",
+  "pageSize": 25,
+  "broken": true
+ },
+ {
+  "id": "menudo_fansub",
+  "name": "Menudo Fansub",
+  "lang": "es",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "foolslide",
+  "domain": "www.menudo-fansub.com",
+  "config": {
+   "listUrl": "slide/directory/",
+   "searchUrl": "slide/search/",
+   "pageSize": 25
+  },
+  "pageSize": 25,
+  "broken": false
+ },
+ {
+  "id": "seinagiadulto",
+  "name": "Seinagi Adulto",
+  "lang": "es",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "foolslide",
+  "domain": "adulto.seinagi.org.es",
+  "config": {
+   "descContains": "Descripción",
+   "descAfter": "Descripción: ",
+   "descBefore": "Lecturas",
+   "authorContains": "Author",
+   "authorAfter": "Author: ",
+   "authorBefore": "Art",
+   "coverFallbackToStub": false
+  },
+  "needsCustomLogic": true,
+  "notes": "Overrides getDetails: localized (Descripción/Lecturas/Author) synopsis+author slice; cover has no list-stub fallback. Datafied via desc*/author*/coverFallbackToStub.",
+  "pageSize": 25,
+  "broken": false
+ },
+ {
+  "id": "pzykosis666hfansub",
+  "name": "Pzykosis666h Fansub",
+  "lang": "es",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "foolslide",
+  "domain": "lector.pzykosis666hfansub.com",
+  "config": {
+   "descContains": "Descripción",
+   "descAfter": "Descripción: ",
+   "descBefore": "Lecturas",
+   "authorContains": "Author",
+   "authorAfter": "Author: ",
+   "authorBefore": "Art",
+   "coverFallbackToStub": true
+  },
+  "needsCustomLogic": true,
+  "notes": "Overrides getDetails: same localized (Descripción/Lecturas/Author) slice as Seinagi Adulto but keeps the list-stub cover fallback.",
+  "pageSize": 25,
+  "broken": false
+ },
+ {
+  "id": "deathtollscans",
+  "name": "DeathTollScans",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "foolslide",
+  "domain": "reader.deathtollscans.net",
+  "config": {
+   "pageSize": 26
+  },
+  "pageSize": 26,
+  "broken": false
+ },
+ {
+  "id": "seinagi",
+  "name": "Seinagi",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "foolslide",
+  "domain": "reader.seinagi.org.es",
+  "config": {
+   "pagination": false,
+   "descContains": "Description",
+   "descAfter": "Description: ",
+   "descBefore": "Readings",
+   "authorContains": "Author",
+   "authorAfter": "Author: ",
+   "authorBefore": "Art",
+   "coverFallbackToStub": true
+  },
+  "needsCustomLogic": true,
+  "notes": "Overrides getDetails: localized (Description/Readings/Author) synopsis+author slice; also pagination=false. Datafied via desc*/author*.",
+  "pageSize": 25,
+  "broken": false
+ },
+ {
+  "id": "mangatellers",
+  "name": "Mangatellers",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "foolslide",
+  "domain": "reader.mangatellers.gr",
+  "config": {
+   "pagination": false
+  },
+  "pageSize": 25,
+  "broken": false
+ }
+]

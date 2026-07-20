@@ -1,0 +1,13 @@
+[
+ {
+  "id": "mangadex",
+  "name": "MangaDex",
+  "lang": "all",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "mangadex",
+  "domain": "mangadex.org",
+  "config": {},
+  "broken": false
+ }
+]

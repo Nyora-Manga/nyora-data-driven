@@ -1,0 +1,333 @@
+[
+ {
+  "id": "BEEHENTAI",
+  "name": "BeeHentai",
+  "lang": "en",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "madtheme",
+  "domain": "beehentai.com",
+  "altDomains": [],
+  "className": "BeeHentai",
+  "file": "en/BeeHentai.kt",
+  "config": {
+   "selectors": {
+    "desc": "div.section-body"
+   }
+  },
+  "configComplex": {},
+  "overriddenMethods": [],
+  "parsingOverrides": [],
+  "needsCustomLogic": false,
+  "warnings": [
+   "Overrides only the selectDesc property (pure selector data)."
+  ],
+  "pageSize": 48,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "MANGABUDDY",
+  "name": "MangaBuddy",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "madtheme",
+  "domain": "mangabuddy.com",
+  "altDomains": [],
+  "className": "MangaBuddy",
+  "file": "en/MangaBuddy.kt",
+  "config": {},
+  "configComplex": {},
+  "overriddenMethods": [],
+  "parsingOverrides": [],
+  "needsCustomLogic": false,
+  "warnings": [
+   "@Broken(\"Website down forever\") in kotatsu."
+  ],
+  "pageSize": 48,
+  "broken": true,
+  "antiBot": "cloudflare"
+ },
+ {
+  "id": "MANGACUTE",
+  "name": "MangaCute",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "madtheme",
+  "domain": "mangacute.com",
+  "altDomains": [],
+  "className": "MangaCute",
+  "file": "en/MangaCute.kt",
+  "config": {},
+  "configComplex": {},
+  "overriddenMethods": [
+   "getPages"
+  ],
+  "parsingOverrides": [
+   "getPages"
+  ],
+  "needsCustomLogic": false,
+  "warnings": [
+   "@Broken(\"Switched to mangakio\") in kotatsu.",
+   "getPages override forces the sb.mbcdn.xyz /manga fallback from chapImages only; this is exactly what the engine's chapImages + resolveChapterImageUrl CDN-fallback path produces, so no custom logic is required."
+  ],
+  "pageSize": 48,
+  "broken": true,
+  "antiBot": "cloudflare"
+ },
+ {
+  "id": "MANGAFOREST",
+  "name": "MangaForest",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "madtheme",
+  "domain": "mangaforest.me",
+  "altDomains": [],
+  "className": "MangaForest",
+  "file": "en/MangaForest.kt",
+  "config": {},
+  "configComplex": {},
+  "overriddenMethods": [
+   "getPages"
+  ],
+  "parsingOverrides": [
+   "getPages"
+  ],
+  "needsCustomLogic": false,
+  "warnings": [
+   "getPages override forces the sb.mbcdn.xyz /manga fallback from chapImages only; subsumed by the engine's chapImages + resolveChapterImageUrl CDN-fallback path (imageFallbackHost = sb.mbcdn.xyz)."
+  ],
+  "pageSize": 48,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "MANGAJINX",
+  "name": "MangaJinx",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "madtheme",
+  "domain": "mgjinx.com",
+  "altDomains": [],
+  "className": "MangaJinx",
+  "file": "en/MangaJinx.kt",
+  "config": {
+   "listUrl": "search",
+   "chapterIdContains": "bookId",
+   "chapterIdPrefix": "bookId = ",
+   "chapterIdSuffix": ";",
+   "chapterApiPath": "/service/backend/chaplist/?manga_id={id}"
+  },
+  "configComplex": {},
+  "overriddenMethods": [
+   "getChapters"
+  ],
+  "parsingOverrides": [
+   "getChapters"
+  ],
+  "needsCustomLogic": false,
+  "warnings": [
+   "getChapters override differs from base only by the JS handle name (bookId vs bookSlug) and the AJAX URL template; fully datafied via chapterIdContains/chapterIdPrefix/chapterIdSuffix/chapterApiPath."
+  ],
+  "pageSize": 48,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "MANGAPUMA",
+  "name": "MangaPuma",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "madtheme",
+  "domain": "mangapuma.com",
+  "altDomains": [],
+  "className": "MangaPuma",
+  "file": "en/MangaPuma.kt",
+  "config": {},
+  "configComplex": {},
+  "overriddenMethods": [
+   "getPages"
+  ],
+  "parsingOverrides": [
+   "getPages"
+  ],
+  "needsCustomLogic": false,
+  "warnings": [
+   "@Broken(\"Now mangakio\") in kotatsu.",
+   "getPages override subsumed by the engine's chapImages + sb.mbcdn.xyz CDN-fallback path."
+  ],
+  "pageSize": 48,
+  "broken": true,
+  "antiBot": "cloudflare"
+ },
+ {
+  "id": "MANGAXYZ",
+  "name": "MangaXyz",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "madtheme",
+  "domain": "mangaxyz.com",
+  "altDomains": [],
+  "className": "Mangaxyz",
+  "file": "en/Mangaxyz.kt",
+  "config": {},
+  "configComplex": {},
+  "overriddenMethods": [
+   "getPages"
+  ],
+  "parsingOverrides": [
+   "getPages"
+  ],
+  "needsCustomLogic": false,
+  "warnings": [
+   "@Broken(\"Now mangakio\") in kotatsu.",
+   "getPages override subsumed by the engine's chapImages + sb.mbcdn.xyz CDN-fallback path."
+  ],
+  "pageSize": 48,
+  "broken": true,
+  "antiBot": "cloudflare"
+ },
+ {
+  "id": "TOONILY_ME",
+  "name": "Toonily.Me",
+  "lang": "en",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "madtheme",
+  "domain": "toonily.me",
+  "altDomains": [],
+  "className": "ToonilyMe",
+  "file": "en/ToonilyMe.kt",
+  "config": {
+   "selectors": {
+    "desc": "div.summary div.section-body p.content"
+   }
+  },
+  "configComplex": {},
+  "overriddenMethods": [],
+  "parsingOverrides": [],
+  "needsCustomLogic": false,
+  "warnings": [
+   "Overrides only the selectDesc property (pure selector data)."
+  ],
+  "pageSize": 48,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "TOONITUBE",
+  "name": "TooniTube",
+  "lang": "en",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "madtheme",
+  "domain": "toonitube.com",
+  "altDomains": [],
+  "className": "TooniTube",
+  "file": "en/TooniTube.kt",
+  "config": {
+   "selectors": {
+    "desc": "div.summary div.section-body p.content"
+   }
+  },
+  "configComplex": {},
+  "overriddenMethods": [],
+  "parsingOverrides": [],
+  "needsCustomLogic": false,
+  "warnings": [
+   "Overrides only the selectDesc property (pure selector data)."
+  ],
+  "pageSize": 48,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "TRUEMANGA",
+  "name": "TrueManga",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "madtheme",
+  "domain": "mangamonk.com",
+  "altDomains": [],
+  "className": "TrueManga",
+  "file": "en/TrueManga.kt",
+  "config": {},
+  "configComplex": {},
+  "overriddenMethods": [],
+  "parsingOverrides": [],
+  "needsCustomLogic": false,
+  "warnings": [
+   "@Broken(\"Down forever\") in kotatsu. Display name TrueManga but domain is mangamonk.com."
+  ],
+  "pageSize": 48,
+  "broken": true,
+  "antiBot": "cloudflare"
+ },
+ {
+  "id": "MANHUASCAN",
+  "name": "kaliscan.io",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "madtheme",
+  "domain": "kaliscan.io",
+  "altDomains": [],
+  "className": "ManhuaScan",
+  "file": "en/ManhuaScan.kt",
+  "config": {
+   "listUrl": "search",
+   "capabilities": {
+    "multipleTags": true,
+    "tagsExclusion": true,
+    "search": true,
+    "searchWithFilters": true,
+    "year": false,
+    "authorSearch": true
+   },
+   "selectors": {
+    "desc": ".summary .content, .summary .content ~ p",
+    "state": ".detail .meta > p > strong:contains(Status) ~ a",
+    "alt": ".detail h2",
+    "tag": ".detail .meta > p > strong:contains(Genres) ~ a",
+    "date": ".chapter-update",
+    "chapter": "#chapter-list > li, #chapter-list-inner .chapter-list > li"
+   }
+  },
+  "configComplex": {},
+  "overriddenMethods": [
+   "getListPage",
+   "getDetails",
+   "fetchAvailableTags",
+   "getFilterOptions",
+   "filterCapabilities"
+  ],
+  "parsingOverrides": [
+   "getListPage",
+   "getDetails",
+   "fetchAvailableTags"
+  ],
+  "needsCustomLogic": true,
+  "warnings": [
+   "Divergent theme variant. getListPage uses a different URL grammar (include[]/exclude[]/include_mode/bookmark/author) and a different card container (.book-detailed-item, not div.book-item).",
+   "getDetails is fully bespoke: title from .detail h1, authors from strong:contains(Authors) ~ a, alt titles split on ,/;, cover from #cover img[data-src], and chapters parsed INLINE off the details page (NOT via the bookSlug AJAX endpoint the base engine uses).",
+   "fetchAvailableTags uses .checkbox-group.genres .checkbox-wrapper instead of div.genres .checkbox.",
+   "The selectors/capabilities above are recorded for reference; the base MadthemeEngine pipeline (div.book-item list + bookSlug chapter API) will NOT parse this source correctly. Needs a bespoke engine or an escape-hatch flow."
+  ],
+  "pageSize": 48,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ }
+]

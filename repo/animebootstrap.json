@@ -1,0 +1,86 @@
+[
+ {
+  "id": "komikzoid",
+  "name": "KomikzoId",
+  "lang": "id",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "animebootstrap",
+  "domain": "komikzoid.id",
+  "needsCustomLogic": false,
+  "customMethods": [],
+  "config": {},
+  "pageSize": 24,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "neumanga",
+  "name": "NeuManga.xyz",
+  "lang": "id",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "animebootstrap",
+  "domain": "neumanga.id",
+  "needsCustomLogic": false,
+  "customMethods": [],
+  "config": {},
+  "pageSize": 24,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "sektekomik",
+  "name": "SekteKomik",
+  "lang": "id",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "animebootstrap",
+  "domain": "sektekomik.id",
+  "needsCustomLogic": false,
+  "customMethods": [],
+  "config": {},
+  "pageSize": 24,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "papscan",
+  "name": "PapScan",
+  "lang": "fr",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "animebootstrap",
+  "domain": "papscan.com",
+  "needsCustomLogic": true,
+  "customMethods": [
+   "getListPage",
+   "fetchAvailableTags",
+   "getDetails",
+   "getChapters"
+  ],
+  "brokenUpstream": true,
+  "config": {
+   "listUrl": "/liste-manga",
+   "locale": "en",
+   "sortOrders": [
+    "POPULARITY",
+    "ALPHABETICAL",
+    "ALPHABETICAL_DESC"
+   ],
+   "selectors": {
+    "state": "div.anime__details__widget li:contains(En cours)",
+    "tags": "div.anime__details__widget li:contains(Genre) a",
+    "chapters": "ul.chapters li",
+    "chapterLink": "a",
+    "chapterTitle": "span em",
+    "chapterDate": "span.date-chapter-title-rtl"
+   }
+  },
+  "pageSize": 24,
+  "broken": true
+ }
+]

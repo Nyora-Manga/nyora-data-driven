@@ -1,0 +1,54 @@
+[
+ {
+  "id": "danke",
+  "name": "DankeFursLesen",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "guya",
+  "domain": "danke.moe",
+  "config": {},
+  "pageSize": 0,
+  "broken": false
+ },
+ {
+  "id": "guyacubari",
+  "name": "GuyaCubari",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "guya",
+  "domain": "guya.cubari.moe",
+  "config": {},
+  "pageSize": 0,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "hachirumi",
+  "name": "Hachirumi",
+  "lang": "en",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "guya",
+  "domain": "hachirumi.com",
+  "config": {},
+  "pageSize": 0,
+  "broken": false
+ },
+ {
+  "id": "mahoushoujobu",
+  "name": "MahouShoujobu",
+  "lang": "all",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "guya",
+  "domain": "mahoushoujobu.com",
+  "config": {},
+  "pageSize": 0,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ }
+]

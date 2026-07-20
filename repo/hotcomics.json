@@ -1,0 +1,346 @@
+[
+ {
+  "id": "HOTCOMICS",
+  "name": "HotComics",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "hotcomics",
+  "domain": "hotcomics.me",
+  "className": "HotComics",
+  "file": "en/HotComics.kt",
+  "config": {
+   "langPath": "/en",
+   "popupLoginChapters": true
+  },
+  "needsCustomLogic": true,
+  "warnings": [
+   "Overrides getDetails (a real parsing method): chapters are #tab-chapter <a> rows whose url is inside a popupLogin('...') onclick, title from .cell-num, date from .cell-time text. Reproduced by the engine via the popupLoginChapters knob."
+  ],
+  "pageSize": 24,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "DAYCOMICS",
+  "name": "DayComics",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "hotcomics",
+  "domain": "daycomics.com",
+  "className": "DayComics",
+  "file": "en/DayComics.kt",
+  "config": {
+   "langPath": "/en",
+   "popupLoginChapters": true
+  },
+  "needsCustomLogic": true,
+  "warnings": [
+   "Overrides getDetails (a real parsing method): identical popupLogin chapter markup as HotComics. Reproduced by the engine via the popupLoginChapters knob."
+  ],
+  "pageSize": 24,
+  "broken": false
+ },
+ {
+  "id": "TOOMICS",
+  "name": "Toomics",
+  "lang": "de",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "hotcomics",
+  "domain": "toomics.top",
+  "className": "Toomics",
+  "file": "de/Toomics.kt",
+  "config": {
+   "langPath": "/de",
+   "locale": "en",
+   "searchSupported": false
+  },
+  "needsCustomLogic": false,
+  "warnings": [
+   "@Broken upstream (disabled in kotatsu). Uses base (genres/ComicSeries) selectors, only sourceLocale=ENGLISH and isSearchSupported=false are overridden — pure config."
+  ],
+  "pageSize": 24,
+  "broken": true
+ },
+ {
+  "id": "TOOMICSDE",
+  "name": "TooMicsDe",
+  "lang": "de",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "hotcomics",
+  "domain": "toomics.com",
+  "className": "TooMicsDe",
+  "file": "de/TooMicsDe.kt",
+  "config": {
+   "langPath": "/de",
+   "searchSupported": false,
+   "mangasUrl": "/webtoon/ranking/genre",
+   "onePage": true,
+   "selectors": {
+    "mangas": "li > div.visual",
+    "chapters": "li.normal_ep:has(.coin-type1)",
+    "tagsList": "div.genre_list li:not(.on) a",
+    "pages": "div[id^=load_image_] img"
+   }
+  },
+  "needsCustomLogic": false,
+  "warnings": [],
+  "pageSize": 24,
+  "broken": false
+ },
+ {
+  "id": "TOOMICSEN",
+  "name": "TooMicsEn",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "hotcomics",
+  "domain": "toomics.com",
+  "className": "TooMicsEn",
+  "file": "en/TooMicsEn.kt",
+  "config": {
+   "langPath": "/en",
+   "searchSupported": false,
+   "mangasUrl": "/webtoon/ranking/genre",
+   "onePage": true,
+   "selectors": {
+    "mangas": "li > div.visual",
+    "chapters": "li.normal_ep:has(.coin-type1)",
+    "tagsList": "div.genre_list li:not(.on) a",
+    "pages": "div[id^=load_image_] img"
+   }
+  },
+  "needsCustomLogic": false,
+  "warnings": [],
+  "pageSize": 24,
+  "broken": false
+ },
+ {
+  "id": "TOOMICSES",
+  "name": "TooMicsEs",
+  "lang": "es",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "hotcomics",
+  "domain": "toomics.com",
+  "className": "TooMicsEs",
+  "file": "es/TooMicsEs.kt",
+  "config": {
+   "langPath": "/es",
+   "searchSupported": false,
+   "mangasUrl": "/webtoon/ranking/genre",
+   "onePage": true,
+   "selectors": {
+    "mangas": "li > div.visual",
+    "chapters": "li.normal_ep:has(.coin-type1)",
+    "tagsList": "div.genre_list li:not(.on) a",
+    "pages": "div[id^=load_image_] img"
+   }
+  },
+  "needsCustomLogic": false,
+  "warnings": [],
+  "pageSize": 24,
+  "broken": false
+ },
+ {
+  "id": "TOOMICSESLA",
+  "name": "TooMicsEsLa",
+  "lang": "es",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "hotcomics",
+  "domain": "toomics.com",
+  "className": "TooMicsEsLa",
+  "file": "es/TooMicsEsLa.kt",
+  "config": {
+   "langPath": "/mx",
+   "searchSupported": false,
+   "mangasUrl": "/webtoon/ranking/genre",
+   "onePage": true,
+   "selectors": {
+    "mangas": "li > div.visual",
+    "chapters": "li.normal_ep:has(.coin-type1)",
+    "tagsList": "div.genre_list li:not(.on) a",
+    "pages": "div[id^=load_image_] img"
+   }
+  },
+  "needsCustomLogic": false,
+  "warnings": [
+   "Latin-America Spanish: lang=es but the UI-language path is /mx."
+  ],
+  "pageSize": 24,
+  "broken": false
+ },
+ {
+  "id": "TOOMICSFR",
+  "name": "TooMicsFr",
+  "lang": "fr",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "hotcomics",
+  "domain": "toomics.com",
+  "className": "TooMicsFr",
+  "file": "fr/TooMicsFr.kt",
+  "config": {
+   "langPath": "/fr",
+   "searchSupported": false,
+   "mangasUrl": "/webtoon/ranking/genre",
+   "onePage": true,
+   "selectors": {
+    "mangas": "li > div.visual",
+    "chapters": "li.normal_ep:has(.coin-type1)",
+    "tagsList": "div.genre_list li:not(.on) a",
+    "pages": "div[id^=load_image_] img"
+   }
+  },
+  "needsCustomLogic": false,
+  "warnings": [],
+  "pageSize": 24,
+  "broken": false
+ },
+ {
+  "id": "TOOMICSIT",
+  "name": "TooMicsIt",
+  "lang": "it",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "hotcomics",
+  "domain": "toomics.com",
+  "className": "TooMicsIt",
+  "file": "it/TooMicsIt.kt",
+  "config": {
+   "langPath": "/it",
+   "searchSupported": false,
+   "mangasUrl": "/webtoon/ranking/genre",
+   "onePage": true,
+   "selectors": {
+    "mangas": "li > div.visual",
+    "chapters": "li.normal_ep:has(.coin-type1)",
+    "tagsList": "div.genre_list li:not(.on) a",
+    "pages": "div[id^=load_image_] img"
+   }
+  },
+  "needsCustomLogic": false,
+  "warnings": [],
+  "pageSize": 24,
+  "broken": false
+ },
+ {
+  "id": "TOOMICSJA",
+  "name": "TooMicsJa",
+  "lang": "ja",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "hotcomics",
+  "domain": "toomics.com",
+  "className": "TooMicsJa",
+  "file": "ja/TooMicsJa.kt",
+  "config": {
+   "langPath": "/ja",
+   "searchSupported": false,
+   "mangasUrl": "/webtoon/ranking/genre",
+   "onePage": true,
+   "selectors": {
+    "mangas": "li > div.visual",
+    "chapters": "li.normal_ep:has(.coin-type1)",
+    "tagsList": "div.genre_list li:not(.on) a",
+    "pages": "div[id^=load_image_] img"
+   }
+  },
+  "needsCustomLogic": false,
+  "warnings": [],
+  "pageSize": 24,
+  "broken": false
+ },
+ {
+  "id": "TOOMICSPT",
+  "name": "TooMicsPt",
+  "lang": "pt",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "hotcomics",
+  "domain": "toomics.com",
+  "className": "TooMicsPt",
+  "file": "pt/TooMicsPt.kt",
+  "config": {
+   "langPath": "/por",
+   "searchSupported": false,
+   "mangasUrl": "/webtoon/ranking/genre",
+   "onePage": true,
+   "selectors": {
+    "mangas": "li > div.visual",
+    "chapters": "li.normal_ep:has(.coin-type1)",
+    "tagsList": "div.genre_list li:not(.on) a",
+    "pages": "div[id^=load_image_] img"
+   }
+  },
+  "needsCustomLogic": false,
+  "warnings": [
+   "Portuguese: lang=pt but the UI-language path is /por."
+  ],
+  "pageSize": 24,
+  "broken": false
+ },
+ {
+  "id": "TOOMICSSC",
+  "name": "TooMicsSc",
+  "lang": "zh",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "hotcomics",
+  "domain": "toomics.com",
+  "className": "TooMicsSc",
+  "file": "zh/TooMicsSc.kt",
+  "config": {
+   "langPath": "/sc",
+   "searchSupported": false,
+   "mangasUrl": "/webtoon/ranking/genre",
+   "onePage": true,
+   "selectors": {
+    "mangas": "li > div.visual",
+    "chapters": "li.normal_ep:has(.coin-type1)",
+    "tagsList": "div.genre_list li:not(.on) a",
+    "pages": "div[id^=load_image_] img"
+   }
+  },
+  "needsCustomLogic": false,
+  "warnings": [
+   "Simplified Chinese: lang=zh, UI-language path /sc."
+  ],
+  "pageSize": 24,
+  "broken": false
+ },
+ {
+  "id": "TOOMICSTC",
+  "name": "TooMicsTc",
+  "lang": "zh",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "hotcomics",
+  "domain": "toomics.com",
+  "className": "TooMicsTc",
+  "file": "zh/TooMicsTc.kt",
+  "config": {
+   "langPath": "/tc",
+   "searchSupported": false,
+   "mangasUrl": "/webtoon/ranking/genre",
+   "onePage": true,
+   "selectors": {
+    "mangas": "li > div.visual",
+    "chapters": "li.normal_ep:has(.coin-type1)",
+    "tagsList": "div.genre_list li:not(.on) a",
+    "pages": "div[id^=load_image_] img"
+   }
+  },
+  "needsCustomLogic": false,
+  "warnings": [
+   "Traditional Chinese: lang=zh, UI-language path /tc."
+  ],
+  "pageSize": 24,
+  "broken": false
+ }
+]

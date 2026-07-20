@@ -1,0 +1,523 @@
+[
+ {
+  "id": "xoxocomics",
+  "name": "XoxoComics",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "COMICS",
+  "engine": "wpcomics",
+  "domain": "xoxocomic.com",
+  "needsCustomLogic": true,
+  "customMethods": [
+   "getListPage",
+   "getOrCreateTagMap",
+   "getDetails",
+   "loadChapters (paginated ?page loop)",
+   "getPages (/all + img[data-original])"
+  ],
+  "config": {
+   "pageSize": 36,
+   "listUrl": "/comic-list",
+   "datePattern": "MM/dd/yyyy",
+   "sortOrders": [
+    "UPDATED",
+    "NEWEST",
+    "POPULARITY",
+    "ALPHABETICAL"
+   ]
+  },
+  "pageSize": 36,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "mangaraw",
+  "name": "MangaRaw",
+  "lang": "ja",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "wpcomics",
+  "domain": "mangaraw.best",
+  "needsCustomLogic": false,
+  "customMethods": [],
+  "config": {
+   "pageSize": 48,
+   "listUrl": "/search/manga",
+   "genreQueryParam": "genre"
+  },
+  "pageSize": 48,
+  "broken": false
+ },
+ {
+  "id": "hamtruyen",
+  "name": "Ham Truyện",
+  "lang": "vi",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "wpcomics",
+  "domain": "hamtruyen.vip",
+  "needsCustomLogic": false,
+  "customMethods": [],
+  "config": {
+   "pageSize": 44
+  },
+  "pageSize": 44,
+  "broken": false
+ },
+ {
+  "id": "doctruyen3q",
+  "name": "DocTruyen3Q",
+  "lang": "vi",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "wpcomics",
+  "domain": "doctruyen3qui15.pro",
+  "needsCustomLogic": true,
+  "customMethods": [
+   "getListPage (classic /tim-truyen grammar)",
+   "parseMangaList (div.item-manga)",
+   "getDetails",
+   "getChapters (a.chapter data-chapter)",
+   "getPages (ads filter)",
+   "static availableTags"
+  ],
+  "config": {
+   "pageSize": 36,
+   "datePattern": "dd/MM/yyyy",
+   "sortOrders": [
+    "UPDATED",
+    "POPULARITY"
+   ],
+   "capabilities": {
+    "multipleTags": false,
+    "tagsExclusion": true,
+    "search": true
+   }
+  },
+  "pageSize": 36,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "toptruyen",
+  "name": "TopTruyen",
+  "lang": "vi",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "wpcomics",
+  "domain": "www.toptruyentv11.com",
+  "needsCustomLogic": true,
+  "customMethods": [
+   "getListPage (classic /tim-truyen grammar)",
+   "parseMangaList (div.item-manga)",
+   "getDetails",
+   "getChapters (a.chapter data-chapter)",
+   "getPages (ads filter)",
+   "static availableTags"
+  ],
+  "config": {
+   "pageSize": 36,
+   "datePattern": "dd/MM/yyyy",
+   "sortOrders": [
+    "UPDATED",
+    "POPULARITY"
+   ],
+   "capabilities": {
+    "multipleTags": false,
+    "tagsExclusion": true,
+    "search": true
+   }
+  },
+  "pageSize": 36,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "mehentaivn",
+  "name": "MeHentaiVN",
+  "lang": "vi",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "wpcomics",
+  "domain": "www.hentaivnx.autos",
+  "needsCustomLogic": true,
+  "customMethods": [
+   "getListPage (/tim-truyen-nang-cao advanced grammar)",
+   "parseSearchList (duckduckgo checkImgUrl)",
+   "getDetails (title-detail, empty desc, forced ADULT)",
+   "getPages (checkImgUrl)",
+   "fetchTags (megamenu data-title)"
+  ],
+  "config": {
+   "pageSize": 44,
+   "referer": true,
+   "capabilities": {
+    "multipleTags": true,
+    "tagsExclusion": true,
+    "search": true
+   }
+  },
+  "pageSize": 44,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "nettruyen",
+  "name": "NetTruyen",
+  "lang": "vi",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "wpcomics",
+  "domain": "nettruyenar.com",
+  "needsCustomLogic": true,
+  "customMethods": [
+   "getDetails",
+   "fetchChapters (ComicService.asmx/ChapterList JSON API)"
+  ],
+  "config": {
+   "pageSize": 36
+  },
+  "pageSize": 36,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "nettruyenvie",
+  "name": "NetTruyenVie",
+  "lang": "vi",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "wpcomics",
+  "domain": "nettruyenvia.com",
+  "needsCustomLogic": true,
+  "customMethods": [
+   "getDetails (desc div.detail-content > div)",
+   "fetchChapters (ComicService.asmx/ChapterList JSON API)"
+  ],
+  "config": {
+   "pageSize": 36
+  },
+  "pageSize": 36,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "nettruyenx",
+  "name": "NetTruyenX",
+  "lang": "vi",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "wpcomics",
+  "domain": "nettruyenx.net",
+  "needsCustomLogic": true,
+  "customMethods": [
+   "getDetails",
+   "fetchChapters (ComicService.asmx/ChapterList JSON API)",
+   "getRequestHeaders (referer)"
+  ],
+  "config": {
+   "pageSize": 36,
+   "referer": true,
+   "selectors": {
+    "desc": "div.detail-content div.shortened",
+    "state": "li.status p.col-xs-8",
+    "aut": "li.author p.col-xs-8",
+    "rating": "div.star input[name=score]"
+   }
+  },
+  "pageSize": 36,
+  "broken": true,
+  "antiBot": "cloudflare"
+ },
+ {
+  "id": "nhattruyenvn",
+  "name": "NhatTruyenVN",
+  "lang": "vi",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "wpcomics",
+  "domain": "nhattruyenqq.com",
+  "needsCustomLogic": true,
+  "customMethods": [
+   "getDetails",
+   "fetchChapters (ComicService.asmx/ChapterList JSON API, chapter_num)"
+  ],
+  "config": {
+   "pageSize": 36
+  },
+  "pageSize": 36,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "newtruyen",
+  "name": "NewTruyen",
+  "lang": "vi",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "wpcomics",
+  "domain": "newtruyen.co.uk",
+  "needsCustomLogic": true,
+  "customMethods": [
+   "getDetails (input#storyID)",
+   "getChapterList (Story/ListChapterByStoryID API)",
+   "getPages",
+   "parseChapterDate (vi relative)",
+   "getAvailableTags (megamenu)"
+  ],
+  "config": {
+   "pageSize": 36
+  },
+  "pageSize": 36,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "nettruyen1975",
+  "name": "NetTruyen1975",
+  "lang": "vi",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "wpcomics",
+  "domain": "nettruyen1905.com",
+  "needsCustomLogic": true,
+  "customMethods": [
+   "getListPage (/tim-kiem-nang-cao advanced grammar)",
+   "getOrCreateTagMap (div.genre-item span data-id)",
+   "getPages (page_2 parent, data-original, httpHead mime filter)"
+  ],
+  "config": {
+   "pageSize": 20,
+   "listUrl": "/tim-kiem-nang-cao",
+   "sortOrders": [
+    "UPDATED",
+    "POPULARITY",
+    "RATING",
+    "NEWEST",
+    "ALPHABETICAL",
+    "ALPHABETICAL_DESC"
+   ],
+   "availableStates": [
+    "ONGOING",
+    "FINISHED",
+    "PAUSED",
+    "ABANDONED"
+   ],
+   "capabilities": {
+    "multipleTags": true,
+    "tagsExclusion": true,
+    "search": true
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "nettruyenfe",
+  "name": "NetTruyenFE",
+  "lang": "vi",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "wpcomics",
+  "domain": "nettruyen1905.com",
+  "needsCustomLogic": true,
+  "customMethods": [
+   "getListPage (/tim-kiem-nang-cao advanced grammar)",
+   "getOrCreateTagMap (div.genre-item span data-id)",
+   "getPages (page_2 parent, data-original, httpHead mime filter)"
+  ],
+  "config": {
+   "pageSize": 20,
+   "listUrl": "/tim-kiem-nang-cao",
+   "sortOrders": [
+    "UPDATED",
+    "POPULARITY",
+    "RATING",
+    "NEWEST",
+    "ALPHABETICAL",
+    "ALPHABETICAL_DESC"
+   ],
+   "availableStates": [
+    "ONGOING",
+    "FINISHED",
+    "PAUSED",
+    "ABANDONED"
+   ],
+   "capabilities": {
+    "multipleTags": true,
+    "tagsExclusion": true,
+    "search": true
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "nettruyenhe",
+  "name": "NetTruyenHE",
+  "lang": "vi",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "wpcomics",
+  "domain": "nettruyenhe.com",
+  "needsCustomLogic": true,
+  "customMethods": [
+   "getListPage (/tim-kiem-nang-cao advanced grammar)",
+   "getOrCreateTagMap (div.genre-item span data-id)"
+  ],
+  "config": {
+   "pageSize": 20,
+   "listUrl": "/tim-kiem-nang-cao",
+   "sortOrders": [
+    "UPDATED",
+    "POPULARITY",
+    "RATING",
+    "NEWEST",
+    "ALPHABETICAL",
+    "ALPHABETICAL_DESC"
+   ],
+   "availableStates": [
+    "ONGOING",
+    "FINISHED",
+    "PAUSED",
+    "ABANDONED"
+   ],
+   "capabilities": {
+    "multipleTags": true,
+    "tagsExclusion": true,
+    "search": true
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "nettruyenll",
+  "name": "NetTruyenLL",
+  "lang": "vi",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "wpcomics",
+  "domain": "nettruyen1905.com",
+  "needsCustomLogic": true,
+  "customMethods": [
+   "getListPage (/tim-kiem-nang-cao advanced grammar)",
+   "getOrCreateTagMap (div.genre-item span data-id)",
+   "getPages (page_2 parent, data-original, httpHead mime filter)"
+  ],
+  "config": {
+   "pageSize": 20,
+   "listUrl": "/tim-kiem-nang-cao",
+   "sortOrders": [
+    "UPDATED",
+    "POPULARITY",
+    "RATING",
+    "NEWEST",
+    "ALPHABETICAL",
+    "ALPHABETICAL_DESC"
+   ],
+   "availableStates": [
+    "ONGOING",
+    "FINISHED",
+    "PAUSED",
+    "ABANDONED"
+   ],
+   "capabilities": {
+    "multipleTags": true,
+    "tagsExclusion": true,
+    "search": true
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "nettruyenssr",
+  "name": "NetTruyenSSR",
+  "lang": "vi",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "wpcomics",
+  "domain": "nettruyen1905.com",
+  "needsCustomLogic": true,
+  "customMethods": [
+   "getListPage (/tim-kiem-nang-cao advanced grammar)",
+   "getOrCreateTagMap (div.genre-item span data-id)",
+   "getPages (page_2 parent, data-original, httpHead mime filter)"
+  ],
+  "config": {
+   "pageSize": 20,
+   "listUrl": "/tim-kiem-nang-cao",
+   "sortOrders": [
+    "UPDATED",
+    "POPULARITY",
+    "RATING",
+    "NEWEST",
+    "ALPHABETICAL",
+    "ALPHABETICAL_DESC"
+   ],
+   "availableStates": [
+    "ONGOING",
+    "FINISHED",
+    "PAUSED",
+    "ABANDONED"
+   ],
+   "capabilities": {
+    "multipleTags": true,
+    "tagsExclusion": true,
+    "search": true
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "nettruyenuu",
+  "name": "NetTruyenUU",
+  "lang": "vi",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "wpcomics",
+  "domain": "nettruyen1905.com",
+  "needsCustomLogic": true,
+  "customMethods": [
+   "getListPage (/tim-kiem-nang-cao advanced grammar)",
+   "getOrCreateTagMap (div.genre-item span data-id)",
+   "getPages (page_2 parent, data-original, httpHead mime filter)"
+  ],
+  "config": {
+   "pageSize": 20,
+   "listUrl": "/tim-kiem-nang-cao",
+   "sortOrders": [
+    "UPDATED",
+    "POPULARITY",
+    "RATING",
+    "NEWEST",
+    "ALPHABETICAL",
+    "ALPHABETICAL_DESC"
+   ],
+   "availableStates": [
+    "ONGOING",
+    "FINISHED",
+    "PAUSED",
+    "ABANDONED"
+   ],
+   "capabilities": {
+    "multipleTags": true,
+    "tagsExclusion": true,
+    "search": true
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ }
+]

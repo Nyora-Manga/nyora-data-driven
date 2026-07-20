@@ -1,0 +1,368 @@
+[
+ {
+  "id": "asmhentai",
+  "name": "AsmHentai",
+  "lang": "all",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "galleryadults",
+  "domain": "asmhentai.com",
+  "needsCustomLogic": false,
+  "config": {
+   "pathTagUrl": "/tags/?page=",
+   "idImg": "fimg",
+   "tagNameSelector": ".tag",
+   "tagTitleCase": false,
+   "selectors": {
+    "gallery": ".preview_item",
+    "galleryLink": ".image a",
+    "galleryImg": ".image img",
+    "tags": ".tags_page ul.tags",
+    "author": "div.tags:contains(Artists:) .tag_list a span.tag"
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "doujindesuuk",
+  "name": "DoujinDesu.uk",
+  "lang": "all",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "galleryadults",
+  "domain": "doujindesu.uk",
+  "needsCustomLogic": false,
+  "config": {
+   "pageSize": 25,
+   "pathTagUrl": "/tags?page=",
+   "idImg": "image-container",
+   "galleryImgLast": true,
+   "pageImgInContainer": true,
+   "selectors": {
+    "gallery": ".gallery",
+    "galleryLink": "a",
+    "galleryTitle": ".caption",
+    "tags": "#tag-container",
+    "tag": "div.tag-container:contains(Tags) span.tags",
+    "author": "div.tag-container:contains(Artists) a",
+    "languageChapter": "div.tag-container:contains(Languages) a"
+   }
+  },
+  "pageSize": 25,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "hentairox",
+  "name": "HentaiRox",
+  "lang": "all",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "galleryadults",
+  "domain": "hentairox.com",
+  "needsCustomLogic": false,
+  "config": {
+   "tagLinkSelector": "a.tag, .gallery_title a",
+   "tagNameSelector": ".item_name",
+   "tagTitleCase": false,
+   "selectors": {
+    "galleryImg": ".inner_thumb img",
+    "tags": ".gtags",
+    "tag": "li:contains(Tags:)",
+    "author": "li:contains(Artists:) span.item_name",
+    "languageChapter": "li:contains(Languages:) .item_name"
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "hentai3",
+  "name": "3Hentai",
+  "lang": "all",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "galleryadults",
+  "domain": "3hentai.net",
+  "needsCustomLogic": true,
+  "config": {
+   "pageSize": 30,
+   "pathTagUrl": "/tags-popular/",
+   "idImg": ".js-main-img",
+   "pageImgIsSelector": true,
+   "sortOrders": [
+    "UPDATED",
+    "POPULARITY"
+   ],
+   "capabilities": {
+    "multipleTags": true,
+    "search": true
+   },
+   "selectors": {
+    "gallery": ".doujin ",
+    "galleryLink": "a",
+    "galleryTitle": ".title",
+    "tags": "div.tag-listing-container",
+    "tag": "div.tag-container:contains(Tags)",
+    "author": "div.tag-container:contains(Artists) .filter-elem a",
+    "languageChapter": "div.tag-container:contains(Languages) a",
+    "urlChapter": "#main-cover a"
+   }
+  },
+  "pageSize": 30,
+  "broken": false
+ },
+ {
+  "id": "hentaienvy",
+  "name": "HentaiEnvy",
+  "lang": "all",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "galleryadults",
+  "domain": "hentaienvy.com",
+  "needsCustomLogic": true,
+  "config": {
+   "pageSize": 24,
+   "idImg": "fimg",
+   "sortOrders": [
+    "UPDATED",
+    "POPULARITY"
+   ],
+   "selectors": {
+    "galleryLink": "a",
+    "galleryTitle": "div.title",
+    "tags": ".tags_items",
+    "tag": ".gt_right_tags ul:contains(Tags:)",
+    "author": ".gt_right_tags ul:contains(Artists:) a",
+    "languageChapter": ".gt_right_tags ul:contains(Languages:) a"
+   }
+  },
+  "pageSize": 24,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "hentaiera",
+  "name": "HentaiEra",
+  "lang": "all",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "galleryadults",
+  "domain": "hentaiera.com",
+  "needsCustomLogic": true,
+  "config": {
+   "pageSize": 25,
+   "sortOrders": [
+    "UPDATED",
+    "POPULARITY"
+   ],
+   "capabilities": {
+    "multipleTags": true,
+    "search": true
+   },
+   "tagLinkSelector": "a.tag, .gallery_title a",
+   "tagNameSelector": ".item_name",
+   "tagTitleCase": false,
+   "selectors": {
+    "tags": ".tags_section",
+    "tag": ".galleries_info li:contains(Tags) div.info_tags",
+    "author": ".galleries_info li:contains(Artists) span.item_name",
+    "languageChapter": ".galleries_info li:contains(Languages) div.info_tags .item_name"
+   }
+  },
+  "pageSize": 25,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "hentaiforce",
+  "name": "HentaiForce",
+  "lang": "all",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "galleryadults",
+  "domain": "hentaiforce.net",
+  "needsCustomLogic": true,
+  "config": {
+   "pageSize": 30,
+   "pathTagUrl": "/tags/popular/",
+   "idImg": ".gallery-reader-img-wrapper img",
+   "pageImgIsSelector": true,
+   "sortOrders": [
+    "UPDATED",
+    "POPULARITY"
+   ],
+   "capabilities": {
+    "multipleTags": true,
+    "search": true
+   },
+   "selectors": {
+    "gallery": ".gallery",
+    "galleryLink": "a.gallery-thumb",
+    "tags": ".tag-listing",
+    "tag": "div.tag-container:contains(Tags:)",
+    "author": "div.tag-container:contains(Artists:) a",
+    "languageChapter": "div.tag-container:contains(Languages:) a",
+    "urlChapter": "#gallery-main-cover a"
+   }
+  },
+  "pageSize": 30,
+  "broken": false
+ },
+ {
+  "id": "hentaifox",
+  "name": "HentaiFox",
+  "lang": "all",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "galleryadults",
+  "domain": "hentaifox.com",
+  "needsCustomLogic": true,
+  "config": {
+   "pathTagUrl": "/tags/popular/pag/",
+   "tagNameSelector": ".list_tag",
+   "tagTitleCase": false,
+   "sortOrders": [
+    "UPDATED",
+    "POPULARITY"
+   ],
+   "capabilities": {
+    "multipleTags": true,
+    "search": true
+   },
+   "selectors": {
+    "gallery": ".lc_galleries .thumb, .related_galleries .thumb",
+    "tags": ".list_tags",
+    "tag": "ul.tags",
+    "languageChapter": "ul.languages a.tag_btn"
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "nhentai_to",
+  "name": "NHentai.to",
+  "lang": "all",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "galleryadults",
+  "domain": "nhentai.to",
+  "needsCustomLogic": true,
+  "config": {
+   "pageSize": 25,
+   "pathTagUrl": "/tags?page=",
+   "idImg": "image-container",
+   "pageImgInContainer": true,
+   "tagNameSelector": ".name",
+   "selectors": {
+    "gallery": "div.index-container:not(.index-popular) .gallery, #related-container .gallery",
+    "galleryLink": "a",
+    "galleryTitle": ".caption",
+    "title": "h1",
+    "tags": "#tag-container",
+    "tag": ".tag-container:contains(Tags) span.tags",
+    "author": "#tags div.tag-container:contains(Artists) span.name",
+    "languageChapter": ".tag-container:contains(Languages) span.tags a:not(.tag-17) span.name"
+   }
+  },
+  "pageSize": 25,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "nhentai_xxx",
+  "name": "NHentai.xxx",
+  "lang": "all",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "galleryadults",
+  "domain": "nhentai.xxx",
+  "needsCustomLogic": true,
+  "config": {
+   "pageSize": 25,
+   "pathTagUrl": "/tags/popular?page=",
+   "idImg": "fimg",
+   "tagNameSelector": ".tag_name",
+   "sortOrders": [
+    "UPDATED",
+    "POPULARITY"
+   ],
+   "capabilities": {
+    "multipleTags": true,
+    "search": true,
+    "searchWithFilters": true
+   },
+   "selectors": {
+    "gallery": "div.galleries_box .gallery_item, #related-container .gallery_item",
+    "galleryLink": "a",
+    "galleryTitle": ".caption",
+    "title": "h1",
+    "tags": "div.tags_items",
+    "tag": ".tags:contains(Tags)",
+    "author": ".tags:contains(Artists) span.tag_name",
+    "languageChapter": ".tags:contains(Languages) a:not([href=\"/language/translated/\"]) span.tag_name"
+   }
+  },
+  "pageSize": 25,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "nhentai",
+  "name": "NHentai.net",
+  "lang": "all",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "galleryadults",
+  "domain": "nhentai.net",
+  "needsCustomLogic": true,
+  "config": {
+   "pageSize": 25
+  },
+  "pageSize": 25,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "hentainexus",
+  "name": "HentaiNexus",
+  "lang": "en",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "galleryadults",
+  "domain": "hentainexus.com",
+  "needsCustomLogic": true,
+  "config": {
+   "pageSize": 30
+  },
+  "pageSize": 30,
+  "broken": false
+ },
+ {
+  "id": "hentairead",
+  "name": "HentaiRead",
+  "lang": "en",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "galleryadults",
+  "domain": "hentairead.com",
+  "needsCustomLogic": true,
+  "config": {
+   "pageSize": 24
+  },
+  "pageSize": 24,
+  "broken": false
+ }
+]

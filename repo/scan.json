@@ -1,0 +1,146 @@
+[
+ {
+  "id": "scanita",
+  "name": "ScanIta.org",
+  "lang": "it",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "scan",
+  "domain": "scanita.org",
+  "className": "ScanIta",
+  "file": "it/ScanIta.kt",
+  "config": {},
+  "overriddenMethods": [
+   "getDetails"
+  ],
+  "parsingOverrides": [
+   "getDetails"
+  ],
+  "needsCustomLogic": true,
+  "warnings": [
+   "getDetails loads chapters from a SEPARATE page: it reads a `.container-fluid button.w-100` data-path attribute, extracts the manga id between `/manga/` and `/books`, then GETs https://{domain}/manga/{id}/books to parse the chapter list. The base ScanParser (and thus ScanEngine) reads chapters inline from the details page, so this source will yield NO chapters until a two-step-chapters knob is added. List/pages/search are unaffected."
+  ],
+  "pageSize": 0,
+  "broken": false
+ },
+ {
+  "id": "mangaitalia",
+  "name": "MangaItalia",
+  "lang": "it",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "scan",
+  "domain": "mangaita.io",
+  "className": "MangaItalia",
+  "file": "it/MangaItalia.kt",
+  "config": {},
+  "overriddenMethods": [],
+  "parsingOverrides": [],
+  "needsCustomLogic": false,
+  "warnings": [],
+  "pageSize": 0,
+  "broken": false
+ },
+ {
+  "id": "mangabr",
+  "name": "MangaBr",
+  "lang": "pt",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "scan",
+  "domain": "mangabr.net",
+  "className": "MangaBr",
+  "file": "pt/MangaBr.kt",
+  "config": {},
+  "overriddenMethods": [],
+  "parsingOverrides": [],
+  "needsCustomLogic": false,
+  "warnings": [
+   "Marked @Broken in kotatsu (source non-functional at snapshot time). Pure-config; no method overrides. Include only after re-verifying the site is live."
+  ],
+  "pageSize": 0,
+  "broken": true
+ },
+ {
+  "id": "mangaterra",
+  "name": "MangaTerra",
+  "lang": "pt",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "scan",
+  "domain": "manga-terra.com",
+  "className": "MangaTerra",
+  "file": "pt/MangaTerra.kt",
+  "config": {},
+  "overriddenMethods": [],
+  "parsingOverrides": [],
+  "needsCustomLogic": false,
+  "warnings": [],
+  "pageSize": 0,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "mangafr",
+  "name": "MangaFr",
+  "lang": "fr",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "scan",
+  "domain": "www.mangafr.org",
+  "className": "MangaFr",
+  "file": "fr/MangaFr.kt",
+  "config": {
+   "listUrl": "/series",
+   "discoverTags": false
+  },
+  "overriddenMethods": [
+   "getFilterOptions",
+   "getDetails"
+  ],
+  "parsingOverrides": [],
+  "needsCustomLogic": false,
+  "warnings": [
+   "Overrides listUrl=/series and disables tags (getFilterOptions returns empty; details set tags empty) — both datafied via config.listUrl + config.discoverTags=false. Its getDetails is otherwise the base logic; minor divergence (uses selectFirstOrThrow on chapter h5 vs base selectFirst) is negligible and intentionally NOT reproduced."
+  ],
+  "pageSize": 0,
+  "broken": false
+ },
+ {
+  "id": "scanvforg",
+  "name": "ScanVf.org",
+  "lang": "fr",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "scan",
+  "domain": "scanvf.org",
+  "className": "ScanVfOrg",
+  "file": "fr/ScanVfOrg.kt",
+  "config": {},
+  "overriddenMethods": [],
+  "parsingOverrides": [],
+  "needsCustomLogic": false,
+  "warnings": [],
+  "pageSize": 0,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "scantrad",
+  "name": "ScanTrad",
+  "lang": "fr",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "scan",
+  "domain": "scan-trad.com",
+  "className": "ScanTrad",
+  "file": "fr/ScanTrad.kt",
+  "config": {},
+  "overriddenMethods": [],
+  "parsingOverrides": [],
+  "needsCustomLogic": false,
+  "warnings": [],
+  "pageSize": 0,
+  "broken": false
+ }
+]

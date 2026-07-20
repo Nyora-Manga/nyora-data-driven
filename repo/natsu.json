@@ -1,0 +1,53 @@
+[
+ {
+  "id": "rawkuma",
+  "name": "Rawkuma",
+  "lang": "ja",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "natsu",
+  "domain": "rawkuma.net",
+  "needsCustomLogic": false,
+  "customMethods": [],
+  "config": {
+   "pageSize": 24
+  },
+  "pageSize": 24,
+  "broken": false
+ },
+ {
+  "id": "kiryuu",
+  "name": "Kiryuu",
+  "lang": "id",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "natsu",
+  "domain": "v6.kiryuu.to",
+  "needsCustomLogic": false,
+  "customMethods": [
+   "getPages"
+  ],
+  "config": {
+   "pageSize": 24,
+   "pagesSelector": "section[data-image-data] img"
+  },
+  "pageSize": 24,
+  "broken": false
+ },
+ {
+  "id": "ikiru",
+  "name": "Ikiru",
+  "lang": "id",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "natsu",
+  "domain": "06.ikiru.wtf",
+  "needsCustomLogic": false,
+  "customMethods": [],
+  "config": {
+   "pageSize": 24
+  },
+  "pageSize": 24,
+  "broken": false
+ }
+]

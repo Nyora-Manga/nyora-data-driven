@@ -1,0 +1,45 @@
+[
+ {
+  "id": "arcrelight",
+  "name": "Arc-Relight",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "mangadventure",
+  "domain": "arc-relight.com",
+  "config": {
+   "pageSize": 10,
+   "relatedFranchises": [
+    "Jubilee",
+    "Steins;Gate",
+    "Robotics;Notes",
+    "Chaos;Head"
+   ]
+  },
+  "pageSize": 10,
+  "broken": false
+ },
+ {
+  "id": "assortedscans",
+  "name": "AssortedScans",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "mangadventure",
+  "domain": "assortedscans.com",
+  "config": {
+   "excludeTags": [
+    "Doujinshi",
+    "Harem",
+    "Hentai",
+    "Mecha",
+    "Shoujo Ai",
+    "Shounen Ai",
+    "Smut",
+    "Yaoi"
+   ]
+  },
+  "pageSize": 25,
+  "broken": false
+ }
+]

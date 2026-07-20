@@ -1,0 +1,73 @@
+[
+ {
+  "id": "LEGIONSCANS",
+  "name": "CerberusSeries",
+  "lang": "es",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "heancmsalt",
+  "domain": "legionscans.com",
+  "needsCustomLogic": false,
+  "customMethods": [],
+  "brokenUpstream": true,
+  "config": {},
+  "pageSize": 18,
+  "broken": true,
+  "antiBot": "cloudflare"
+ },
+ {
+  "id": "MANGAESP",
+  "name": "MangaEsp",
+  "lang": "es",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "heancmsalt",
+  "domain": "mangaesp.topmanhuas.org",
+  "needsCustomLogic": false,
+  "customMethods": [],
+  "brokenUpstream": true,
+  "config": {
+   "pageSize": 15,
+   "listUrl": "/comic",
+   "selectManga": "div.contenedor div.grid-5  .p-relative:not(.portada-contenedor)",
+   "selectMangaTitle": "div.titulo-contenedor",
+   "selectDesc": "div.project-sinopsis-contenido",
+   "selectAlt": "div.project-info-opcion:contains(Altenativo) div.project-info-contenido",
+   "selectChapter": "div.grid-capitulos div a",
+   "selectChapterTitle": ".capitulo-info-titulo",
+   "selectChapterDate": ".capitulo-info-fecha",
+   "selectPage": ".grid-center img"
+  },
+  "pageSize": 15,
+  "broken": true,
+  "antiBot": "cloudflare"
+ },
+ {
+  "id": "BRAKEOUT",
+  "name": "Brakeout",
+  "lang": "es",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "heancmsalt",
+  "domain": "brakeout.xyz",
+  "needsCustomLogic": true,
+  "customMethods": [
+   "getDetails"
+  ],
+  "brokenUpstream": true,
+  "config": {
+   "pageSize": 10,
+   "datePattern": "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'",
+   "selectManga": "div.grid.grid-cols-2 figure",
+   "selectMangaTitle": "figcaption",
+   "selectDesc": "#section-sinopsis p",
+   "selectChapter": ".grid-capitulos div.contenedor-capitulo-miniatura",
+   "selectChapterTitle": "#name",
+   "selectChapterDate": "time",
+   "selectPage": "section img.readImg",
+   "chapterHrefInChild": true
+  },
+  "pageSize": 10,
+  "broken": true
+ }
+]

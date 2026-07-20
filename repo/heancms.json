@@ -1,0 +1,206 @@
+[
+ {
+  "id": "OMEGASCANS",
+  "name": "OmegaScans",
+  "lang": "en",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "heancms",
+  "domain": "omegascans.org",
+  "altDomains": [],
+  "className": "OmegaScans",
+  "file": "en/OmegaScans.kt",
+  "config": {},
+  "configComplex": {},
+  "overriddenMethods": [],
+  "parsingOverrides": [],
+  "needsCustomLogic": false,
+  "warnings": [],
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "LUACOMIC_COM",
+  "name": "Lua Scans",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "heancms",
+  "domain": "luacomic.com",
+  "altDomains": [],
+  "className": "LuaScans",
+  "file": "en/LuaScans.kt",
+  "config": {
+   "datePattern": "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+   "dateTimeZone": "UTC",
+   "truncateDateAtT": false
+  },
+  "configComplex": {},
+  "overriddenMethods": [
+   "getDetails"
+  ],
+  "parsingOverrides": [],
+  "needsCustomLogic": false,
+  "warnings": [
+   "broken",
+   "getDetails override is purely a date-format change (parses the full ISO-8601 created_at in UTC, no 'T' truncation) — fully absorbed by datePattern + dateTimeZone + truncateDateAtT knobs; no residual custom logic"
+  ],
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "REAPERCOMICS",
+  "name": "ReaperComics",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "heancms",
+  "domain": "reaperscans.com",
+  "altDomains": [],
+  "className": "ReaperComics",
+  "file": "en/ReaperComics.kt",
+  "config": {
+   "cdn": "media.reaperscans.com/file/4SRBHm//",
+   "paramsUpdated": "updated_at",
+   "selectPages": ".flex > img",
+   "chapterReqTemplate": "https://{apiPath}/chapters/{seriesId}?page=1&perPage=9999&order=desc"
+  },
+  "configComplex": {},
+  "overriddenMethods": [
+   "reqUrl"
+  ],
+  "parsingOverrides": [],
+  "needsCustomLogic": false,
+  "warnings": [
+   "broken",
+   "Closed site. reqUrl override (path-segment chapter endpoint instead of ?series_id= query) datafied via chapterReqTemplate; cdn/paramsUpdated/selectPages are plain config"
+  ],
+  "pageSize": 20,
+  "broken": true,
+  "antiBot": "cloudflare"
+ },
+ {
+  "id": "TEMPLESCAN",
+  "name": "TempleScan",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "heancms",
+  "domain": "templetoons.com",
+  "altDomains": [],
+  "className": "TempleScan",
+  "file": "en/TempleScan.kt",
+  "config": {
+   "pathManga": "comic",
+   "apiPath": "templetoons.com/api"
+  },
+  "configComplex": {},
+  "overriddenMethods": [
+   "apiPath",
+   "pathManga"
+  ],
+  "parsingOverrides": [],
+  "needsCustomLogic": false,
+  "warnings": [
+   "broken",
+   "Changed template. apiPath override is a path-suffixed host (templetoons.com/api). pathManga is DEAD in the kotatsu base (base hardcodes /series/); the generic engine wires pathManga into /{pathManga}/ url building, a documented strict superset that additionally gives TempleScan its intended /comic/ paths"
+  ],
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "YUGEN_MANGAS_ES",
+  "name": "YugenMangas.lat",
+  "lang": "es",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "heancms",
+  "domain": "ikigaimangas.com",
+  "altDomains": [],
+  "className": "YugenMangasEs",
+  "file": "es/YugenMangasEs.kt",
+  "config": {},
+  "configComplex": {},
+  "overriddenMethods": [],
+  "parsingOverrides": [],
+  "needsCustomLogic": false,
+  "warnings": [
+   "broken",
+   "Changed template"
+  ],
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "MODESCANLATOR",
+  "name": "ModeScanlator",
+  "lang": "pt",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "heancms",
+  "domain": "site.modescanlator.net",
+  "altDomains": [],
+  "className": "ModeScanlator",
+  "file": "pt/ModeScanlator.kt",
+  "config": {
+   "apiPath": "api.modescanlator.net"
+  },
+  "configComplex": {},
+  "overriddenMethods": [
+   "apiPath"
+  ],
+  "parsingOverrides": [],
+  "needsCustomLogic": false,
+  "warnings": [
+   "broken",
+   "apiPath override is a fixed subdomain (api.modescanlator.net) distinct from api.{domain} since the site host is site.modescanlator.net"
+  ],
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "PERF_SCAN",
+  "name": "PerfScan",
+  "lang": "fr",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "heancms",
+  "domain": "perf-scan.xyz",
+  "altDomains": [],
+  "className": "PerfScan",
+  "file": "fr/PerfScan.kt",
+  "config": {},
+  "configComplex": {},
+  "overriddenMethods": [
+   "getListPage",
+   "getDetails",
+   "getPages",
+   "getPageUrl",
+   "parseMangaList",
+   "fetchAvailableTags",
+   "fetchStatusMap",
+   "getFilterOptions",
+   "availableSortOrders",
+   "cdn",
+   "intercept"
+  ],
+  "parsingOverrides": [
+   "getListPage",
+   "getDetails",
+   "getPages",
+   "parseMangaList",
+   "fetchAvailableTags"
+  ],
+  "needsCustomLogic": true,
+  "warnings": [
+   "broken",
+   "Site inaccessible (erreur 520)",
+   "Completely different HeanCMS-v2 REST API — NOT expressible in the generic HeancmsEngine. Uses /series?page=&take=&type=COMIC, /series/{id}, /genre, /status endpoints; genreIds[]/statusIds[] filters; STRING series/chapter ids; Chapter[].index chapter numbering; /series/{slug}/chapter/{n} reader path fetched from the API (JSON pages via /cdn/); French status vocabulary (En cours/Terminé/Annulé/En pause); and an Origin/Referer/NEXT_LOCALE header interceptor. Requires a dedicated engine or per-source custom logic; the config here is a placeholder and will NOT drive the source correctly"
+  ],
+  "pageSize": 20,
+  "broken": true,
+  "antiBot": "cloudflare"
+ }
+]

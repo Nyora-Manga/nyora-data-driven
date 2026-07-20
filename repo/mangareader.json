@@ -1,0 +1,4767 @@
+[
+ {
+  "id": "arareascans",
+  "name": "ArAreaScans",
+  "lang": "ar",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "ar.kenmanga.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "areascans",
+  "name": "AreaScans",
+  "lang": "ar",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "ar.kenmanga.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "flares",
+  "name": "Fl-Ares",
+  "lang": "ar",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "fl-ares.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "listUrl": "/series",
+   "capabilities": {
+    "tagsExclusion": false
+   },
+   "encodedSrc": true
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "hijalacom",
+  "name": "Hijalacom",
+  "lang": "ar",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "hijala.com",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 10
+  },
+  "pageSize": 30,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "mangaatrend",
+  "name": "MangaAtrend",
+  "lang": "ar",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "mangaatrend.net",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 10
+  },
+  "pageSize": 30,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "mangaflame",
+  "name": "MangaFlame",
+  "lang": "ar",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "mangaflame.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "manganoon",
+  "name": "MangaNoon",
+  "lang": "ar",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "vrnoin.site",
+  "config": {
+   "pageSize": 24,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 24,
+  "broken": true
+ },
+ {
+  "id": "manjanoon",
+  "name": "Manjanoon",
+  "lang": "ar",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "vrnoin.site",
+  "config": {
+   "pageSize": 21,
+   "searchPageSize": 10
+  },
+  "pageSize": 21,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "noonscan",
+  "name": "NoonScan.com",
+  "lang": "ar",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "noonscan.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "normoyun",
+  "name": "MangaSwat",
+  "lang": "ar",
+  "engine": "mangareader",
+  "needsCustomLogic": true,
+  "domain": "meshmanga.com",
+  "config": {
+   "pageSize": 42,
+   "searchPageSize": 39,
+   "datePattern": "MMMM dd, yyyy",
+   "capabilities": {
+    "tagsExclusion": false
+   },
+   "selectors": {
+    "mangaList": ".listupd .bs .bsx",
+    "mangaListImg": "img"
+   },
+   "netshield": true
+  },
+  "pageSize": 42,
+  "broken": false
+ },
+ {
+  "id": "peachbl",
+  "name": "PeachBl",
+  "lang": "ar",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": true,
+  "domain": "peach-bl.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "listUrl": "",
+   "locale": "en"
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "potatomanga",
+  "name": "PotatoManga",
+  "lang": "ar",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "potatomanga.xyz",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 10,
+   "listUrl": "/series",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 30,
+  "broken": true
+ },
+ {
+  "id": "scarmanga",
+  "name": "ScarManga",
+  "lang": "ar",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "scarmanga.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "listUrl": "/series",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "stellarsaber",
+  "name": "StellarSaber",
+  "lang": "ar",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "stellarsaber.pro",
+  "config": {
+   "pageSize": 32,
+   "searchPageSize": 10
+  },
+  "pageSize": 32,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "thunderscans",
+  "name": "ThunderScans",
+  "lang": "ar",
+  "engine": "mangareader",
+  "needsCustomLogic": true,
+  "domain": "lavascans.com",
+  "config": {
+   "pageSize": 32,
+   "searchPageSize": 10,
+   "listUrl": "/browse-manga",
+   "datePattern": "yyyy/MM/dd",
+   "sortOrders": [
+    "ALPHABETICAL",
+    "POPULARITY",
+    "NEWEST"
+   ],
+   "capabilities": {
+    "tagsExclusion": false
+   },
+   "selectors": {
+    "mangaList": "article.legend-card",
+    "mangaListImg": "img.legend-img",
+    "mangaListTitle": "h3.legend-title a",
+    "chapter": ".ch-list-grid .ch-item",
+    "description": ".lh-story-content, #manga-story"
+   }
+  },
+  "pageSize": 32,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "umimanga",
+  "name": "UmiManga",
+  "lang": "ar",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "www.umimanga.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "vexmanga",
+  "name": "VexManga",
+  "lang": "ar",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "vortexscans.org",
+  "config": {
+   "pageSize": 10,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   },
+   "selectors": {
+    "mangaList": ".listarchives .latest-recom",
+    "chapter": ".ulChapterList > a"
+   }
+  },
+  "pageSize": 10,
+  "broken": true
+ },
+ {
+  "id": "evilmanga",
+  "name": "EvilManga",
+  "lang": "cs",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "evil-manga.eu",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "datePattern": "d MMMM, yyyy"
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "altayscans",
+  "name": "AltayScans",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "altayscans.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "anigliscans",
+  "name": "AnigliScans",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "anigliscans.xyz",
+  "config": {
+   "pageSize": 47,
+   "searchPageSize": 47,
+   "listUrl": "/series",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 47,
+  "broken": true
+ },
+ {
+  "id": "arenascans",
+  "name": "Arenascans",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "arenascan.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "ascalonscans",
+  "name": "AscalonScans",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "ascalonscans.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "astrascans",
+  "name": "AstraScans",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "astrascans.org",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "listUrl": "/series",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "birdmanga",
+  "name": "BirdManga",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "birdmanga.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   },
+   "encodedSrc": true
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "constellarcomic",
+  "name": "ConstellarComic",
+  "lang": "en",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "constellarcomic.com",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 18,
+   "capabilities": {
+    "tagsExclusion": false
+   },
+   "selectors": {
+    "testScript": "script:containsData(ts_rea_der_._run)"
+   }
+  },
+  "pageSize": 30,
+  "broken": true
+ },
+ {
+  "id": "cosmicscans",
+  "name": "CosmicScans.com",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "cosmic-scans.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "datePattern": "MMM d, yyyy",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "culturedworks",
+  "name": "CulturedWorks",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "culturedworks.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "selectors": {
+    "mangaList": ".listupd .bs .bsx"
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "cypherscans",
+  "name": "CypherScans",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "cypheroscans.xyz",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "dexhentai",
+  "name": "DexHentai",
+  "lang": "en",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "dexhentai.com",
+  "config": {
+   "pageSize": 40,
+   "searchPageSize": 36
+  },
+  "pageSize": 40,
+  "broken": false
+ },
+ {
+  "id": "drakescans",
+  "name": "DrakeComic",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "drakecomic.org",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": true,
+  "antiBot": "cloudflare"
+ },
+ {
+  "id": "edoujin",
+  "name": "EHentaiManga",
+  "lang": "en",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "ehentaimanga.com",
+  "config": {
+   "pageSize": 25,
+   "searchPageSize": 10
+  },
+  "pageSize": 25,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "elarcpage",
+  "name": "ElarcPage",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "elarctoon.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "listUrl": "/series"
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "elftoon",
+  "name": "Elftoon",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "elftoon.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "enthunderscans",
+  "name": "EnThunderScans",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "en-thunderscans.com",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 10,
+   "listUrl": "/comics",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 30,
+  "broken": false
+ },
+ {
+  "id": "enryumanga",
+  "name": "EnryuManga",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "enryumanga.net",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "erosscans",
+  "name": "ErosScans",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "erosxscans.xyz",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "freakcomic",
+  "name": "FreakComic",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": true,
+  "domain": "freakcomic.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   },
+   "selectors": {
+    "mangaList": ".listupd .lastest-serie",
+    "mangaListImg": "img",
+    "chapter": ".chapter-li a:not(:has(svg))",
+    "description": "#summary"
+   }
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "freakscans",
+  "name": "FreakScans",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "freakscans.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 20,
+   "datePattern": "MMM d, yyyy",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "furymanga",
+  "name": "KingOfScans",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "myshojo.com",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 10,
+   "listUrl": "/comics"
+  },
+  "pageSize": 30,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "greedscans",
+  "name": "Greed Scans",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "greedscans.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "selectors": {
+    "description": "div.entry-content[itemprop=description], div.entry-content.entry-content-single"
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "hentai20",
+  "name": "Hentai20",
+  "lang": "en",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "hentai20.io",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "kaiscans",
+  "name": "KaiScans",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "luascans.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "komiklab",
+  "name": "KomikLab",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "komiklab.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "datePattern": "MMM d, yyyy",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true,
+  "antiBot": "cloudflare"
+ },
+ {
+  "id": "lagoonscans",
+  "name": "Lagoon Scans",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "lagoonscans.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "luminousscans",
+  "name": "RadiantScans",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "radiantscans.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "listUrl": "/series",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true,
+  "antiBot": "cloudflare"
+ },
+ {
+  "id": "lunar_scan",
+  "name": "LunarScan.org",
+  "lang": "en",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "lunarscan.org",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 20,
+   "listUrl": "/series",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "madarascans",
+  "name": "Madara Scans",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": true,
+  "domain": "madarascans.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "listUrl": "/series",
+   "datePattern": "yyyy/MM/dd",
+   "capabilities": {
+    "tagsExclusion": false
+   },
+   "selectors": {
+    "testScript": "script:containsData(ts_reader.run)"
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "mangagojo",
+  "name": "MangaGojo",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "mangagojo.com",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 20
+  },
+  "pageSize": 30,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "mangatx_cc",
+  "name": "MangaTx.cc",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "mangatx.cc",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 21,
+   "listUrl": "/manga-list",
+   "datePattern": "dd-MM-yyyy"
+  },
+  "pageSize": 30,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "manhuascanus",
+  "name": "ManhuaScan.Us",
+  "lang": "en",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "manhuascan.us",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 30,
+   "listUrl": "/manga-list",
+   "datePattern": "dd-MM-yyyy"
+  },
+  "pageSize": 30,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "manhwa_freak",
+  "name": "ManhwaFreak",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "manhwafreak.xyz",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 42
+  },
+  "pageSize": 30,
+  "broken": true
+ },
+ {
+  "id": "manhwafreake",
+  "name": "ManhwaFreake",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "manhwafreake.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "listUrl": "/series",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "manhwalover",
+  "name": "ManhwaLover",
+  "lang": "en",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "www.manhwalover.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 20,
+   "datePattern": "MMM d, yyyy",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "manhwax",
+  "name": "ManhwaX",
+  "lang": "en",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "manhwax.pro",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 20,
+   "datePattern": "MMM d, yyyy",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "manjanoon_en",
+  "name": "NoonScan.net",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "noonscan.net",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "myshojo",
+  "name": "MyShojo",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "myshojo.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "nightscans",
+  "name": "NightScans",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "qimanga.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "listUrl": "/series",
+   "capabilities": {
+    "tagsExclusion": false
+   },
+   "selectors": {
+    "mangaListImg": "img.ts-post-image, picture img"
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "rackusreads",
+  "name": "RackusReads",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "rackusreads.com",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 30,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "ravenscans",
+  "name": "RavenScans",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "ravenscans.org",
+  "config": {
+   "pageSize": 10,
+   "searchPageSize": 10,
+   "datePattern": "MMM d, yyyy",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 10,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "readerspoint",
+  "name": "ReadersPoint",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "qscomics.org",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "listUrl": "/series",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "readkomik",
+  "name": "ReadKomik",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "novelstreams.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 20,
+   "datePattern": "MMM d, yyyy",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "reaperscansunoriginal",
+  "name": "ReaperScansUnoriginal",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "reaper-scans.com",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 42
+  },
+  "pageSize": 30,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "rizzcomic",
+  "name": "RizzComic",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": true,
+  "domain": "rizzfables.com",
+  "config": {
+   "pageSize": 50,
+   "searchPageSize": 20,
+   "listUrl": "/series",
+   "datePattern": "dd MMM yyyy",
+   "sortOrders": [
+    "ALPHABETICAL",
+    "UPDATED",
+    "NEWEST",
+    "POPULARITY",
+    "ALPHABETICAL_DESC"
+   ],
+   "capabilities": {
+    "multipleTags": true,
+    "tagsExclusion": false,
+    "search": true
+   },
+   "availableStates": [
+    "ONGOING",
+    "FINISHED",
+    "PAUSED"
+   ]
+  },
+  "pageSize": 50,
+  "broken": true,
+  "antiBot": "cloudflare"
+ },
+ {
+  "id": "rokaricomics",
+  "name": "Rokari Comics",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "rokaricomics.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "locale": "en",
+   "capabilities": {
+    "tagsExclusion": false
+   },
+   "selectors": {
+    "chapter": "#chapterlist li:has(div.chbox):has(div.eph-num):has(a[href]):not(:has(.text-gold))"
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "shojoscans",
+  "name": "ShojoScans",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "violetscans.org",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "listUrl": "/comics"
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "sky_manga",
+  "name": "SkyManga",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "skymanga.work",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 20,
+   "listUrl": "/manga-list",
+   "datePattern": "dd-MM-yyy"
+  },
+  "pageSize": 20,
+  "broken": true,
+  "antiBot": "cloudflare"
+ },
+ {
+  "id": "snowmachinetranslation",
+  "name": "Snow Machine Translation",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "snowmachinetranslation.com",
+  "config": {
+   "pageSize": 24,
+   "searchPageSize": 10
+  },
+  "pageSize": 24,
+  "broken": false
+ },
+ {
+  "id": "snowscans",
+  "name": "SnowScans",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "flixscans.net",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "listUrl": "/series"
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "spiderscans",
+  "name": "SpiderScans",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "spiderscans.xyz",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": true,
+  "antiBot": "cloudflare"
+ },
+ {
+  "id": "tecnoscans",
+  "name": "TecnoScans",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "olyteconscans.xyz",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "varnascan",
+  "name": "VarnaScan",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "varnascan.xyz",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "voidscans",
+  "name": "HiveToon",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "hivetoons.org",
+  "config": {
+   "pageSize": 15,
+   "searchPageSize": 10
+  },
+  "pageSize": 15,
+  "broken": false
+ },
+ {
+  "id": "voidscans_co",
+  "name": "VoidScans",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "voidscans.co",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 42
+  },
+  "pageSize": 30,
+  "broken": true
+ },
+ {
+  "id": "witchscans",
+  "name": "WitchScans",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "witchscans.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "xcalibrscans",
+  "name": "XCalibrScans",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "xcalibrscans.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "ydcomics",
+  "name": "YdComics",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "yd-comics.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "listUrl": "/index.php/series"
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "zahard",
+  "name": "Zahard",
+  "lang": "en",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "zahard.xyz",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 30,
+   "listUrl": "/library",
+   "sortOrders": [
+    "NEWEST"
+   ],
+   "capabilities": {
+    "multipleTags": false,
+    "tagsExclusion": false
+   },
+   "selectors": {
+    "chapter": "#chapterlist > ul > a",
+    "page": "div#chapter_imgs img"
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "asialotuss",
+  "name": "AsiaLotuss",
+  "lang": "es",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "asialotuss.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "bymichiby",
+  "name": "Bymichiby",
+  "lang": "es",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "bymichiby.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "carteldemanhwas",
+  "name": "Cartel De Manhwas",
+  "lang": "es",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "cartelmanhwas.net",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 20,
+   "listUrl": "/series",
+   "datePattern": "MMM d, yyyy"
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "catharsisfantasy",
+  "name": "CatharsisFantasy",
+  "lang": "es",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "catharsisworld.com",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 10
+  },
+  "pageSize": 30,
+  "broken": false
+ },
+ {
+  "id": "catharsisworld",
+  "name": "CatharsisWorld",
+  "lang": "es",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "catharsisworld.dig-it.info",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 10,
+   "locale": "en",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 30,
+  "broken": true,
+  "antiBot": "cloudflare"
+ },
+ {
+  "id": "doujins",
+  "name": "Doujins.lat",
+  "lang": "es",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "doujins.lat",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "listUrl": "/comic",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "dtupscan",
+  "name": "DtupScan",
+  "lang": "es",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "dtupscan.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "gremorymangas",
+  "name": "GremoryMangas",
+  "lang": "es",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "gremorymangas.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 20,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "hentaireader",
+  "name": "HentaiReader",
+  "lang": "es",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "hentaireader.org",
+  "config": {
+   "pageSize": 25,
+   "searchPageSize": 25,
+   "listUrl": "/tipo/all",
+   "capabilities": {
+    "tagsExclusion": false
+   },
+   "selectors": {
+    "chapter": ".releases"
+   }
+  },
+  "pageSize": 25,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "inarimanga",
+  "name": "InariManga",
+  "lang": "es",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "clubinari.org",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "inaripikav",
+  "name": "InariPikav",
+  "lang": "es",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "clubinari.org",
+  "config": {
+   "pageSize": 10,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 10,
+  "broken": true
+ },
+ {
+  "id": "lectorhentai",
+  "name": "LectorHentai",
+  "lang": "es",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "lectorhentai.com",
+  "config": {
+   "pageSize": 25,
+   "searchPageSize": 25,
+   "listUrl": "/tipo/all",
+   "capabilities": {
+    "tagsExclusion": false
+   },
+   "selectors": {
+    "chapter": ".releases"
+   }
+  },
+  "pageSize": 25,
+  "broken": false
+ },
+ {
+  "id": "mangashiina",
+  "name": "MangaMukai.com",
+  "lang": "es",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "mangamukai.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "mangatv",
+  "name": "MangaTv",
+  "lang": "es",
+  "engine": "mangareader",
+  "needsCustomLogic": true,
+  "domain": "www.mangatv.net",
+  "config": {
+   "pageSize": 25,
+   "searchPageSize": 25,
+   "listUrl": "/lista",
+   "datePattern": "yyyy-MM-dd",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 25,
+  "broken": false
+ },
+ {
+  "id": "miauscan",
+  "name": "LectorMiau",
+  "lang": "es",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "leemiau.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "ragnascan",
+  "name": "RagnaScan",
+  "lang": "es",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "ragnascan.com",
+  "config": {
+   "pageSize": 5,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 5,
+  "broken": true
+ },
+ {
+  "id": "raikiscan",
+  "name": "RaikiScan",
+  "lang": "es",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "raikiscan.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 20,
+   "datePattern": "MMM d, yyyy"
+  },
+  "pageSize": 20,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "senpaiediciones",
+  "name": "SenpaiEdiciones",
+  "lang": "es",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "senpaiediciones.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 20,
+   "datePattern": "MMM d, yyyy"
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "shadowmangas",
+  "name": "ShadowMangas",
+  "lang": "es",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "shadowmangas.com",
+  "config": {
+   "pageSize": 10,
+   "searchPageSize": 10,
+   "datePattern": "MMM d, yyyy",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 10,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "skymangas",
+  "name": "SkyMangas",
+  "lang": "es",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "skymangas.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   },
+   "encodedSrc": true
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "tecnoscann",
+  "name": "TecnoScann",
+  "lang": "es",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "tecnoscann.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "tenkaiscan",
+  "name": "TenkaiScan",
+  "lang": "es",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "falcoscan.net",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "locale": "en",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true,
+  "antiBot": "cloudflare"
+ },
+ {
+  "id": "traduccionesmoonlight",
+  "name": "TraduccionesMoonlight",
+  "lang": "es",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "traduccionesmoonlight.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "tresdaos",
+  "name": "Tresdaos",
+  "lang": "es",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "threedaos.zdrz.xyz",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "tu_manhwas",
+  "name": "TuManhwas.com",
+  "lang": "es",
+  "engine": "mangareader",
+  "needsCustomLogic": true,
+  "domain": "tumanhwas.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 20,
+   "listUrl": "/biblioteca",
+   "sortOrders": [
+    "NEWEST"
+   ],
+   "capabilities": {
+    "multipleTags": false,
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "ukiyotoon",
+  "name": "UkiyoToon",
+  "lang": "es",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "nakamatoon.com",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 30,
+  "broken": true
+ },
+ {
+  "id": "bananascan",
+  "name": "BananaScan",
+  "lang": "fr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "banana-scan.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 20,
+   "datePattern": "MMM d, yyyy"
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "etheralradiance",
+  "name": "EtheralRadiance",
+  "lang": "fr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "www.etheralradiance.eu",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "japscansfr",
+  "name": "JapScans.fr",
+  "lang": "fr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "japscans.fr",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "locale": "en"
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "lelmanga",
+  "name": "LelManga",
+  "lang": "fr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "www.lelmanga.com",
+  "config": {
+   "pageSize": 21,
+   "searchPageSize": 20,
+   "locale": "en"
+  },
+  "pageSize": 21,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "lunarhentai",
+  "name": "GloryScans",
+  "lang": "fr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "gloryscans.fr",
+  "config": {
+   "pageSize": 40,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 40,
+  "broken": true
+ },
+ {
+  "id": "lunarscans",
+  "name": "LunarScans",
+  "lang": "fr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "lunarscans.fr",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "mangasscans",
+  "name": "MangasScans",
+  "lang": "fr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "mangas-scans.com",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 10
+  },
+  "pageSize": 30,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "pantheonscan_fr",
+  "name": "PantheonScan.fr",
+  "lang": "fr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "pantheon-scan.com",
+  "config": {
+   "pageSize": 40,
+   "searchPageSize": 10
+  },
+  "pageSize": 40,
+  "broken": false
+ },
+ {
+  "id": "pornhwascans",
+  "name": "PornhwaScans",
+  "lang": "fr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "pornhwascans.fr",
+  "config": {
+   "pageSize": 24,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   },
+   "selectors": {
+    "chapter": "div.chapter-list > a.chapter-item"
+   }
+  },
+  "pageSize": 24,
+  "broken": true
+ },
+ {
+  "id": "revolutionscantrad",
+  "name": "RevolutionScantrad",
+  "lang": "fr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "www.revolutionscantrad.com",
+  "config": {
+   "pageSize": 100,
+   "searchPageSize": 10,
+   "listUrl": "/series.html",
+   "datePattern": "yyyy",
+   "capabilities": {
+    "tagsExclusion": false,
+    "search": false
+   },
+   "selectors": {
+    "page": "div#readerarea img.chapter-image"
+   }
+  },
+  "pageSize": 100,
+  "broken": true
+ },
+ {
+  "id": "rimuscans",
+  "name": "RimuScans",
+  "lang": "fr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "rimuscans.com",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 10
+  },
+  "pageSize": 30,
+  "broken": true,
+  "antiBot": "cloudflare"
+ },
+ {
+  "id": "sushiscan",
+  "name": "SushiScan.Net",
+  "lang": "fr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "sushiscan.net",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "listUrl": "/catalogue",
+   "datePattern": "MMM d, yyyy",
+   "cloudflare": true
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "sushiscanfr",
+  "name": "SushiScan.fr",
+  "lang": "fr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "sushiscan.fr",
+  "config": {
+   "pageSize": 36,
+   "searchPageSize": 10,
+   "listUrl": "/catalogue",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 36,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "vfscan",
+  "name": "VfScan",
+  "lang": "fr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "www.vfscan.net",
+  "config": {
+   "pageSize": 18,
+   "searchPageSize": 18,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 18,
+  "broken": true
+ },
+ {
+  "id": "xxxrevolutionscantrad",
+  "name": "Xxx.RevolutionScantrad",
+  "lang": "fr",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "xxx.revolutionscantrad.com",
+  "config": {
+   "pageSize": 100,
+   "searchPageSize": 10,
+   "listUrl": "/series.html",
+   "datePattern": "yyyy",
+   "capabilities": {
+    "tagsExclusion": false,
+    "search": false
+   },
+   "selectors": {
+    "page": "div#readerarea img.chapter-image"
+   }
+  },
+  "pageSize": 100,
+  "broken": true
+ },
+ {
+  "id": "alceascan",
+  "name": "AlceaScan",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "alceacomic.my.id",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "locale": "en"
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "alterkaiscans",
+  "name": "AlterkaiScans",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "alterkaiscans.my.id",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "locale": "en"
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "apkomik",
+  "name": "Apkomik",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "01.apkomik.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "locale": "en"
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "bacakomik",
+  "name": "BacaKomik",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": true,
+  "domain": "bacakomik.my",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 30,
+   "listUrl": "/daftar-komik",
+   "capabilities": {
+    "multipleTags": true,
+    "search": true,
+    "searchWithFilters": true,
+    "year": true,
+    "authorSearch": true
+   },
+   "availableStates": [
+    "ONGOING",
+    "FINISHED"
+   ],
+   "availableContentTypes": [
+    "MANGA",
+    "MANHWA",
+    "MANHUA",
+    "COMICS"
+   ],
+   "selectors": {
+    "mangaList": "div.animepost",
+    "mangaListImg": "div.limit img",
+    "mangaListTitle": ".animposx .tt h4",
+    "chapter": "#chapter_list li"
+   }
+  },
+  "pageSize": 30,
+  "broken": false
+ },
+ {
+  "id": "comic21",
+  "name": "Comic21",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "comic21.me",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "locale": "en",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "cosmic_scans",
+  "name": "CosmicScans.id",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "lc1.cosmicscans.to",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 30,
+   "locale": "en",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 30,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "dojing",
+  "name": "Dojing",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "dojing.net",
+  "config": {
+   "pageSize": 12,
+   "searchPageSize": 12,
+   "datePattern": "MMM d, yyyy",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 12,
+  "broken": false
+ },
+ {
+  "id": "doujindesurip",
+  "name": "DoujinDesu.click",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "doujindesu.asia",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "doujinku",
+  "name": "DoujinKu",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "doujinku.org",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "duniakomik",
+  "name": "DuniaKomik",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "duniakomik.org",
+  "config": {
+   "pageSize": 12,
+   "searchPageSize": 12,
+   "datePattern": "MMM d, yyyy"
+  },
+  "pageSize": 12,
+  "broken": true
+ },
+ {
+  "id": "futari",
+  "name": "Futari",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "futari.info",
+  "config": {
+   "pageSize": 25,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 25,
+  "broken": true
+ },
+ {
+  "id": "izanamiscans",
+  "name": "IzanamiScans",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "izanamiscans.my.id",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "kanzenin",
+  "name": "Kanzenin",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "kanzenin.info",
+  "config": {
+   "pageSize": 27,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 27,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "katakomik",
+  "name": "KataKomik",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "katakomik.my.id",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "locale": "en",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "kofiscans",
+  "name": "KofiScans",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "isekaikomik.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "locale": "en"
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "kombatch",
+  "name": "KomBatch",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "kombatch.cc",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "komikav",
+  "name": "KomikAv",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "komikav.net",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "komikdewasa_online",
+  "name": "KomikDewasa.Online",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "komikdewasa.art",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "locale": "en",
+   "capabilities": {
+    "tagsExclusion": false
+   },
+   "cloudflare": true
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "komikdewasa",
+  "name": "komikRemaja.icu",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "komikremaja.icu",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "locale": "en",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "komikgo",
+  "name": "KomikGo",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "komikgo.xyz",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "komikindo_ch",
+  "name": "KomikIndo.ch",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": true,
+  "domain": "komikindo.ch",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 30,
+   "listUrl": "/daftar-manga",
+   "datePattern": "MMM d, yyyy",
+   "capabilities": {
+    "multipleTags": true,
+    "search": true,
+    "searchWithFilters": true
+   },
+   "availableStates": [
+    "ONGOING",
+    "FINISHED"
+   ],
+   "availableContentTypes": [
+    "MANGA",
+    "MANHWA",
+    "MANHUA"
+   ],
+   "selectors": {
+    "mangaList": "div.animepost",
+    "mangaListImg": "div.limit img",
+    "mangaListTitle": "div.tt h4",
+    "chapter": "#chapter_list li",
+    "description": "div.entry-content.entry-content-single"
+   }
+  },
+  "pageSize": 30,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "komikindo_live",
+  "name": "Komikindo.live",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "komikindo.live",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "komiklokal",
+  "name": "KomikLokal",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "komikmu.top",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "datePattern": "MMM d, yyyy",
+   "locale": "en"
+  },
+  "pageSize": 20,
+  "broken": true,
+  "antiBot": "cloudflare"
+ },
+ {
+  "id": "komiklovers",
+  "name": "KomikLovers",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "komiklovers.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "listUrl": "/komik",
+   "locale": "en"
+  },
+  "pageSize": 20,
+  "broken": true,
+  "antiBot": "cloudflare"
+ },
+ {
+  "id": "komikmama",
+  "name": "KomikMama",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "komikmama.online",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 10,
+   "listUrl": "/komik"
+  },
+  "pageSize": 30,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "komikpix",
+  "name": "KomikPix",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "komikpix.com",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 14,
+   "listUrl": "/hentai"
+  },
+  "pageSize": 30,
+  "broken": true
+ },
+ {
+  "id": "komikpoi",
+  "name": "KomikPoi",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "komikpoi.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "locale": "en",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "komiksan",
+  "name": "KomikSan",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "komiksan.link",
+  "config": {
+   "pageSize": 40,
+   "searchPageSize": 10,
+   "listUrl": "/list",
+   "datePattern": "MMM d, yyyy",
+   "capabilities": {
+    "tagsExclusion": false
+   },
+   "selectors": {
+    "mangaListImg": "img.attachment-medium"
+   }
+  },
+  "pageSize": 40,
+  "broken": true
+ },
+ {
+  "id": "komiksay",
+  "name": "KomikSay",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "komiksay.info",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 10,
+   "locale": "en",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 30,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "komiktap",
+  "name": "KomikTap",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "komiktap.info",
+  "config": {
+   "pageSize": 25,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 25,
+  "broken": false
+ },
+ {
+  "id": "komiklokalcfd",
+  "name": "KomikLokal.mom",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "komikmu.icu",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 10,
+   "locale": "en"
+  },
+  "pageSize": 30,
+  "broken": true
+ },
+ {
+  "id": "komiksin_co",
+  "name": "Komiksin",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "komiksin.net",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "datePattern": "MMM d, yyyy",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true,
+  "antiBot": "cloudflare"
+ },
+ {
+  "id": "komikstation",
+  "name": "KomikStation",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "komikstation.org",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 30,
+   "datePattern": "MMM d, yyyy",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 30,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "komiku",
+  "name": "Komiku",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": true,
+  "domain": "komiku.org",
+  "config": {
+   "pageSize": 10,
+   "searchPageSize": 10,
+   "listUrl": "/manga/",
+   "datePattern": "dd/MM/yyyy",
+   "capabilities": {
+    "multipleTags": true,
+    "search": true
+   },
+   "availableStates": [
+    "ONGOING",
+    "FINISHED"
+   ],
+   "availableContentTypes": [
+    "MANGA",
+    "MANHWA",
+    "MANHUA"
+   ],
+   "selectors": {
+    "mangaList": "div.bge",
+    "mangaListImg": "div.bgei img",
+    "mangaListTitle": "div.kan h3",
+    "chapter": "#Daftar_Chapter tr:has(td.judulseries)",
+    "description": "#Sinopsis > p",
+    "page": "#Baca_Komik img",
+    "testScript": "script:containsData(thisIsNeverFound)"
+   }
+  },
+  "pageSize": 10,
+  "broken": false
+ },
+ {
+  "id": "kyumik",
+  "name": "Kyumik",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "kyumik.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "lianscans",
+  "name": "LianScans",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "www.lianscans.com",
+  "config": {
+   "pageSize": 10,
+   "searchPageSize": 10,
+   "datePattern": "MMM d, yyyy"
+  },
+  "pageSize": 10,
+  "broken": false
+ },
+ {
+  "id": "luvyaa",
+  "name": "Luvyaa",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "v4.luvyaa.co",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "datePattern": "MMM d, yyyy",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "mangashiro",
+  "name": "MangaShiro",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "mangashiro.me",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "locale": "en",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "mangasusuku",
+  "name": "MangaSusuku",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "mangasusuku.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 20,
+   "listUrl": "/komik",
+   "datePattern": "MMM d, yyyy",
+   "locale": "en",
+   "netshield": true
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "mangatale",
+  "name": "MangaTale",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "ikiru.one",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "locale": "en",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "mangadop",
+  "name": "MangaDop",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "mangadop.net",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 20,
+   "locale": "en"
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "mangakita",
+  "name": "MangaKita",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "mangakita.id",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "locale": "en",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "mangakyo",
+  "name": "MangaKyo",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "mangakyo.vip",
+  "config": {
+   "pageSize": 40,
+   "searchPageSize": 20,
+   "listUrl": "/komik",
+   "datePattern": "MMM d, yyyy",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 40,
+  "broken": true
+ },
+ {
+  "id": "mangayaro",
+  "name": "MangaYaro",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "mangayaro.id",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 20,
+   "locale": "en"
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "manhwaindoicu",
+  "name": "KomikCinta",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "komikdewasa.art",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 10,
+   "listUrl": "/komik",
+   "locale": "en",
+   "cloudflare": true
+  },
+  "pageSize": 30,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "manhwaindo",
+  "name": "ManhwaIndo",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "www.manhwaindo.my",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 20,
+   "listUrl": "/series",
+   "selectors": {
+    "mangaList": "div.bs",
+    "mangaListImg": "img",
+    "mangaListTitle": ".tt",
+    "chapter": "#chapterlist li",
+    "page": "#readerarea img"
+   }
+  },
+  "pageSize": 30,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "manhwaland",
+  "name": "ManhwaLand.vip",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "www.manhwaland.baby",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "datePattern": "MMM d, yyyy",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "manhwaland_ink",
+  "name": "ManhwaLand.ink",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "manhwaland.asia",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "datePattern": "MMM d, yyyy",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "manhwalist_org",
+  "name": "ManhwaList.org",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "isekaikomik.com",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 10,
+   "locale": "en",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 30,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "manhwaplus",
+  "name": "ManhwaPlus",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "manhwablue.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "listUrl": "/komik",
+   "locale": "en",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true,
+  "antiBot": "cloudflare"
+ },
+ {
+  "id": "manhwadesu",
+  "name": "ManhwaDesu",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "manhwadesu.im",
+  "config": {
+   "domains": [
+    "manhwadesu.im",
+    "manhwadesu.cx",
+    "manhwadesu.com",
+    "manhwadesu.shop",
+    "manhwadesu.asia"
+   ],
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "listUrl": "/komik",
+   "capabilities": {
+    "tagsExclusion": false
+   },
+   "cloudflare": true
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "manhwaku",
+  "name": "Manhwaku",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "manhwaku.id",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "manhwalist",
+  "name": "ManhwaList",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "manhwalist02.asia",
+  "config": {
+   "pageSize": 24,
+   "searchPageSize": 10,
+   "locale": "en"
+  },
+  "pageSize": 24,
+  "broken": false
+ },
+ {
+  "id": "masterkomik",
+  "name": "Tenshi",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "tenshi01.id",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 20,
+   "listUrl": "/komik",
+   "datePattern": "MMM d, yyyy"
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "mihentai",
+  "name": "MiHentai",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "mihentai.net",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 10,
+   "datePattern": "MMM d, yyyy",
+   "capabilities": {
+    "tagsExclusion": false
+   },
+   "selectors": {
+    "mangaList": ".listupd .bs .bsx"
+   }
+  },
+  "pageSize": 30,
+  "broken": false
+ },
+ {
+  "id": "monzeekomik",
+  "name": "MonzeeKomik",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "monzee01.my.id",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 10,
+   "locale": "en",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 30,
+  "broken": true
+ },
+ {
+  "id": "ngomik",
+  "name": "Ngomik",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "ngomik.asia",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 5,
+   "locale": "en"
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "noromax",
+  "name": "Noromax",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "noromax02.my.id",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "locale": "en",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "otsugami",
+  "name": "Otsugami",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "otsugami.id",
+  "config": {
+   "pageSize": 40,
+   "searchPageSize": 10,
+   "locale": "en"
+  },
+  "pageSize": 40,
+  "broken": true
+ },
+ {
+  "id": "sasangeyou",
+  "name": "Sasangeyou",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "sasangeyou.net",
+  "config": {
+   "pageSize": 25,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 25,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "sekaikomik",
+  "name": "SekaiKomik",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "sekaikomik.mom",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 100,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "sektedoujin",
+  "name": "SekteDoujin",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "sektedoujin.cc",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 20,
+   "datePattern": "MMM d, yyyy",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "sheakomik",
+  "name": "SheaKomik",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "sheakomik.com",
+  "config": {
+   "pageSize": 40,
+   "searchPageSize": 40,
+   "datePattern": "MMM d, yyyy",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 40,
+  "broken": true
+ },
+ {
+  "id": "shirakami",
+  "name": "Shirakami",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "shirakami.xyz",
+  "config": {
+   "pageSize": 10,
+   "searchPageSize": 10,
+   "locale": "en",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 10,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "siikomik",
+  "name": "SiiKomik",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "siikomik.net",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false,
+    "search": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "sirenkomik",
+  "name": "SirenKomik",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "sirenkomik.xyz",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   },
+   "selectors": {
+    "chapter": ".list-chapter a"
+   }
+  },
+  "pageSize": 20,
+  "broken": true,
+  "antiBot": "cloudflare"
+ },
+ {
+  "id": "soulscans",
+  "name": "SoulScans",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "soulscans.my.id",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 30,
+   "datePattern": "MMM d, yyyy",
+   "locale": "en",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 30,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "tukangkomik",
+  "name": "Tukang Komik",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "tukangkomik.co",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 20,
+   "datePattern": "MMM d, yyyy",
+   "locale": "en",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "warungkomik",
+  "name": "WarungKomik",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "warungkomik.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "yumekomik",
+  "name": "YumeKomik",
+  "lang": "id",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "www.re-yume.my.id",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "walpurgiscan",
+  "name": "WalpurgiScan",
+  "lang": "it",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "www.walpurgiscan.it",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 20,
+   "datePattern": "MMM d, yyyy",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "witcomics",
+  "name": "WitComics",
+  "lang": "it",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "www.witcomics.net",
+  "config": {
+   "pageSize": 5,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 5,
+  "broken": true
+ },
+ {
+  "id": "mangajp",
+  "name": "MangaJp",
+  "lang": "ja",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "mangajp.top",
+  "config": {
+   "pageSize": 54,
+   "searchPageSize": 10,
+   "locale": "en",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 54,
+  "broken": false
+ },
+ {
+  "id": "mangamate",
+  "name": "MangaMate",
+  "lang": "ja",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "manga-mate.org",
+  "config": {
+   "pageSize": 10,
+   "searchPageSize": 10,
+   "datePattern": "M月 d, yyyy",
+   "locale": "en",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 10,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "skanlacjefeniksy",
+  "name": "SkanlacjeFeniksy",
+  "lang": "pl",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "skanlacje-feniksy.pl",
+  "config": {
+   "pageSize": 10,
+   "searchPageSize": 10,
+   "datePattern": "d MMMM, yyyy",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 10,
+  "broken": false
+ },
+ {
+  "id": "diskusscan",
+  "name": "DiskusScan",
+  "lang": "pt",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "diskusscan.online",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "franxxmangas",
+  "name": "FranxxMangas",
+  "lang": "pt",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "franxxmangas.net",
+  "config": {
+   "pageSize": 10,
+   "searchPageSize": 10
+  },
+  "pageSize": 10,
+  "broken": true
+ },
+ {
+  "id": "irisscanlator",
+  "name": "IrisScanlator",
+  "lang": "pt",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "irisscanlator.com.br",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "mangaschan",
+  "name": "MangasChan",
+  "lang": "pt",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "mangaschan.net",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 20
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "mangasonline",
+  "name": "MangasOnline",
+  "lang": "pt",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "mangasonline.cc",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "origamiorpheans",
+  "name": "Origami Orpheans",
+  "lang": "pt",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "origami-orpheans.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "pointzerotoons",
+  "name": "PointZero Toons",
+  "lang": "pt",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "pointzerotoons.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "silencescan",
+  "name": "SilenceScan",
+  "lang": "pt",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "silencescan.com.br",
+  "config": {
+   "pageSize": 35,
+   "searchPageSize": 35,
+   "datePattern": "MMM d, yyyy"
+  },
+  "pageSize": 35,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "sssscanlator",
+  "name": "YomuComics",
+  "lang": "pt",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "yomucomics.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true,
+  "antiBot": "cloudflare"
+ },
+ {
+  "id": "tsundoku",
+  "name": "Tsundoku",
+  "lang": "pt",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "tsundoku.com.br",
+  "config": {
+   "pageSize": 50,
+   "searchPageSize": 50,
+   "datePattern": "MMM d, yyyy",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 50,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "doujin69",
+  "name": "Doujin69",
+  "lang": "th",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "doujin69.com",
+  "config": {
+   "pageSize": 40,
+   "searchPageSize": 21,
+   "listUrl": "/doujin",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 40,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "dragonmanga",
+  "name": "DragonManga",
+  "lang": "th",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "www.dragon-manga.com",
+  "config": {
+   "pageSize": 40,
+   "searchPageSize": 10
+  },
+  "pageSize": 40,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "ecchidoujin",
+  "name": "EcchiDoujin",
+  "lang": "th",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "ecchi-doujin.com",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 10,
+   "listUrl": "/doujin",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 30,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "inumanga",
+  "name": "InuManga",
+  "lang": "th",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "www.inu-manga.com",
+  "config": {
+   "pageSize": 40,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 40,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "lamimanga",
+  "name": "LamiManga",
+  "lang": "th",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "mangalami.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "mafiamanga",
+  "name": "MafiaManga",
+  "lang": "th",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "mafia-manga.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "makimaaaaa",
+  "name": "Makimaaaaa",
+  "lang": "th",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "makimaaaaa.com",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 30,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 30,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "manga168",
+  "name": "Manga168",
+  "lang": "th",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "manga168x.com",
+  "config": {
+   "pageSize": 40,
+   "searchPageSize": 30,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 40,
+  "broken": false
+ },
+ {
+  "id": "manga689",
+  "name": "Manga689",
+  "lang": "th",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "manga689.com",
+  "config": {
+   "pageSize": 45,
+   "searchPageSize": 21,
+   "listUrl": "/read",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 45,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "mangakimi",
+  "name": "MangaKimi",
+  "lang": "th",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "www.mangakimi.com",
+  "config": {
+   "pageSize": 40,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 40,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "mangamoons",
+  "name": "MangaMoons",
+  "lang": "th",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "manga-moons.net",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "ntrmanga",
+  "name": "NtrManga",
+  "lang": "th",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "www.ntr-manga.net",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 30,
+  "broken": false
+ },
+ {
+  "id": "popsmanga",
+  "name": "PopsManga",
+  "lang": "th",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "popsmanga.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 14,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "reapertrans",
+  "name": "ReaperTrans",
+  "lang": "th",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "reapertrans.com",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 14,
+   "locale": "en",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 30,
+  "broken": false
+ },
+ {
+  "id": "somanga",
+  "name": "SoManga",
+  "lang": "th",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "so-manga.com",
+  "config": {
+   "pageSize": 5,
+   "searchPageSize": 25
+  },
+  "pageSize": 5,
+  "broken": true
+ },
+ {
+  "id": "sodsaime",
+  "name": "สดใสเมะ",
+  "lang": "th",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "www.xn--l3c0azab5a2gta.com",
+  "config": {
+   "pageSize": 40,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 40,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "tanukimanga",
+  "name": "TanukiManga",
+  "lang": "th",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "www.tanuki-manga.com",
+  "config": {
+   "pageSize": 40,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 40,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "thaimanga",
+  "name": "ThaiManga",
+  "lang": "th",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "www.thaimanga.net",
+  "config": {
+   "pageSize": 40,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 40,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "toomtammanga",
+  "name": "ToomtamManga",
+  "lang": "th",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "toomtam-manga.com",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 28,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 30,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "toonhunter",
+  "name": "ToonHunter",
+  "lang": "th",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "toonhunter.com",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 10,
+   "datePattern": "MMM d, yyyy",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 30,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "adonisfansub",
+  "name": "AdonisFansub",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "manga.adonisfansub.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 20,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "adumanga",
+  "name": "AduManga",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "adumanga.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "locale": "en",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "afroditscans",
+  "name": "AfroditScans",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "afroditscans.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "datePattern": "MMM d, yyyy",
+   "capabilities": {
+    "tagsExclusion": false
+   },
+   "netshield": true
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "arcurafansub",
+  "name": "ArcuraFansub",
+  "lang": "tr",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "arcurafansub.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "listUrl": "/seri",
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "asemifansub",
+  "name": "AsemiFansub",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "asemifansub.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "athenamanga",
+  "name": "AthenaManga",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "athenamanga.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "multipleTags": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "ayatoon",
+  "name": "AyaToon",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "ayatoon.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 20,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "culturesubs",
+  "name": "CultureSubs",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "culturesubs.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "multipleTags": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "gafeland",
+  "name": "Gafeland",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "www.gafeland.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "gaiatoon",
+  "name": "GaiaToon",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "gaiatoon.com",
+  "config": {
+   "pageSize": 50,
+   "searchPageSize": 10,
+   "capabilities": {
+    "multipleTags": false
+   }
+  },
+  "pageSize": 50,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "golgebahcesi",
+  "name": "GolgeBahcesi",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "golgebahcesi.com",
+  "config": {
+   "pageSize": 14,
+   "searchPageSize": 9,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 14,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "hyperionscans",
+  "name": "SeraphManga",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "www.seraphmanga.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "mangakazani",
+  "name": "MangaKazani",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "mangakazani.com",
+  "config": {
+   "pageSize": 19,
+   "searchPageSize": 10,
+   "listUrl": "/seriler"
+  },
+  "pageSize": 19,
+  "broken": true
+ },
+ {
+  "id": "mangakings",
+  "name": "MangaKings",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "mangakings.com.tr",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "mangakoleji",
+  "name": "MangaKoleji",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "mangakoleji.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": true
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "mangasiginagi",
+  "name": "MangaSiginagi",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "mangasiginagi.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "mangacim",
+  "name": "Mangacim",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "mangacim.com.tr",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 20,
+   "datePattern": "MMM d, yyyy"
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "mangacix",
+  "name": "Mangacix",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "mangacix.net",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": true
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "mangaefendisi",
+  "name": "MangaEfendisi",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "mangaefendisi.net",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 20,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 30,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "mangaokutr",
+  "name": "MangaOkuTr",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "mangaokutr.net",
+  "config": {
+   "pageSize": 25,
+   "searchPageSize": 20
+  },
+  "pageSize": 25,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "moondaisy_scans",
+  "name": "MoonDaisyScans",
+  "lang": "tr",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "moondaisyscans.pro",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "nirvanamanga",
+  "name": "NirvanaManga",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "nirvanamanga.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "noxscans",
+  "name": "NoxScans",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "www.noxscans.com",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 20,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 30,
+  "broken": true
+ },
+ {
+  "id": "nyxmanga",
+  "name": "NyxManga",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "nyxscans.com",
+  "config": {
+   "pageSize": 14,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 14,
+  "broken": false
+ },
+ {
+  "id": "patimanga",
+  "name": "PatiManga",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "www.patimanga.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "prunusscans",
+  "name": "PrunusScans",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "prunusscans.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "raindropteamfan",
+  "name": "Raindrop Fansub",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "www.raindropteamfan.com",
+  "config": {
+   "pageSize": 25,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 25,
+  "broken": false
+ },
+ {
+  "id": "robinmanga",
+  "name": "RobinManga",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "www.guildknives.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 25,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "sereinscan",
+  "name": "SereinScan",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "sereinscan.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "shijiescans",
+  "name": "ShijieScans",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "shijiescans.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "listUrl": "/seri"
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "summertoon",
+  "name": "SummerToon",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "summertoon.co",
+  "config": {
+   "pageSize": 10,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 10,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "tarotscans",
+  "name": "TarotScans",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "www.tarotscans.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "tempestfansubnet",
+  "name": "tempestmangas.com",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "tempestfansub.net",
+  "config": {
+   "pageSize": 30,
+   "searchPageSize": 10
+  },
+  "pageSize": 30,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "tempestscans",
+  "name": "TempestScans",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "adumanga.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "tempestfansub",
+  "name": "TempestFansub.Com",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "tempestscans.net",
+  "config": {
+   "pageSize": 25,
+   "searchPageSize": 40,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 25,
+  "broken": true
+ },
+ {
+  "id": "zenithscans",
+  "name": "ZenithScans",
+  "lang": "tr",
+  "engine": "mangareader",
+  "needsCustomLogic": false,
+  "domain": "zenithscans.com",
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "capabilities": {
+    "tagsExclusion": false
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ }
+]

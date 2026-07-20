@@ -1,0 +1,655 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nyora.app/schema/SourceDef.schema.json",
+  "title": "SourceDef",
+  "description": "A single data-driven manga source. A source is DATA, not code: {engine, domain, config}. A clean Play-Store build ships only the generic bundled engines (madara, mangareader, ...) with ZERO source domains baked in; each SourceDef arrives at runtime from a user-added repo URL. No JavaScript, no downloaded code, no APK extensions. The `config` object is engine-specific and selected by the `engine` discriminator.",
+  "type": "object",
+  "required": ["id", "name", "lang", "engine", "domain", "config"],
+  "additionalProperties": false,
+
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable unique source id within the repo (e.g. \"hiperdex\"). Used as the Nyora MangaSource key and to namespace String manga/chapter ids.",
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable source title shown in the UI (e.g. \"HiperDex\").",
+      "minLength": 1
+    },
+    "lang": {
+      "type": "string",
+      "description": "Primary content language as a BCP-47 / ISO-639-1 code (\"en\",\"id\",\"pt\",\"ja\", \"all\" for multi-language). Distinct from config.locale, which governs date parsing/title-casing.",
+      "pattern": "^([a-z]{2,3}(-[A-Za-z0-9]{2,8})*|all)$"
+    },
+    "nsfw": {
+      "type": "boolean",
+      "description": "Whether the source is predominantly adult. Mirrors kotatsu isNsfwSource (ContentType.HENTAI). Drives contentRating = ADULT at the source level.",
+      "default": false
+    },
+    "contentType": {
+      "type": "string",
+      "description": "Dominant content type of the source. Mirrors kotatsu ContentType enum.",
+      "enum": ["MANGA", "MANHWA", "MANHUA", "HENTAI", "COMICS", "NOVEL", "ONE_SHOT", "DOUJINSHI", "IMAGE_SET", "OTHER"],
+      "default": "MANGA"
+    },
+    "engine": {
+      "type": "string",
+      "description": "Which bundled generic engine renders this source. Acts as the discriminator selecting the shape of `config`. Only `madara` and `mangareader` have a typed `config` schema (see allOf below); every other engine reads its pure-data config from the free-form `config` object (the Kotlin SourceDef.rawConfig escape hatch).",
+      "enum": [
+        "madara", "mangareader",
+        "animebootstrap", "asurascans", "batoto", "cupfox", "fmreader", "foolslide",
+        "fuzzydoodle", "galleryadults", "gattsu", "guya", "heancms", "heancmsalt",
+        "hotcomics", "iken", "keyoapp", "liliana", "madtheme", "manga18", "mangabox",
+        "mangadex", "mangadventure", "mangago", "mmrcms", "natsu", "onemanga",
+        "pizzareader", "scan", "signedrest", "sinmh", "wpcomics", "zeistmanga", "zmanga"
+      ]
+    },
+    "domain": {
+      "type": "string",
+      "description": "Primary host, without scheme (e.g. \"hiperdex.com\"). All URLs are built as https://{domain}/... . User-overridable at runtime.",
+      "pattern": "^([a-z0-9-]+\\.)+[a-z]{2,}$"
+    },
+    "config": {
+      "type": "object",
+      "description": "Engine-specific pure-data configuration. Shape determined by `engine` (see allOf discriminator below)."
+    },
+    "broken": {
+      "type": "boolean",
+      "description": "Source is disabled everywhere: dead upstream, no bundled engine, or @Broken in kotatsu. Loaders on ALL platforms hide it.",
+      "default": false
+    },
+    "brokenReason": {
+      "type": "string",
+      "description": "Optional human note for why `broken` is true (e.g. \"dead DNS, no successor\")."
+    },
+    "antiBot": {
+      "type": "string",
+      "description": "Anti-bot protection guarding the site. When set, the source needs a solver the platform may not have. PLATFORM POLICY: native builds that run a local helper capable of solving/forwarding the challenge (desktop, nyora-mihon, android, docker) LOAD these sources; thin clients that hit a shared read-only helper or scrape in-browser (web, ios, aidoku-extension) HIDE any source with antiBot set. Absent = no anti-bot (loads everywhere).",
+      "enum": ["cloudflare", "netshield"]
+    },
+    "cfWall": {
+      "type": "string",
+      "description": "When antiBot=cloudflare, which Cloudflare wall (measured 2026-07 via curl_cffi Chrome impersonation). \"A\" = fingerprint-only 403, cleared at ZERO per-request load by TLS/JA3 impersonation (impersonator-okhttp) — recoverable everywhere once the helper impersonates. \"B\" = JS interstitial (\"Just a moment\", cf_chl), needs a one-time headless cf_clearance solve. See CF_BYPASS.md.",
+      "enum": ["A", "B"]
+    },
+    "pageSize": {
+      "type": "integer",
+      "description": "Items per browse page (kotatsu PagedMangaParser pageSize; used by offset-based paginators / API-limit engines).",
+      "minimum": 1
+    }
+  },
+
+  "$defs": {
+    "sortOrder": {
+      "type": "string",
+      "enum": [
+        "UPDATED", "UPDATED_ASC", "POPULARITY", "POPULARITY_ASC",
+        "RATING", "RATING_ASC", "NEWEST", "NEWEST_ASC",
+        "ALPHABETICAL", "ALPHABETICAL_DESC", "ADDED", "ADDED_ASC", "RELEVANCE"
+      ]
+    },
+    "mangaState": {
+      "type": "string",
+      "enum": ["ONGOING", "FINISHED", "ABANDONED", "PAUSED", "UPCOMING", "RESTRICTED"]
+    },
+    "demographic": {
+      "type": "string",
+      "description": "Reader demographic facet (mirrors kotatsu Demographic).",
+      "enum": ["JOSEI", "SEINEN", "SHOUJO", "SHOUNEN"]
+    },
+    "stringPair": {
+      "type": "array",
+      "description": "A [from, to] literal replacement pair.",
+      "items": { "type": "string" },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "staticTag": {
+      "type": "object",
+      "description": "A pre-baked tag, used when live tag discovery fails on that theme layout.",
+      "required": ["key", "title"],
+      "additionalProperties": false,
+      "properties": {
+        "key": { "type": "string", "description": "Tag identifier / slug used in filter URLs." },
+        "title": { "type": "string", "description": "User-readable tag title (Title case)." }
+      }
+    },
+    "filterCapabilities": {
+      "type": "object",
+      "description": "Booleans for the filter UI. Mirrors kotatsu MangaListFilterCapabilities.",
+      "additionalProperties": false,
+      "properties": {
+        "multipleTags": { "type": "boolean", "default": true },
+        "tagsExclusion": { "type": "boolean", "default": true },
+        "search": { "type": "boolean", "default": true },
+        "searchWithFilters": { "type": "boolean", "default": false },
+        "year": { "type": "boolean", "default": false },
+        "authorSearch": { "type": "boolean", "default": false }
+      }
+    },
+
+    "madaraPageMode": {
+      "type": "string",
+      "description": "Pagination placement for madara pathBrowse: PATH=/page/{n}/, QUERY=?page={n}, SUFFIX=/{n}, NONE=no paging.",
+      "enum": ["PATH", "QUERY", "SUFFIX", "NONE"]
+    },
+    "madaraTagSource": {
+      "type": "object",
+      "description": "One tag-discovery scrape recipe for madara tagDiscovery. Absorbs the fetchAvailableTags overrides that only move the tag list to a different URL / element shape.",
+      "required": ["selector"],
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["ANCHOR", "CHECKBOX", "OPTION"],
+          "default": "ANCHOR",
+          "description": "Extraction shape: ANCHOR=<a> (key from href/tagPrefix, title from ownText), CHECKBOX=filter-form input (key from input[value], title from <label>/nextElementSibling), OPTION=<select><option> (key from value, title from option text)."
+        },
+        "url": { "type": "string", "description": "GET path for the tag page. Omitted => \"/{listUrl}\". \"\" = site root. Accepts query paths, e.g. \"?s=&post_type=wp-manga\"." },
+        "selector": { "type": "string", "description": "ANCHOR => <a> elements; CHECKBOX => wrapper or <input>; OPTION => <option> elements." },
+        "keyPrefix": { "type": "string", "default": "", "description": "Prepended to each derived key (Roseveil dual <select> genre_/tag_)." }
+      }
+    },
+    "madaraPathBrowse": {
+      "type": "object",
+      "description": "Separate-search + path-based genre/catalog browse strategy (absorbs the getListPage overrides that add a dedicated search endpoint and browse genres/catalog by URL path). Present => replaces the base admin-ajax / flat-merged-GET listing. Absent => base behavior. A bare {} reproduces the ManyToon canonical form. {tagPrefix} and {listUrl} interpolate the top-level config fields.",
+      "additionalProperties": false,
+      "properties": {
+        "searchUrl": { "type": "string", "default": "/?s={q}&post_type=wp-manga", "description": "Text-search URL template. Tokens: {q}=urlEncoded query, {page}=page number." },
+        "searchPageMode": { "allOf": [{ "$ref": "#/$defs/madaraPageMode" }], "default": "PATH", "description": "How the page number renders in the search branch when {page} is not templated into searchUrl." },
+        "tagPath": { "type": "string", "default": "/{tagPrefix}{tag}/", "description": "Single-tag browse path template. Tokens: {tag}, {sort}, {page}." },
+        "listPath": { "type": "string", "default": "/{listUrl}", "description": "Catalog browse path template. Tokens: {sort}, {page}." },
+        "pageMode": { "allOf": [{ "$ref": "#/$defs/madaraPageMode" }], "default": "PATH", "description": "Browse pagination style." },
+        "sortParam": { "type": ["string", "null"], "default": "m_orderby", "description": "Query key carrying the sort token in browse; null => path/none only." },
+        "sortMap": {
+          "type": "object",
+          "description": "SortOrder -> browse sort token. default {POPULARITY:views, UPDATED:latest, NEWEST:new-manga, ALPHABETICAL:alphabet, RATING:rating}. Values may be numeric-string tokens or path tokens (used with a {sort} placeholder).",
+          "propertyNames": { "$ref": "#/$defs/sortOrder" },
+          "additionalProperties": { "type": "string" }
+        },
+        "container": { "type": ["string", "null"], "default": null, "description": "List-item container selector; null => stock parseMangaList containers. Field sub-selectors (summary/title/cover/rating/tags) stay stock." }
+      }
+    },
+    "madaraChapterFetch": {
+      "type": "object",
+      "description": "Full chapter-list fetch descriptor (absorbs loadChapters overrides incl. GET endpoints + pagination loops). Present => supersedes postReq/postDataReq. Absent => base postReq/postDataReq behavior. Row parsing stays on the existing selectors.chapter/date knobs.",
+      "additionalProperties": false,
+      "properties": {
+        "method": { "type": "string", "enum": ["GET", "POST"], "default": "POST" },
+        "url": { "type": "string", "default": "{mangaUrl}/ajax/chapters/", "description": "Request URL template. Tokens: {domain}, {mangaUrl}, {mangaId}, {page}." },
+        "body": { "type": ["string", "null"], "default": null, "description": "POST body template; null => empty form. Same tokens as url." },
+        "idSelector": { "type": "string", "default": "div#manga-chapters-holder", "description": "Element whose data-id attribute supplies {mangaId} (e.g. \"div[id^=manga-chapters-holder]\" prefix match)." },
+        "paginated": { "type": "boolean", "default": false, "description": "Loop {page}=1,2,... until an empty page, then renumber ascending." },
+        "headers": { "type": "object", "additionalProperties": { "type": "string" }, "description": "Optional static request headers (e.g. X-Requested-With); kept for fidelity." }
+      }
+    },
+    "madaraListItem": {
+      "type": "object",
+      "description": "Alternate list-item markup for parseMangaList (absorbs the overrides with a different card container / field sub-selectors). Absent => stock parseMangaList verbatim. Every sub-field falls back to its stock selector; rating/tags/author/state keep stock selectors.",
+      "additionalProperties": false,
+      "properties": {
+        "container": { "type": "string", "description": "Card container. default div.row.c-tabs-item__content ifEmpty div.page-item-detail." },
+        "link": { "type": "string", "description": "Href element. default a." },
+        "title": { "type": "string", "description": "Title element. default the stock h3,h4 / .manga-name,.post-title chain." },
+        "cover": { "type": "string", "description": "Cover img. default img." },
+        "coverResizeStrip": { "type": "string", "description": "Regex removed from the resolved cover URL (strip a resize suffix like -193x278 or -\\d+x\\d+)." },
+        "fallbackToStock": { "type": "boolean", "default": false, "description": "If the configured container yields nothing, retry the stock parseMangaList body (Roseveil)." }
+      }
+    },
+
+    "mangaReaderChapters": {
+      "type": "object",
+      "description": "Chapter-row parse tuning for getDetails (absorbs the getDetails overrides whose only new logic is the chapter-row parse). Absent/all-default => stock MangaThemesia row parse. Localized relative dates are handled by the existing relativeDateWords field.",
+      "additionalProperties": false,
+      "properties": {
+        "order": { "type": "string", "enum": ["DOM_REVERSED", "DOM", "BY_NUMBER"], "default": "DOM_REVERSED", "description": "Row ordering: DOM_REVERSED=reverse DOM so oldest=1 (base), DOM=rows already oldest-first, BY_NUMBER=sort by parsed chapter number." },
+        "anchor": { "type": "string", "description": "Selector for the row <a>. Omitted => selectFirst(\"a\"). \".\" or \"self\" => the row element itself IS the anchor." },
+        "titleSelector": { "type": "string", "default": ".chapternum", "description": "Chapter title element (e.g. h2, td.judulseries a, span.lchx > a)." },
+        "titleFallback": { "type": "string", "enum": ["NONE", "CHAPTER_INDEX", "LINK_TEXT"], "default": "NONE", "description": "Title fallback when titleSelector is empty: CHAPTER_INDEX => \"Chapter {i}\", LINK_TEXT => anchor text / data-title." },
+        "numberSource": { "type": "string", "enum": ["SEQUENTIAL", "TITLE_REGEX", "ATTR"], "default": "SEQUENTIAL", "description": "Chapter number source: SEQUENTIAL=index+1, TITLE_REGEX=parse from title, ATTR=from numberAttr (falls back to TITLE_REGEX)." },
+        "numberAttr": { "type": "string", "description": "Attribute holding the chapter number when numberSource=ATTR (e.g. data-num)." },
+        "numberRegex": { "type": "string", "default": "(\\d+(?:\\.\\d+)?)", "description": "Regex extracting the number from the title (TITLE_REGEX / ATTR fallback)." },
+        "dateSelector": { "type": "string", "default": ".chapterdate", "description": "Chapter date node (e.g. .chapter-date, span.dt, td.tanggalseries)." },
+        "dateScope": { "type": "string", "enum": ["ELEMENT", "DOCUMENT"], "default": "ELEMENT", "description": "ELEMENT=per-row date, DOCUMENT=page-level shared date node (e.g. \"time\")." },
+        "noDate": { "type": "boolean", "default": false, "description": "uploadDate always 0L; skip date parsing entirely." },
+        "urlPrefixMangaDir": { "type": "boolean", "default": false, "description": "Resolve the chapter href against the manga URL's directory (Revolution)." },
+        "lockedClass": { "type": "string", "description": "Skip chapter rows carrying this class (e.g. \"locked\" premium rows)." }
+      }
+    },
+    "mangaReaderListPage": {
+      "type": "object",
+      "description": "Re-parameterized browse/search URL grammar (absorbs the getListPage overrides that only re-parameterize the base URL grammar). Absent => stock base grammar. Does not change list-parse markup. Only applies to engine=\"mangareader\" HTML sources (JSON-API sources are a different engine).",
+      "additionalProperties": false,
+      "properties": {
+        "listHost": { "type": "string", "description": "Override host for LIST/SEARCH requests only (e.g. Komiku api.komiku.org)." },
+        "browseSeparator": { "type": "string", "enum": ["/?", "?"], "default": "/?", "description": "Separator between listUrl and the browse query." },
+        "orderParam": { "type": "string", "default": "order", "description": "Query key carrying the sort token (e.g. Komiku \"orderby\")." },
+        "orderKeys": {
+          "type": "object",
+          "description": "SortOrder -> order token; values MAY be raw fragments like \"orderby=title&order=ASC\" to fold WordPress orderby/order pairs. default {ALPHABETICAL:title, ALPHABETICAL_DESC:titlereverse, NEWEST:latest, POPULARITY:popular, UPDATED:update}.",
+          "propertyNames": { "$ref": "#/$defs/sortOrder" },
+          "additionalProperties": { "type": "string" }
+        },
+        "orderDefault": { "type": "string", "description": "Order token used when the selected SortOrder is not in orderKeys (e.g. ThunderScans \"new\")." },
+        "genreParam": { "type": "string", "default": "genre[]", "description": "Genre query param name (tags[], genre, genero, tag)." },
+        "genreParamsIndexed": { "type": "array", "items": { "type": "string" }, "description": "Dual/indexed genre params (e.g. Komiku [\"genre\",\"genre2\"]); overrides genreParam, caps at list size." },
+        "statusParam": { "type": "string", "default": "status" },
+        "statusValues": {
+          "type": "object",
+          "description": "MangaState -> status token (per-source vocab + case). default {ONGOING:ongoing, FINISHED:completed, PAUSED:hiatus}.",
+          "propertyNames": { "$ref": "#/$defs/mangaState" },
+          "additionalProperties": { "type": "string" }
+        },
+        "typeParam": { "type": "string", "default": "type" },
+        "typeValues": {
+          "type": "object",
+          "description": "ContentType name -> type token (per-source vocab + case, e.g. Manga/Manhwa).",
+          "propertyNames": { "enum": ["MANGA", "MANHWA", "MANHUA", "COMICS", "NOVEL"] },
+          "additionalProperties": { "type": "string" }
+        },
+        "extraBrowseParams": { "type": "object", "additionalProperties": { "type": "string" }, "description": "Fixed browse-only params (e.g. format=...)." },
+        "yearParam": { "type": "string", "description": "Year filter param, emitted when filter.year != 0 (e.g. BacaKomik \"yearx\")." },
+        "authorParam": { "type": "string", "description": "Author filter param (e.g. BacaKomik \"author\")." },
+        "page": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Pagination placement.",
+          "properties": {
+            "mode": { "type": "string", "enum": ["PATH", "QUERY", "QUERY_FIRST"], "default": "QUERY", "description": "PATH=/page/{n}/, QUERY=&page={n} at browse end, QUERY_FIRST=?page={n} emitted first." },
+            "param": { "type": "string", "default": "page", "description": "Page param name (e.g. \"paged\")." },
+            "inSearch": { "type": "boolean", "default": false, "description": "Also emit the page number on the search branch (Normoyun)." }
+          }
+        },
+        "search": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Search-endpoint grammar.",
+          "properties": {
+            "supported": { "type": "boolean", "default": true, "description": "false => search throws SEARCH_NOT_SUPPORTED (Revolution)." },
+            "mode": { "type": "string", "enum": ["PATH_PAGE", "QUERY"], "default": "PATH_PAGE", "description": "PATH_PAGE=base /page/{n}/?s=, QUERY=query-param endpoint." },
+            "path": { "type": "string", "description": "Search path (/search, /lista, \"\"); omitted => reuse the /page/{n}/?s= base." },
+            "param": { "type": "string", "default": "s", "description": "Search query param (search, q, title)." },
+            "fixedParams": { "type": "object", "additionalProperties": { "type": "string" }, "description": "Fixed search params (e.g. post_type=manga | post_type=webtoon)." }
+          }
+        },
+        "singlePage": { "type": "boolean", "default": false, "description": "page>1 => empty list (single-page sources / paging guard)." }
+      }
+    },
+    "mangaReaderPagesApi": {
+      "type": "object",
+      "description": "JSON-API reader (used when pages.mode=api). Absorbs the reader-page JSON-API overrides.",
+      "additionalProperties": false,
+      "properties": {
+        "domain": { "type": "string", "description": "Separate API host; omitted => main domain (e.g. Westmanga apiDomain)." },
+        "urlRegex": { "type": "string", "description": "Regex over chapter.url; named groups feed urlTemplate." },
+        "urlTemplate": { "type": "string", "description": "Token-substituted API request path (e.g. /api/v/{slug})." },
+        "imagesJsonPath": { "type": "string", "description": "'|'-alternated dotted paths to the images[] array (e.g. \"data.images|images\", \"data.data.images\")." },
+        "headers": { "type": "object", "additionalProperties": { "type": "string" }, "description": "Static request headers (signed API)." }
+      }
+    },
+    "mangaReaderPages": {
+      "type": "object",
+      "description": "Reader page-extraction tuning for getPageList (absorbs the getPages overrides). Absent/all-default => stock ts_reader-JSON-then-img-scrape behavior. Layers on top of the existing encodedSrc / netshield / cloudflare flags.",
+      "additionalProperties": false,
+      "properties": {
+        "mode": { "type": "string", "enum": ["auto", "images", "json", "api"], "default": "auto", "description": "auto=JSON-if-present else img-scrape (base, keeps fallback), images=force the scrape path even when a ts_reader script exists, json=force ts_reader JSON, api=JSON-API reader." },
+        "dedup": { "type": "boolean", "default": false, "description": "distinct() the resolved url list (Rokari, AlucardScans)." },
+        "tolerateMissingSrc": { "type": "boolean", "default": false, "description": "Skip src-less <img> instead of throwing (base requireSrc throws)." },
+        "skipDataUri": { "type": "boolean", "default": true, "description": "Drop data: urls (ThunderScans)." },
+        "skipNoscript": { "type": "boolean", "default": false, "description": "Drop <img> nested in <noscript> (BacaKomik)." },
+        "onErrorSrcAttr": { "type": "array", "items": { "type": "string" }, "description": "Attributes whose onError src='...' supplies a fallback url (e.g. [\"onError\",\"onerror\"])." },
+        "excludeUrlSubstrings": { "type": "array", "items": { "type": "string" }, "description": "Drop urls containing any of these substrings (e.g. [\"cover\"])." },
+        "extraImgAttrs": { "type": "array", "items": { "type": "string" }, "description": "Extra lazy-image attributes beyond the engine's src() list (e.g. [\"abs:data-src\"])." },
+        "scriptRegex": { "type": "string", "description": "Regex (group 1 = the reader JSON) scanned over ALL <script> tags (MadaraScans)." },
+        "jsonReplacements": { "type": "array", "items": { "$ref": "#/$defs/stringPair" }, "description": "[from,to] rewrites applied to the raw reader JSON string before parse (e.g. trailing-comma fix)." },
+        "imageUrlReplacements": { "type": "array", "items": { "$ref": "#/$defs/stringPair" }, "description": "[from,to] rewrites applied to each image url (e.g. strip a stray backslash)." },
+        "httpsFromProtocolRelative": { "type": "boolean", "default": false, "description": "Rewrite //host => https://host on each url (LectorHentai)." },
+        "iframeReader": { "type": "boolean", "default": false, "description": "GET the first <iframe src> before parsing pages (CatharsisFantasy)." },
+        "api": { "$ref": "#/$defs/mangaReaderPagesApi" }
+      }
+    },
+
+    "madaraConfig": {
+      "type": "object",
+      "description": "config for engine=\"madara\" (WordPress wp-manga theme). Every field is a scalar, enum, short list, or CSS selector. Omitted fields fall back to the engine's stock-Madara defaults. Engine constants NOT expressed here: the admin-ajax vars[] payload template, sort->param maps, multilingual status vocab, adult/status value maps, AES chapter-protector decrypt, and relative-date parser.",
+      "additionalProperties": false,
+      "properties": {
+        "pageSize": { "type": "integer", "minimum": 1, "default": 12, "description": "Items/page hint for the paginator." },
+        "locale": { "type": "string", "description": "BCP-47 locale for date parsing + title-casing (datePattern is interpreted with this). Defaults from top-level lang, else ROOT." },
+        "datePattern": { "type": "string", "default": "MMMM d, yyyy", "description": "SimpleDateFormat chapter-date pattern. Most-overridden field. e.g. \"dd/MM/yyyy\"." },
+        "tagPrefix": { "type": "string", "default": "manga-genre/", "description": "URL segment before a genre slug." },
+        "listUrl": { "type": "string", "default": "manga/", "description": "Path for the catalog/genre page; \"\" = root." },
+        "withoutAjax": { "type": "boolean", "default": false, "description": "Master switch: use GET ?s=&post_type=wp-manga pages instead of admin-ajax; also shrinks sort orders and disables tag exclusion." },
+        "postReq": { "type": "boolean", "default": false, "description": "Chapter-list fetch style: true=POST admin-ajax action=manga_get_chapters; false=POST {mangaUrl}/ajax/chapters/. Superseded by chapterFetch when that is present." },
+        "postDataReq": { "type": "string", "default": "action=manga_get_chapters&manga=", "description": "POST body prefix when postReq=true. Superseded by chapterFetch when that is present." },
+        "stylePage": { "type": "string", "default": "?style=list", "description": "Query suffix appended to chapter URLs to force the flat image list." },
+        "authorSearchSupported": { "type": "boolean", "default": false },
+        "sortOrders": {
+          "type": "array",
+          "description": "Which sort orders to expose (payload keys per order are engine constants).",
+          "items": { "$ref": "#/$defs/sortOrder" }
+        },
+        "capabilities": { "$ref": "#/$defs/filterCapabilities" },
+        "selectors": {
+          "type": "object",
+          "description": "CSS selectors; each optional, falls back to the engine default for stock Madara.",
+          "additionalProperties": false,
+          "properties": {
+            "chapter": { "type": "string", "description": "Chapter rows. default li.wp-manga-chapter, div.wp-manga-chapter" },
+            "chapterTitle": { "type": "string", "description": "Chapter-row title element. default a > p, else the anchor ownText. e.g. \"a h4\", \".mini-letters a\", \"h3\". (getChapters/loadChapters absorb.)" },
+            "page": { "type": "string", "description": "Reader page containers. default div.page-break" },
+            "bodyPage": { "type": "string", "description": "Reader root. default div.main-col-inner div.reading-content" },
+            "desc": { "type": "string", "description": "Synopsis HTML." },
+            "genre": { "type": "string", "description": "Detail-page tags. default div.genres-content a" },
+            "date": { "type": "string", "description": "Chapter date node. default span.chapter-release-date i" },
+            "state": { "type": "string", "description": "Status row." },
+            "alt": { "type": "string", "description": "Alt titles." },
+            "author": { "type": "string", "default": "div.author-content a, div.artist-content a", "description": "Details-page author box (stock wp-manga). Absorbs the getDetails author-extraction overrides; previously authors were always empty on details." },
+            "testAsync": { "type": "string", "description": "Presence test: inline vs ajax-loaded chapters. default div.listing-chapters_wrap" }
+          }
+        },
+        "images": {
+          "type": "object",
+          "description": "Page-image extraction knobs that absorb most getPages overrides.",
+          "additionalProperties": false,
+          "properties": {
+            "stripStyleParam": { "type": "boolean", "default": false, "description": "Strip ?style=list from chapter URL before fetching pages (HiperDex)." },
+            "imgAttrCandidates": {
+              "type": "array",
+              "description": "Ordered lazy-image attribute fallbacks.",
+              "items": { "type": "string" },
+              "default": ["src", "data-src", "data-lazy-src"]
+            },
+            "pageImgSelector": { "type": "string", "description": "Override <img> selector inside a page container (also the flat img selector when flatPages=true)." },
+            "flatPages": { "type": "boolean", "default": false, "description": "Select <img> in a single level from the bodyPage root (root.select(pageImgSelector ?: \"img\")) instead of the base two-level page-break -> img descent. Composes with bodyPage (use \"body\" for whole-doc) / pageImgSelector / imgAttrCandidates. false = unchanged base behavior." }
+          }
+        },
+        "staticTags": {
+          "type": "array",
+          "description": "Optional pre-baked tag list for when live tag discovery fails.",
+          "items": { "$ref": "#/$defs/staticTag" }
+        },
+        "tagDiscovery": {
+          "type": "array",
+          "description": "Ordered tag-scrape recipes (absorbs the fetchAvailableTags overrides). Entries are concatenated + deduped on key. Empty => stock base tag roots (header ul.second-menu + div.genres_wrap ul.list-unstyled). If non-empty but yields zero tags, the engine falls back to the stock roots.",
+          "items": { "$ref": "#/$defs/madaraTagSource" }
+        },
+        "extraStatusMap": {
+          "type": "object",
+          "description": "Optional per-source status synonyms extending the engine's multilingual dictionary. Value = MangaState.",
+          "additionalProperties": { "$ref": "#/$defs/mangaState" }
+        },
+        "chapterDateReplacements": {
+          "type": "object",
+          "description": "Ordered raw-chapter-date substring rewrites applied before date parsing (absorbs 'just published' sentinels and month-abbrev fixes). Key = literal substring to find, value = replacement; applied case-sensitively in insertion order. Empty => no-op.",
+          "additionalProperties": { "type": "string" }
+        },
+        "forwardCloudflareCookies": { "type": "boolean", "default": false, "description": "Engine forwards cf_clearance/__cf* cookies (covers the common CF-cookie override shape)." },
+        "pathBrowse": {
+          "oneOf": [{ "$ref": "#/$defs/madaraPathBrowse" }, { "type": "null" }],
+          "default": null,
+          "description": "Optional separate-search + path-based browse strategy (absorbs the getListPage overrides). null/absent => base admin-ajax / flat-merged-GET listing."
+        },
+        "chapterFetch": {
+          "oneOf": [{ "$ref": "#/$defs/madaraChapterFetch" }, { "type": "null" }],
+          "default": null,
+          "description": "Optional full chapter-list fetch descriptor (absorbs the loadChapters overrides incl. GET/paginated). null/absent => postReq/postDataReq behavior."
+        },
+        "listItem": {
+          "oneOf": [{ "$ref": "#/$defs/madaraListItem" }, { "type": "null" }],
+          "default": null,
+          "description": "Optional alternate list-item markup for parseMangaList (absorbs the parseMangaList overrides). null/absent => stock parseMangaList."
+        }
+      }
+    },
+
+    "mangareaderConfig": {
+      "type": "object",
+      "description": "config for engine=\"mangareader\" (MangaThemesia / MangaReader WordPress theme). Engine constants NOT expressed here: browse URL grammar, order/status/type maps, tag scraping, multilingual status dictionary, ts_reader.run JSON reader, resolveLink.",
+      "additionalProperties": false,
+      "properties": {
+        "domains": {
+          "type": "array",
+          "description": "Mirror domains (first = primary; the top-level `domain` is the default). e.g. manhwadesu.im, manhwadesu.cx, ...",
+          "items": { "type": "string" }
+        },
+        "pageSize": { "type": "integer", "minimum": 1, "description": "Items/page on list/browse endpoints (20-60)." },
+        "searchPageSize": { "type": "integer", "minimum": 1, "description": "Items/page on the ?s= search endpoint (10-100). Paging metadata." },
+        "listUrl": { "type": "string", "default": "/manga", "description": "Path of the browse/all-series page (also the tag-scrape page)." },
+        "datePattern": { "type": "string", "default": "MMMM d, yyyy", "description": "SimpleDateFormat pattern for .chapterdate, interpreted with locale." },
+        "locale": { "type": "string", "description": "BCP-47 locale for date parsing + toTitleCase. Defaults from top-level lang." },
+        "userAgent": { "type": "string", "description": "Pinned User-Agent header (e.g. Komikcast pins a Chrome/91 UA)." },
+        "defaultSortOrder": { "$ref": "#/$defs/sortOrder", "description": "Initial sort order." },
+        "sortOrders": {
+          "type": "array",
+          "description": "availableSortOrders. default {UPDATED, POPULARITY, ALPHABETICAL, ALPHABETICAL_DESC, NEWEST}.",
+          "items": { "$ref": "#/$defs/sortOrder" }
+        },
+        "capabilities": { "$ref": "#/$defs/filterCapabilities" },
+        "availableStates": {
+          "type": "array",
+          "description": "Filter states to expose. Tri-state: omitted/null => stock default {ONGOING, FINISHED, PAUSED}; [] => expose none; subset => exactly that subset (unknown names skipped).",
+          "items": { "$ref": "#/$defs/mangaState" }
+        },
+        "availableContentTypes": {
+          "type": "array",
+          "description": "Filter content types to expose. Tri-state: omitted/null => stock default {MANGA, MANHWA, MANHUA, COMICS, NOVEL}; [] => expose none; subset => exactly that subset.",
+          "items": { "type": "string", "enum": ["MANGA", "MANHWA", "MANHUA", "COMICS", "NOVEL"] }
+        },
+        "availableDemographics": {
+          "type": "array",
+          "description": "Demographic facet to expose (absorbs KomikIndo's getFilterOptions demographics axis). omitted/null => not exposed. The demographic filter param itself rides the source's listPage grammar.",
+          "items": { "$ref": "#/$defs/demographic" }
+        },
+        "selectors": {
+          "type": "object",
+          "description": "CSS selectors; each optional, falls back to the MangaThemesia default.",
+          "additionalProperties": false,
+          "properties": {
+            "mangaList": { "type": "string", "description": "Card container on list pages. default .postbody .listupd .bs .bsx" },
+            "mangaListImg": { "type": "string", "description": "Cover img inside a card. default img.ts-post-image" },
+            "mangaListTitle": { "type": "string", "description": "Title element inside a card. default div.tt" },
+            "chapter": { "type": "string", "description": "Chapter li rows. default #chapterlist > ul > li" },
+            "description": { "type": "string", "description": "Synopsis container. default div.entry-content" },
+            "page": { "type": "string", "description": "Reader img selector on the non-JSON fallback path. default div#readerarea img" },
+            "script": { "type": "string", "description": "Where the encoded reader script lives (encodedSrc only). default div.wrapper script" },
+            "testScript": { "type": "string", "description": "Probe deciding is-JS-reader-page + the parsed script. default script:containsData(ts_reader)" }
+          }
+        },
+        "encodedSrc": { "type": "boolean", "default": false, "description": "Reader images live in a base64 data:text/javascript <script src> blob (native decode path; no JS eval)." },
+        "netshield": { "type": "boolean", "default": false, "description": "Enable the native NetShield anti-bot cookie solver. Engine-internal primitive; never source-supplied code." },
+        "cloudflare": { "type": "boolean", "default": false, "description": "Register/enable the Cloudflare interstitial solver toggle." },
+        "statusOverrides": {
+          "type": "object",
+          "description": "Extra site-specific status synonyms, e.g. {\"publishing\":\"ONGOING\"}. Value = MangaState.",
+          "additionalProperties": { "$ref": "#/$defs/mangaState" }
+        },
+        "relativeDateWords": {
+          "type": "object",
+          "description": "Optional relative-date vocabulary for sites like TuManhwas (\"hace 3 días\"). Maps unit words -> canonical unit (second|minute|hour|day|week|month|year).",
+          "additionalProperties": { "type": "string", "enum": ["second", "minute", "hour", "day", "week", "month", "year"] }
+        },
+        "chapters": {
+          "oneOf": [{ "$ref": "#/$defs/mangaReaderChapters" }, { "type": "null" }],
+          "default": null,
+          "description": "Optional chapter-row parse tuning for getDetails (absorbs the getDetails chapter-row overrides). null/absent => stock MangaThemesia row parse."
+        },
+        "listPage": {
+          "oneOf": [{ "$ref": "#/$defs/mangaReaderListPage" }, { "type": "null" }],
+          "default": null,
+          "description": "Optional re-parameterized browse/search URL grammar (absorbs the getListPage overrides). null/absent => stock base grammar."
+        },
+        "pages": {
+          "oneOf": [{ "$ref": "#/$defs/mangaReaderPages" }, { "type": "null" }],
+          "default": null,
+          "description": "Optional reader page-extraction tuning for getPageList (absorbs the getPages overrides). null/absent => stock ts_reader-JSON-then-scrape behavior."
+        }
+      }
+    }
+  },
+
+  "allOf": [
+    {
+      "if": { "properties": { "engine": { "const": "madara" } } },
+      "then": { "properties": { "config": { "$ref": "#/$defs/madaraConfig" } } }
+    },
+    {
+      "if": { "properties": { "engine": { "const": "mangareader" } } },
+      "then": { "properties": { "config": { "$ref": "#/$defs/mangareaderConfig" } } }
+    }
+  ],
+
+  "examples": [
+    {
+      "id": "hiperdex",
+      "name": "HiperDex",
+      "lang": "en",
+      "nsfw": true,
+      "contentType": "MANGA",
+      "engine": "madara",
+      "domain": "hiperdex.com",
+      "config": {
+        "pageSize": 36,
+        "locale": "en",
+        "datePattern": "MMMM d, yyyy",
+        "tagPrefix": "manga-genre/",
+        "listUrl": "",
+        "withoutAjax": false,
+        "postReq": false,
+        "stylePage": "?style=list",
+        "sortOrders": ["UPDATED", "POPULARITY", "NEWEST", "ALPHABETICAL", "RATING", "RELEVANCE"],
+        "capabilities": { "multipleTags": true, "tagsExclusion": true, "search": true, "year": true, "authorSearch": false },
+        "selectors": {
+          "chapter": "li.wp-manga-chapter, div.wp-manga-chapter",
+          "page": "div.page-break",
+          "genre": "div.genres-content a",
+          "date": "span.chapter-release-date i",
+          "bodyPage": "div.main-col-inner div.reading-content",
+          "author": "div.author-content a, div.artist-content a"
+        },
+        "images": { "stripStyleParam": true, "imgAttrCandidates": ["src", "data-src", "data-lazy-src"], "flatPages": false },
+        "forwardCloudflareCookies": false
+      }
+    },
+    {
+      "id": "manytoon",
+      "name": "ManyToon",
+      "lang": "en",
+      "nsfw": true,
+      "contentType": "MANHWA",
+      "engine": "madara",
+      "domain": "manytoon.com",
+      "config": {
+        "selectors": { "author": "div.author-content a, div.artist-content a" },
+        "chapterDateReplacements": { "Newly Published!": "today" },
+        "chapterFetch": {
+          "url": "https://{domain}/wp-admin/admin-ajax.php",
+          "body": "action=ajax_chap&post_id={mangaId}"
+        },
+        "pathBrowse": {}
+      }
+    },
+    {
+      "id": "roseveil",
+      "name": "Roseveil",
+      "lang": "id",
+      "engine": "madara",
+      "domain": "roseveil.net",
+      "config": {
+        "selectors": { "chapterTitle": "h3", "bodyPage": "body" },
+        "tagDiscovery": [
+          { "mode": "OPTION", "selector": "select[name=manga_genre] option", "keyPrefix": "genre_" },
+          { "mode": "OPTION", "selector": "select[name=manga_tag] option", "keyPrefix": "tag_" }
+        ],
+        "listItem": { "container": "article", "link": "h3 a, a", "fallbackToStock": true },
+        "images": { "flatPages": true, "pageImgSelector": ".reading-content .page-break img" }
+      }
+    },
+    {
+      "id": "sushiscan",
+      "name": "SushiScan",
+      "lang": "fr",
+      "nsfw": false,
+      "contentType": "MANGA",
+      "engine": "mangareader",
+      "domain": "sushiscan.net",
+      "config": {
+        "domains": ["sushiscan.net", "sushiscan.fr"],
+        "pageSize": 20,
+        "searchPageSize": 20,
+        "listUrl": "/catalogue",
+        "datePattern": "MMMM d, yyyy",
+        "locale": "fr",
+        "sortOrders": ["UPDATED", "POPULARITY", "ALPHABETICAL", "ALPHABETICAL_DESC", "NEWEST"],
+        "capabilities": { "multipleTags": true, "tagsExclusion": false, "search": true },
+        "availableStates": ["ONGOING", "FINISHED", "PAUSED"],
+        "availableContentTypes": ["MANGA", "MANHWA", "MANHUA"],
+        "selectors": {
+          "mangaList": ".postbody .listupd .bs .bsx",
+          "mangaListImg": "img.ts-post-image",
+          "chapter": "#chapterlist > ul > li",
+          "description": "div.entry-content",
+          "page": "div#readerarea img",
+          "testScript": "script:containsData(ts_reader)"
+        },
+        "encodedSrc": false,
+        "cloudflare": true,
+        "chapters": { "order": "DOM_REVERSED", "titleSelector": ".chapternum", "dateSelector": ".chapterdate" },
+        "pages": { "mode": "auto", "dedup": true, "skipDataUri": true, "imageUrlReplacements": [["\\", ""]] }
+      }
+    },
+    {
+      "id": "komiku",
+      "name": "Komiku",
+      "lang": "id",
+      "engine": "mangareader",
+      "domain": "komiku.id",
+      "config": {
+        "listUrl": "/manga",
+        "datePattern": "dd/MM/yyyy",
+        "availableStates": ["ONGOING", "FINISHED"],
+        "availableContentTypes": ["MANGA", "MANHWA", "MANHUA"],
+        "chapters": {
+          "anchor": "td.judulseries a",
+          "titleSelector": "td.judulseries a span",
+          "dateSelector": "td.tanggalseries"
+        },
+        "listPage": {
+          "listHost": "api.komiku.org",
+          "orderParam": "orderby",
+          "orderKeys": { "UPDATED": "modified", "NEWEST": "date", "POPULARITY": "meta_value_num", "ALPHABETICAL": "title" },
+          "genreParamsIndexed": ["genre", "genre2"],
+          "statusValues": { "ONGOING": "ongoing", "FINISHED": "end" },
+          "typeParam": "tipe",
+          "page": { "mode": "PATH" },
+          "search": { "mode": "QUERY", "path": "", "param": "s", "fixedParams": { "post_type": "manga" } }
+        }
+      }
+    },
+    {
+      "id": "komikindo_ch",
+      "name": "KomikIndo.ch",
+      "lang": "id",
+      "engine": "mangareader",
+      "domain": "komikindo.ch",
+      "config": {
+        "availableStates": ["ONGOING", "FINISHED"],
+        "availableContentTypes": ["MANGA", "MANHWA", "MANHUA"],
+        "availableDemographics": ["JOSEI", "SEINEN", "SHOUJO", "SHOUNEN"],
+        "relativeDateWords": { "tahun": "year", "bulan": "month", "minggu": "week", "hari": "day", "jam": "hour", "menit": "minute", "detik": "second" },
+        "chapters": { "anchor": "span.lchx > a", "dateSelector": "span.dt" },
+        "listPage": {
+          "browseSeparator": "?",
+          "statusValues": { "ONGOING": "Ongoing", "FINISHED": "Completed" },
+          "typeValues": { "MANGA": "Manga", "MANHWA": "Manhwa", "MANHUA": "Manhua" },
+          "search": { "mode": "QUERY", "param": "title" }
+        },
+        "pages": { "mode": "images", "onErrorSrcAttr": ["onError", "onerror"] }
+      }
+    }
+  ]
+}

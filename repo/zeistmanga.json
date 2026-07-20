@@ -1,0 +1,834 @@
+[
+ {
+  "id": "arabsdoujin",
+  "name": "ArabsDoujin",
+  "lang": "ar",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "zeistmanga",
+  "domain": "www.arabsdoujin.online",
+  "broken": true,
+  "config": {},
+  "pageSize": 12
+ },
+ {
+  "id": "hijala",
+  "name": "Hijala",
+  "lang": "ar",
+  "engine": "zeistmanga",
+  "domain": "hijala.com",
+  "broken": true,
+  "config": {},
+  "pageSize": 12,
+  "antiBot": "cloudflare"
+ },
+ {
+  "id": "lonertl",
+  "name": "LonerTranslations",
+  "lang": "ar",
+  "engine": "zeistmanga",
+  "domain": "loner-tl.blogspot.com",
+  "config": {
+   "stateOngoing": "مستمرة",
+   "stateFinished": "مكتملة",
+   "stateAbandoned": "متوقفة"
+  },
+  "pageSize": 12,
+  "broken": false
+ },
+ {
+  "id": "mangaailand",
+  "name": "MangaAiLand",
+  "lang": "ar",
+  "engine": "zeistmanga",
+  "domain": "manga-ai-land.blogspot.com",
+  "config": {
+   "stateOngoing": "مستمر",
+   "stateFinished": "مكتملة",
+   "stateAbandoned": "متوقفة",
+   "tagScrape": {
+    "rootId": "LinkList1",
+    "item": "ul li a",
+    "keyMode": "hrefQuery",
+    "titleMode": "text",
+    "titleCase": false
+   }
+  },
+  "pageSize": 12,
+  "broken": false
+ },
+ {
+  "id": "mangahub_link",
+  "name": "MangaHub.link",
+  "lang": "ar",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "zeistmanga",
+  "domain": "www.mangahub.link",
+  "config": {
+   "stateOngoing": "مستمر",
+   "stateFinished": "مكتمل",
+   "availableStates": [
+    "ONGOING",
+    "FINISHED"
+   ],
+   "tagScrape": {
+    "rootId": "Genre",
+    "item": "div.items-center",
+    "keyMode": "input",
+    "titleMode": "label",
+    "titleTrimBefore": ")",
+    "titleCase": true
+   }
+  },
+  "pageSize": 12,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "mangasoul",
+  "name": "MangaSoul",
+  "lang": "ar",
+  "engine": "zeistmanga",
+  "domain": "www.manga-soul.com",
+  "config": {},
+  "pageSize": 12,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "manhatok",
+  "name": "ManhaTok",
+  "lang": "ar",
+  "engine": "zeistmanga",
+  "domain": "manhatok.blogspot.com",
+  "config": {
+   "selectPage": "#seoneurons-target img"
+  },
+  "pageSize": 12,
+  "broken": false
+ },
+ {
+  "id": "xsanomanga",
+  "name": "XsanoManga",
+  "lang": "ar",
+  "engine": "zeistmanga",
+  "domain": "www.xsano-manga.com",
+  "config": {},
+  "pageSize": 12,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "yokaiteam",
+  "name": "YokaiTeam",
+  "lang": "ar",
+  "engine": "zeistmanga",
+  "domain": "yokai-team.blogspot.com",
+  "config": {},
+  "pageSize": 12,
+  "broken": false
+ },
+ {
+  "id": "yurimoonsub",
+  "name": "Yurimoonsub.blogspot.com",
+  "lang": "ar",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "zeistmanga",
+  "domain": "yurimoonsub.blogspot.com",
+  "config": {},
+  "pageSize": 12,
+  "broken": false
+ },
+ {
+  "id": "aiyumangascanlation",
+  "name": "AiyuManhua",
+  "lang": "es",
+  "engine": "zeistmanga",
+  "domain": "www.aiyumanhua.com",
+  "broken": true,
+  "config": {
+   "selectPage": "article.chapter img"
+  },
+  "pageSize": 12
+ },
+ {
+  "id": "datgarscanlation",
+  "name": "DatgarScanlation",
+  "lang": "es",
+  "engine": "zeistmanga",
+  "domain": "datgarscanlation.blogspot.com",
+  "config": {},
+  "pageSize": 12,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "gistamishousefansub",
+  "name": "GistamisHouseFansub",
+  "lang": "es",
+  "engine": "zeistmanga",
+  "domain": "gistamishousefansub.blogspot.com",
+  "config": {
+   "stateOngoing": "Activo",
+   "stateFinished": "Completo",
+   "stateAbandoned": "Cancelado",
+   "selectPage": ".post img"
+  },
+  "pageSize": 12,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "nekoscans",
+  "name": "NekoScans",
+  "lang": "es",
+  "engine": "zeistmanga",
+  "domain": "nekoproject.org",
+  "broken": false,
+  "config": {},
+  "pageSize": 12
+ },
+ {
+  "id": "asupankomik",
+  "name": "AsupanKomik",
+  "lang": "id",
+  "engine": "zeistmanga",
+  "domain": "www.asupankomik.my.id",
+  "broken": true,
+  "config": {},
+  "pageSize": 12
+ },
+ {
+  "id": "ichiromanga",
+  "name": "IchiroManga",
+  "lang": "id",
+  "engine": "zeistmanga",
+  "domain": "ichiroverse.my.id",
+  "broken": false,
+  "config": {},
+  "pageSize": 12
+ },
+ {
+  "id": "kishisan",
+  "name": "Kishisan",
+  "lang": "id",
+  "engine": "zeistmanga",
+  "domain": "www.kishisan.site",
+  "broken": true,
+  "config": {},
+  "pageSize": 12
+ },
+ {
+  "id": "klmanhua",
+  "name": "KlManhua",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "zeistmanga",
+  "domain": "klmanhua.com",
+  "broken": false,
+  "config": {
+   "tagScrape": {
+    "rootId": "LinkList1",
+    "item": "ul li a",
+    "keyMode": "hrefQuery",
+    "titleMode": "text",
+    "titleCase": false
+   }
+  },
+  "pageSize": 12
+ },
+ {
+  "id": "komikges",
+  "name": "KomikGes",
+  "lang": "id",
+  "engine": "zeistmanga",
+  "domain": "www.komikges.my.id",
+  "broken": true,
+  "needsCustomLogic": true,
+  "customMethods": [
+   "loadChapters",
+   "getPages"
+  ],
+  "customNote": "Chapter feed label read from .episode-list script; pages decoded from a `let data_content =` script with \\x3d/\\x22-escaped src attrs. Neither is expressible by the generic feed/three-branch page pipeline.",
+  "config": {},
+  "pageSize": 12
+ },
+ {
+  "id": "komikrealm",
+  "name": "KomikRealm",
+  "lang": "id",
+  "engine": "zeistmanga",
+  "domain": "komikrealm.org",
+  "config": {},
+  "pageSize": 12,
+  "broken": false
+ },
+ {
+  "id": "lepoytl",
+  "name": "Lepoytl",
+  "lang": "id",
+  "engine": "zeistmanga",
+  "domain": "lepoytl.my.id",
+  "config": {},
+  "pageSize": 12,
+  "broken": false
+ },
+ {
+  "id": "magerin",
+  "name": "Magerin",
+  "lang": "id",
+  "engine": "zeistmanga",
+  "domain": "www.magerin.com",
+  "broken": true,
+  "config": {},
+  "pageSize": 12
+ },
+ {
+  "id": "mikoroku",
+  "name": "Mikoroku",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "zeistmanga",
+  "domain": "www.mikoroku.com",
+  "config": {
+   "tagScrape": {
+    "rootId": "Genre",
+    "item": "div.items-center",
+    "keyMode": "input",
+    "titleMode": "label",
+    "titleTrimBefore": "(",
+    "titleCase": false
+   }
+  },
+  "pageSize": 12,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "ngamenkomik",
+  "name": "NgamenKomik",
+  "lang": "id",
+  "engine": "zeistmanga",
+  "domain": "ngamenkomik05.blogspot.com",
+  "config": {},
+  "pageSize": 12,
+  "broken": false
+ },
+ {
+  "id": "nimemob",
+  "name": "Nimemob",
+  "lang": "id",
+  "engine": "zeistmanga",
+  "domain": "www.nimemob.my.id",
+  "broken": true,
+  "config": {},
+  "pageSize": 12
+ },
+ {
+  "id": "okyykomik",
+  "name": "OkyyKomik",
+  "lang": "id",
+  "engine": "zeistmanga",
+  "domain": "www.okyykomik.my.id",
+  "config": {},
+  "pageSize": 12,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "reyume",
+  "name": "ReYume",
+  "lang": "id",
+  "engine": "zeistmanga",
+  "domain": "www.re-yume.my.id",
+  "needsCustomLogic": true,
+  "customMethods": [
+   "parseMangaList",
+   "getDetails",
+   "loadChapters",
+   "getPages",
+   "fetchAvailableTags"
+  ],
+  "customNote": "Strips ?m=1/&m=1 from list URLs; bespoke details title/author/state selectors; chapter feed label from .chapter_get[data-labelchapter]/.libraryAdd[data-title]/clwd.run with per-chapter title prefix stripping; pages from a #zeist-raw-data textarea via regex. selectTags/selectPage/staticTags datafied as a degraded fallback only.",
+  "config": {
+   "selectTags": "a[rel=tag]",
+   "selectPage": "#zeist-manga-reader img",
+   "staticTags": [
+    {
+     "key": "Action",
+     "title": "Action"
+    },
+    {
+     "key": "Adventure",
+     "title": "Adventure"
+    },
+    {
+     "key": "Comedy",
+     "title": "Comedy"
+    },
+    {
+     "key": "Drama",
+     "title": "Drama"
+    },
+    {
+     "key": "Fantasy",
+     "title": "Fantasy"
+    },
+    {
+     "key": "Horror",
+     "title": "Horror"
+    },
+    {
+     "key": "Mystery",
+     "title": "Mystery"
+    },
+    {
+     "key": "Psychological",
+     "title": "Psychological"
+    },
+    {
+     "key": "Romance",
+     "title": "Romance"
+    },
+    {
+     "key": "Sci-Fi",
+     "title": "Sci-Fi"
+    },
+    {
+     "key": "Slice of Life",
+     "title": "Slice of Life"
+    },
+    {
+     "key": "Supernatural",
+     "title": "Supernatural"
+    },
+    {
+     "key": "Thriller",
+     "title": "Thriller"
+    },
+    {
+     "key": "Tragedy",
+     "title": "Tragedy"
+    },
+    {
+     "key": "Isekai",
+     "title": "Isekai"
+    },
+    {
+     "key": "Magic",
+     "title": "Magic"
+    },
+    {
+     "key": "Shounen",
+     "title": "Shounen"
+    },
+    {
+     "key": "Seinen",
+     "title": "Seinen"
+    },
+    {
+     "key": "Shoujo",
+     "title": "Shoujo"
+    },
+    {
+     "key": "Josei",
+     "title": "Josei"
+    },
+    {
+     "key": "Martial Arts",
+     "title": "Martial Arts"
+    },
+    {
+     "key": "Historical",
+     "title": "Historical"
+    },
+    {
+     "key": "School Life",
+     "title": "School Life"
+    }
+   ]
+  },
+  "pageSize": 12,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "shiyurasub",
+  "name": "ShiyuraSub",
+  "lang": "id",
+  "engine": "zeistmanga",
+  "domain": "shiyurasub.blogspot.com",
+  "config": {
+   "selectTags": ".leading-8 div.my-5.gap-2 a",
+   "tagScrape": {
+    "rootSelector": "div.list-label-widget-content",
+    "item": "ul li a",
+    "keyMode": "hrefSlash",
+    "titleMode": "htmlBeforeSpan",
+    "titleCase": false
+   }
+  },
+  "pageSize": 12,
+  "broken": false
+ },
+ {
+  "id": "sobatmanku",
+  "name": "Sobatmanku",
+  "lang": "id",
+  "engine": "zeistmanga",
+  "domain": "www.sobatmanku.my.id",
+  "broken": false,
+  "config": {},
+  "pageSize": 12
+ },
+ {
+  "id": "tooncubus",
+  "name": "ToonCubus",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "zeistmanga",
+  "domain": "www.tooncubus.top",
+  "needsCustomLogic": true,
+  "customMethods": [
+   "loadChapters"
+  ],
+  "customNote": "Chapters scraped from HTML ul.series-chapterlist div.flexch-infoz (uploadDate=0), not the Blogger JSON feed. tagScrape datafied; list/details/pages use the base pipeline.",
+  "config": {
+   "tagScrape": {
+    "path": "/p/genre-list.html",
+    "rootSelector": ".dzdes-genre",
+    "item": "ul li a",
+    "keyMode": "hrefSlash",
+    "titleMode": "span",
+    "titleCase": false
+   }
+  },
+  "pageSize": 12,
+  "broken": false
+ },
+ {
+  "id": "ulascomic",
+  "name": "UlasComic",
+  "lang": "id",
+  "engine": "zeistmanga",
+  "domain": "www.ulascomic01.xyz",
+  "needsCustomLogic": true,
+  "customMethods": [
+   "getPages"
+  ],
+  "customNote": "Pages from a `config['chapterImage'] = [ ... ]` script array; not one of the base three page branches.",
+  "config": {},
+  "pageSize": 12,
+  "broken": false
+ },
+ {
+  "id": "animexnovel",
+  "name": "AnimeXNovel",
+  "lang": "pt",
+  "engine": "zeistmanga",
+  "domain": "www.animexnovel.com",
+  "needsCustomLogic": true,
+  "customMethods": [
+   "loadChapters"
+  ],
+  "customNote": "Chapters scraped from HTML (div.list-judul:contains(Lista de Capítulos) #latest ul li / tab-content) with uploadDate=0, not the Blogger feed. States + tagScrape datafied.",
+  "config": {
+   "stateOngoing": "Ativo",
+   "stateFinished": "Completo",
+   "stateAbandoned": "Dropado",
+   "tagScrape": {
+    "rootId": "LinkList1",
+    "item": "ul li a",
+    "keyMode": "hrefSlash",
+    "titleMode": "text",
+    "titleCase": false
+   }
+  },
+  "pageSize": 12,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "duoscanlators",
+  "name": "DuoScanlators",
+  "lang": "pt",
+  "engine": "zeistmanga",
+  "domain": "duoscanlators.blogspot.com",
+  "config": {},
+  "pageSize": 12,
+  "broken": false
+ },
+ {
+  "id": "elevenscanlator",
+  "name": "ElevenScanlator",
+  "lang": "pt",
+  "engine": "zeistmanga",
+  "domain": "elevenscanlator.blogspot.com",
+  "config": {
+   "stateOngoing": "Lançando",
+   "stateFinished": "Completo",
+   "stateAbandoned": "Dropado"
+  },
+  "pageSize": 12,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "galaxscans",
+  "name": "GalaxScanlator",
+  "lang": "pt",
+  "engine": "zeistmanga",
+  "domain": "galaxscanlator.blogspot.com",
+  "config": {
+   "mangaCategory": "Recentes",
+   "stateOngoing": "Lançando",
+   "stateFinished": "Completo",
+   "stateAbandoned": "Dropado"
+  },
+  "pageSize": 12,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "guildatierdraw",
+  "name": "GuildaTierDraw",
+  "lang": "pt",
+  "engine": "zeistmanga",
+  "domain": "www.guildatierdraw.top",
+  "broken": true,
+  "config": {
+   "tagScrape": {
+    "rootId": "LinkList2",
+    "item": "ul li a",
+    "keyMode": "hrefQuery",
+    "titleMode": "text",
+    "titleCase": false
+   }
+  },
+  "pageSize": 12
+ },
+ {
+  "id": "heckscans",
+  "name": "HeckScans",
+  "lang": "pt",
+  "engine": "zeistmanga",
+  "domain": "heckscans.blogspot.com",
+  "config": {},
+  "pageSize": 12,
+  "broken": false
+ },
+ {
+  "id": "ler999",
+  "name": "Ler999",
+  "lang": "pt",
+  "engine": "zeistmanga",
+  "domain": "ler999.blogspot.com",
+  "config": {},
+  "pageSize": 12,
+  "broken": false
+ },
+ {
+  "id": "maxgsscan",
+  "name": "MaxgsScan",
+  "lang": "pt",
+  "engine": "zeistmanga",
+  "domain": "www.maxgsscan.online",
+  "broken": true,
+  "config": {},
+  "pageSize": 12
+ },
+ {
+  "id": "raysscan",
+  "name": "RaysScan",
+  "lang": "pt",
+  "engine": "zeistmanga",
+  "domain": "raysscan.blogspot.com",
+  "config": {
+   "availableStates": []
+  },
+  "pageSize": 12,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "solooscan",
+  "name": "SolooScan",
+  "lang": "pt",
+  "engine": "zeistmanga",
+  "domain": "solooscan.blogspot.com",
+  "broken": true,
+  "config": {
+   "mangaCategory": "Recentes",
+   "stateOngoing": "Lançando",
+   "stateFinished": "Completo",
+   "stateAbandoned": "Dropado"
+  },
+  "pageSize": 12,
+  "antiBot": "cloudflare"
+ },
+ {
+  "id": "temakimangas",
+  "name": "TemakiMangas",
+  "lang": "pt",
+  "engine": "zeistmanga",
+  "domain": "temakimangas.blogspot.com",
+  "needsCustomLogic": true,
+  "customMethods": [
+   "getDetails"
+  ],
+  "customNote": "Bespoke details layout (header/.thumb/#extra-info dt:contains(Autor); state dropado/finalizada; tags dt:contains(Generos)+dd a). No tag/state filter. selectPage datafied; list/chapters/pages use the base pipeline.",
+  "config": {
+   "availableStates": [],
+   "selectPage": "#reader div.separator img"
+  },
+  "pageSize": 12,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "tyrantscans",
+  "name": "TyrantScans",
+  "lang": "pt",
+  "engine": "zeistmanga",
+  "domain": "www.tyrantscans.com",
+  "config": {},
+  "pageSize": 12,
+  "broken": true,
+  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+ },
+ {
+  "id": "wolfscanbr",
+  "name": "WolfScanBr",
+  "lang": "pt",
+  "engine": "zeistmanga",
+  "domain": "wolfscanbr.blogspot.com",
+  "config": {},
+  "pageSize": 12,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "yaoifanclub",
+  "name": "YaoiFanClub",
+  "lang": "pt",
+  "engine": "zeistmanga",
+  "domain": "www.yaoifanclub.com",
+  "config": {
+   "stateOngoing": "Ativo",
+   "stateFinished": "Completo",
+   "stateAbandoned": "Dropado"
+  },
+  "pageSize": 12,
+  "broken": false
+ },
+ {
+  "id": "zscanlation",
+  "name": "ZScanlation",
+  "lang": "pt",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "zeistmanga",
+  "domain": "zscanlation.blogspot.com",
+  "broken": false,
+  "config": {
+   "stateOngoing": "Em Lançamento",
+   "stateFinished": "Completo",
+   "stateAbandoned": "Dropado"
+  },
+  "pageSize": 12
+ },
+ {
+  "id": "epikman",
+  "name": "EpikMan",
+  "lang": "tr",
+  "engine": "zeistmanga",
+  "domain": "www.epikman.ga",
+  "broken": true,
+  "config": {
+   "mangaCategory": "Seri",
+   "stateOngoing": "Devam Ediyor",
+   "stateFinished": "Tamamlandı",
+   "tagScrape": {
+    "rootId": "LinkList1",
+    "item": "ul li a",
+    "keyMode": "hrefQuery",
+    "titleMode": "text",
+    "titleCase": false
+   }
+  },
+  "pageSize": 12
+ },
+ {
+  "id": "mikrokosmosfb",
+  "name": "Mikrokosmosfb",
+  "lang": "tr",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "zeistmanga",
+  "domain": "mikrokosmosfb.blogspot.com",
+  "tagNote": "fetchAvailableTags parses a `label: [ ... ]` inline script array (not a DOM widget), which the declarative tagScrape cannot express; tags fall back to the base div.filter scrape (empty if absent). Core list/details/chapters/pages fully data-driven.",
+  "config": {
+   "stateOngoing": "Devam Ediyor",
+   "stateFinished": "Tamamlandı",
+   "stateAbandoned": "Güncel"
+  },
+  "pageSize": 12,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "shadowceviri",
+  "name": "ShadowCeviri",
+  "lang": "tr",
+  "contentType": "COMICS",
+  "engine": "zeistmanga",
+  "domain": "shadowceviri.blogspot.com",
+  "config": {
+   "stateOngoing": "Devam Ediyor",
+   "stateFinished": "Tamamlandı",
+   "stateAbandoned": "Güncel"
+  },
+  "pageSize": 12,
+  "broken": false
+ },
+ {
+  "id": "snscoeurturkey",
+  "name": "SnscoeurTurkey",
+  "lang": "tr",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "zeistmanga",
+  "domain": "snscoeurturkey.blogspot.com",
+  "config": {
+   "mangaCategory": "Seriler",
+   "stateOngoing": "Güncel",
+   "stateFinished": "Final",
+   "stateAbandoned": "Düzenleniyor",
+   "tagScrape": {
+    "path": "/p/gelismis-arama.html",
+    "rootSelector": "div.filter",
+    "item": "ul li",
+    "keyMode": "input",
+    "titleMode": "label",
+    "titleCase": false
+   }
+  },
+  "pageSize": 12,
+  "broken": false
+ }
+]

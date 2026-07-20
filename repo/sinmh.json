@@ -1,0 +1,29 @@
+[
+ {
+  "id": "gufengmh",
+  "name": "Gufengmh",
+  "lang": "zh",
+  "nsfw": false,
+  "contentType": "MANHUA",
+  "engine": "sinmh",
+  "domain": "www.gufengmh.com",
+  "broken": true,
+  "config": {},
+  "pageSize": 36,
+  "antiBot": "cloudflare"
+ },
+ {
+  "id": "ykmh",
+  "name": "Ykmh",
+  "lang": "zh",
+  "nsfw": false,
+  "contentType": "MANHUA",
+  "engine": "sinmh",
+  "domain": "www.ykmh.net",
+  "config": {},
+  "pageSize": 36,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ }
+]

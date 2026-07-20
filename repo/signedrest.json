@@ -1,0 +1,627 @@
+[
+ {
+  "id": "KOMIKCAST",
+  "name": "KomikCast",
+  "lang": "id",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "signedrest",
+  "domain": "komikcast05.com",
+  "altDomains": [],
+  "className": "Komikcast",
+  "file": "mangareader/id/Komikcast.kt",
+  "config": {
+   "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+   "referer": "https://v1.komikcast.fit/",
+   "origin": "https://v1.komikcast.fit",
+   "sortOrders": [
+    "UPDATED",
+    "POPULARITY",
+    "ALPHABETICAL",
+    "ALPHABETICAL_DESC",
+    "NEWEST"
+   ],
+   "capabilities": {
+    "multipleTags": true,
+    "tagsExclusion": false,
+    "search": true
+   },
+   "statusStateMap": {
+    "ongoing": "ONGOING",
+    "completed": "FINISHED",
+    "hiatus": "PAUSED"
+   },
+   "list": {
+    "path": "/series",
+    "pageBase": 1,
+    "pageSizeValue": 60,
+    "params": {
+     "page": "page",
+     "pageSize": "take",
+     "status": "status",
+     "type": "type",
+     "genre": "genreIds",
+     "genreMode": "csv",
+     "genreValueField": "title"
+    },
+    "staticParams": {
+     "takeChapter": "2",
+     "includeMeta": "true"
+    },
+    "statusMap": {
+     "ONGOING": "ongoing",
+     "FINISHED": "completed",
+     "PAUSED": "hiatus"
+    },
+    "typeMap": {
+     "MANGA": "manga",
+     "MANHWA": "manhwa",
+     "MANHUA": "manhua"
+    },
+    "searchQueryTemplate": "?filter=title=like=\"{query}\",nativeTitle=like=\"{query}\"",
+    "arrayPath": [
+     "data"
+    ],
+    "itemObjectPath": "data",
+    "item": {
+     "slug": "slug",
+     "title": "title",
+     "cover": "coverImage",
+     "author": "author",
+     "status": "status",
+     "rating": "rating",
+     "ratingDivisor": 10,
+     "urlTemplate": "/series/{slug}"
+    }
+   },
+   "details": {
+    "endpoint": "/series/{slug}?includeMeta=true",
+    "slugPrefix": "/series/",
+    "objectPath": [
+     "data.data",
+     "data"
+    ],
+    "title": "title",
+    "cover": "coverImage",
+    "description": "synopsis",
+    "author": "author",
+    "status": "status",
+    "genresArray": [
+     "genres"
+    ],
+    "genreName": [
+     "data.name"
+    ],
+    "genreKey": [
+     "id"
+    ],
+    "chaptersEndpoint": "/series/{slug}/chapters"
+   },
+   "chapters": {
+    "arrayPath": [
+     "data"
+    ],
+    "itemObjectPath": "data",
+    "slug": "slug",
+    "index": "index",
+    "number": "index",
+    "title": "title",
+    "date": "createdAt",
+    "urlTemplate": "/series/{seriesSlug}/chapters/{chapterId}",
+    "dateUnit": "iso",
+    "datePattern": "yyyy-MM-dd'T'HH:mm:ss.SSSXXX",
+    "reversed": true
+   },
+   "pages": {
+    "endpoint": "{chapterPath}",
+    "arrayPath": [
+     "data.data.images",
+     "data.images",
+     "images"
+    ]
+   },
+   "genres": {
+    "endpoint": "/genres",
+    "arrayPath": [
+     "data"
+    ],
+    "itemObjectPath": "data",
+    "name": [
+     "name"
+    ],
+    "key": [
+     "id"
+    ]
+   }
+  },
+  "configComplex": {},
+  "overriddenMethods": [
+   "getListPage",
+   "getDetails",
+   "getPages",
+   "getRequestHeaders",
+   "getFilterOptions"
+  ],
+  "parsingOverrides": [],
+  "needsCustomLogic": false,
+  "warnings": [
+   "Browse endpoint ignores sort order (kotatsu Komikcast never sends a sort param on /series); the exposed sortOrders are cosmetic, faithful to the original.",
+   "genreIds param is joined from tag *titles* (kotatsu quirk), captured via genreValueField=title."
+  ],
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "WESTMANGA",
+  "name": "WestManga",
+  "lang": "id",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "signedrest",
+  "domain": "westmanga.cc",
+  "altDomains": [],
+  "className": "WestmangaParser",
+  "file": "mangareader/id/WestmangaParser.kt",
+  "config": {
+   "apiDomain": "data.mantweh.online",
+   "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+   "referer": "https://{domain}/",
+   "sortOrders": [
+    "UPDATED",
+    "POPULARITY",
+    "ALPHABETICAL",
+    "NEWEST"
+   ],
+   "capabilities": {
+    "multipleTags": true,
+    "tagsExclusion": false,
+    "search": true
+   },
+   "statusStateMap": {
+    "ongoing": "ONGOING",
+    "completed": "FINISHED",
+    "hiatus": "PAUSED"
+   },
+   "signing": {
+    "alg": "HmacSHA256",
+    "accessKey": "WM_WEB_FRONT_END",
+    "secretKey": "xxxoidj",
+    "message": "wm-api-request",
+    "keyTemplate": "{time}GET{path}{accessKey}{secretKey}",
+    "method": "GET",
+    "timeUnit": "seconds",
+    "timeHeader": "x-wm-request-time",
+    "accessKeyHeader": "x-wm-accses-key",
+    "signatureHeader": "x-wm-request-signature"
+   },
+   "list": {
+    "path": "/api/contents",
+    "pageBase": 0,
+    "pageSizeValue": 20,
+    "defaultSort": "UPDATED",
+    "params": {
+     "query": "q",
+     "page": "page",
+     "pageSize": "per_page",
+     "sort": "sort",
+     "status": "status",
+     "type": "country",
+     "genre": "genre[]",
+     "genreMode": "repeat",
+     "genreValueField": "key"
+    },
+    "staticParams": {
+     "type": "Comic"
+    },
+    "sortMap": {
+     "UPDATED": "updated_at",
+     "POPULARITY": "views",
+     "ALPHABETICAL": "title",
+     "NEWEST": "created_at"
+    },
+    "statusMap": {
+     "ONGOING": "ongoing",
+     "FINISHED": "completed",
+     "PAUSED": "hiatus"
+    },
+    "typeMap": {
+     "MANGA": "JP",
+     "MANHWA": "KR",
+     "MANHUA": "CN"
+    },
+    "arrayPath": [
+     "data"
+    ],
+    "item": {
+     "slug": "slug",
+     "title": "title",
+     "cover": "cover",
+     "urlTemplate": "/manga/{slug}/",
+     "publicUrlTemplate": "/comic/{slug}"
+    }
+   },
+   "details": {
+    "endpoint": "/api/comic/{slug}",
+    "slugPrefix": "/manga/",
+    "slugSuffix": "/",
+    "objectPath": [
+     "data"
+    ],
+    "title": "title",
+    "cover": "cover",
+    "description": "sinopsis",
+    "author": "author",
+    "status": "status",
+    "altName": [
+     "alternative_name"
+    ],
+    "genresArray": [
+     "genres"
+    ],
+    "genreName": [
+     "name"
+    ],
+    "genreKey": [
+     "id"
+    ],
+    "country": [
+     "country_id",
+     "country"
+    ],
+    "countryTagMap": {
+     "JP": "manga",
+     "CN": "manhua",
+     "KR": "manhwa"
+    }
+   },
+   "chapters": {
+    "arrayPath": [
+     "chapters"
+    ],
+    "slug": "slug",
+    "number": "number",
+    "date": [
+     "updated_at.time",
+     "updated_at"
+    ],
+    "urlTemplate": "/{chapterSlug}/",
+    "dateUnit": "seconds",
+    "reversed": true
+   },
+   "pages": {
+    "endpoint": "/api/v/{chapterSlug}",
+    "chapterSlugPrefix": "/",
+    "chapterSlugSuffix": "/",
+    "arrayPath": [
+     "data.images",
+     "images"
+    ]
+   },
+   "genres": {
+    "endpoint": "/api/contents/genres",
+    "arrayPath": [
+     "data"
+    ],
+    "name": [
+     "name"
+    ],
+    "key": [
+     "id"
+    ]
+   }
+  },
+  "configComplex": {},
+  "overriddenMethods": [
+   "getListPage",
+   "getDetails",
+   "getPages",
+   "getFilterOptions",
+   "getRequestHeaders",
+   "createApiHeaders"
+  ],
+  "parsingOverrides": [
+   "HMAC-SHA256 request signing (x-wm-request-signature)"
+  ],
+  "needsCustomLogic": false,
+  "warnings": [
+   "The HMAC signing key/message is site-specific pure DATA (accessKey/secretKey/message/keyTemplate) and covered by the engine's generic HMAC primitive.",
+   "The 'x-wm-accses-key' header name preserves the upstream typo intentionally."
+  ],
+  "broken": false
+ },
+ {
+  "id": "AINZSCANS",
+  "name": "AinzScans",
+  "lang": "id",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "signedrest",
+  "domain": "api.ainzscans01.com",
+  "altDomains": [],
+  "className": "AinzScans",
+  "file": "mangareader/id/AinzScans.kt",
+  "config": {
+   "locale": "en",
+   "referer": "https://v1.ainzscans01.com/",
+   "origin": "https://v1.ainzscans01.com",
+   "sortOrders": [
+    "UPDATED",
+    "POPULARITY",
+    "NEWEST",
+    "ALPHABETICAL",
+    "ALPHABETICAL_DESC"
+   ],
+   "capabilities": {
+    "multipleTags": true,
+    "tagsExclusion": false,
+    "search": true
+   },
+   "statusStateMap": {
+    "ongoing": "ONGOING",
+    "completed": "FINISHED",
+    "hiatus": "PAUSED"
+   },
+   "list": {
+    "path": "/api/search",
+    "pageBase": 0,
+    "pageSizeValue": 30,
+    "defaultSort": "UPDATED",
+    "params": {
+     "query": "q",
+     "page": "page",
+     "pageSize": "limit",
+     "sort": "sort",
+     "order": "order",
+     "orderValue": "desc",
+     "status": "status",
+     "type": "comic_type",
+     "genre": "genre",
+     "genreMode": "single",
+     "genreValueField": "key"
+    },
+    "staticParams": {
+     "type": "COMIC"
+    },
+    "sortMap": {
+     "UPDATED": "new",
+     "POPULARITY": "views",
+     "NEWEST": "new",
+     "ALPHABETICAL": "az",
+     "ALPHABETICAL_DESC": "za"
+    },
+    "statusMap": {
+     "ONGOING": "ONGOING",
+     "FINISHED": "COMPLETED",
+     "PAUSED": "HIATUS"
+    },
+    "typeMap": {
+     "MANGA": "MANGA",
+     "MANHWA": "MANHWA",
+     "MANHUA": "MANHUA"
+    },
+    "arrayPath": [
+     "data"
+    ],
+    "item": {
+     "slug": "slug",
+     "title": "title",
+     "cover": "poster_image_url",
+     "author": "author_name",
+     "status": "comic_status",
+     "rating": "rating_average",
+     "ratingDivisor": 10,
+     "urlTemplate": "/series/{slug}"
+    }
+   },
+   "details": {
+    "endpoint": "/api/series/comic/{slug}",
+    "slugPrefix": "/series/",
+    "objectPath": [
+     ""
+    ],
+    "title": "title",
+    "description": "synopsis",
+    "author": "author_name",
+    "status": "comic_status",
+    "genresArray": [
+     "genres"
+    ],
+    "genreName": [
+     "name"
+    ],
+    "genreKey": [
+     "slug"
+    ]
+   },
+   "chapters": {
+    "arrayPath": [
+     "units"
+    ],
+    "slug": "slug",
+    "number": "number",
+    "title": "title",
+    "date": "created_at",
+    "urlTemplate": "/series/{seriesSlug}/chapter/{chapterSlug}",
+    "dateUnit": "iso",
+    "datePattern": "yyyy-MM-dd'T'HH:mm:ss.SSSXXX",
+    "reversed": true
+   },
+   "pages": {
+    "endpoint": "/api/series/comic/{seriesSlug}/chapter/{chapterSlug}",
+    "seriesSlugAfter": "/series/",
+    "seriesSlugBefore": "/chapter",
+    "chapterSlugAfter": "/chapter/",
+    "arrayPath": [
+     "chapter.pages"
+    ],
+    "imageField": [
+     "image_url"
+    ]
+   },
+   "genres": {
+    "endpoint": "/api/genres",
+    "arrayPath": [
+     "data"
+    ],
+    "name": [
+     "name"
+    ],
+    "key": [
+     "slug"
+    ]
+   }
+  },
+  "configComplex": {},
+  "overriddenMethods": [
+   "getListPage",
+   "getDetails",
+   "getPages",
+   "getFilterOptions",
+   "getRequestHeaders"
+  ],
+  "parsingOverrides": [],
+  "needsCustomLogic": false,
+  "warnings": [
+   "genres endpoint returns a bare JSON array (not an envelope); the engine auto-detects a leading '[' and parses it directly.",
+   "The reader/pages endpoint inserts a 'comic' path segment absent from the chapter href, so seriesSlug/chapterSlug are re-extracted from the chapter url via between-markers."
+  ],
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "ALUCARDSCANS",
+  "name": "AlucardScans",
+  "lang": "tr",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "signedrest",
+  "domain": "alucardscans.com",
+  "altDomains": [],
+  "className": "AlucardScans",
+  "file": "mangareader/tr/AlucardScans.kt",
+  "config": {
+   "nextjs": true,
+   "referer": "https://{domain}/",
+   "origin": "https://{domain}",
+   "sortOrders": [
+    "POPULARITY",
+    "UPDATED"
+   ],
+   "capabilities": {
+    "search": true,
+    "multipleTags": false,
+    "tagsExclusion": false
+   },
+   "statusStateMap": {
+    "ongoing": "ONGOING",
+    "devam ediyor": "ONGOING",
+    "complete": "FINISHED",
+    "completed": "FINISHED",
+    "tamamlandi": "FINISHED",
+    "tamamlandı": "FINISHED",
+    "bitti": "FINISHED"
+   },
+   "list": {
+    "pageBase": 0,
+    "pageSizeValue": 24,
+    "defaultSort": "POPULARITY",
+    "popularTemplate": "/api/series?sort=views&order=desc&calculateTotalViews=true&page={page}&limit=24",
+    "latestTemplate": "/api/chapters/latest?page={page}&limit=24",
+    "searchTemplate": "/api/series?search={query}&page={page}&limit=24",
+    "arrayPath": [
+     "series",
+     "data"
+    ],
+    "latestArrayPath": [
+     "groupedChapters"
+    ],
+    "latestItemObjectPath": "series",
+    "item": {
+     "slug": "slug",
+     "title": [
+      "title",
+      "postTitle"
+     ],
+     "cover": [
+      "coverImage",
+      "cover"
+     ],
+     "status": [
+      "status",
+      "seriesStatus"
+     ],
+     "genresArrayInline": [
+      "genres"
+     ],
+     "urlTemplate": "/manga/{slug}"
+    }
+   },
+   "details": {
+    "slugPrefix": "/manga/",
+    "title": [
+     "title",
+     "postTitle"
+    ],
+    "cover": [
+     "coverImage",
+     "cover"
+    ],
+    "description": [
+     "description",
+     "postContent"
+    ],
+    "status": [
+     "status",
+     "seriesStatus"
+    ],
+    "genresArray": [
+     "genres"
+    ],
+    "genreName": [
+     "name",
+     "title"
+    ],
+    "genreKey": [
+     "slug"
+    ],
+    "nextSeriesKey": "initialSeries",
+    "nextChaptersKey": "initialChapters"
+   },
+   "chapters": {
+    "slug": "slug",
+    "number": "number",
+    "title": "title",
+    "date": "releaseDate",
+    "urlTemplate": "/{chapterSlug}",
+    "dateUnit": "iso",
+    "datePattern": "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+    "dateTimeZone": "UTC",
+    "sortByNumber": true
+   },
+   "pages": {
+    "htmlImgSelector": "div.w-full.flex-col.items-center img"
+   }
+  },
+  "configComplex": {},
+  "overriddenMethods": [
+   "getListPage",
+   "getDetails",
+   "getPages",
+   "getFilterOptions",
+   "getRequestHeaders"
+  ],
+  "parsingOverrides": [
+   "Next.js initialSeries/initialChapters embedded-JSON extraction (brace matching)"
+  ],
+  "needsCustomLogic": false,
+  "warnings": [
+   "BORDERLINE: covered via the nextjs flag, but AlucardScans is a Next.js hybrid (JSON list endpoints + HTML-embedded details/chapters + scraped reader imgs), not a pure signed-REST API. If more Next.js sources appear, promote this to its own NextjsEngine.",
+   "Only the millis UTC date pattern is applied; the kotatsu no-millis fallback (yyyy-MM-dd'T'HH:mm:ss'Z') is not attempted, so a rare seconds-precision releaseDate parses to 0."
+  ],
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ }
+]

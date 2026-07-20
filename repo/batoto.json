@@ -1,0 +1,39 @@
+[
+ {
+  "id": "batoto",
+  "name": "Bato.To",
+  "lang": "all",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "batoto",
+  "domain": "bato.to",
+  "needsCustomLogic": false,
+  "customMethods": [],
+  "config": {
+   "pageSize": 36,
+   "apiPath": "/ap2/"
+  },
+  "broken": false
+ },
+ {
+  "id": "xbatcat",
+  "name": "XBatCat",
+  "lang": "all",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "batoto",
+  "domain": "xcat.tv",
+  "needsCustomLogic": true,
+  "customMethods": [
+   "intercept"
+  ],
+  "customLogicReason": "kotatsu intercept() retries a failed image request against a pool of mirror image servers (https://n03, k06, ...) by rewriting the SERVER_PATTERN host prefix. That is a transport concern the SourceEngine contract does not model; getPageImageUrl returns the primary GraphQL image url and the mirror-server fallback is left as a future native-transport hook. All parsing (GraphQL browse/detail/chapter/page) is fully covered by the generic engine.",
+  "config": {
+   "pageSize": 36,
+   "apiPath": "/ap2/"
+  },
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ }
+]

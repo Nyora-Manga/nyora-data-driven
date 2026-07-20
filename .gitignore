@@ -1,0 +1,8 @@
+# Gradle / Kotlin build output
+build/
+.gradle/
+.kotlin/
+*.class
+
+# OS / editor
+.DS_Store

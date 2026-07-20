@@ -1,0 +1,117 @@
+[
+ {
+  "id": "manga18",
+  "name": "Manga18",
+  "lang": "en",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "manga18",
+  "domain": "manga18.club",
+  "config": {},
+  "needsCustomLogic": false,
+  "notes": "Reference source of the family (manga18.club software). Zero overrides — pure config on stock defaults.",
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "porncomic18",
+  "name": "18PornComic",
+  "lang": "en",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "manga18",
+  "domain": "18porncomic.com",
+  "config": {
+   "selectors": {
+    "selectTag": "div.item:not(.info_label) div.info_value a"
+   }
+  },
+  "needsCustomLogic": false,
+  "notes": "Overrides only the selectTag protected-open-val selector — pure config via selectors.selectTag.",
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "tumanhwas",
+  "name": "Tumanhwas",
+  "lang": "es",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "manga18",
+  "domain": "tumanhwas.club",
+  "config": {
+   "selectors": {
+    "selectTag": "div.item:contains(Géneros) div.info_value a",
+    "selectAlt": "div.item:contains(Títulos alternativos) div.info_value"
+   }
+  },
+  "needsCustomLogic": false,
+  "notes": "Spanish. Overrides only selectTag + selectAlt selectors — pure config. locale defaults from lang=es for date parsing.",
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "comic1000",
+  "name": "Comic1000",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "manga18",
+  "domain": "comic1000.com",
+  "config": {},
+  "needsCustomLogic": false,
+  "notes": "@Broken upstream (site dead). No overrides — pure-config row on stock defaults. nsfw=false (no ContentType.HENTAI on the @MangaSourceParser).",
+  "pageSize": 20,
+  "broken": true
+ },
+ {
+  "id": "hentai3zcc",
+  "name": "Hentai3z.cc",
+  "lang": "en",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "manga18",
+  "domain": "hentai3z.cc",
+  "config": {
+   "coverReplacements": [
+    {
+     "from": "cover_thumb_2.webp",
+     "to": "cover_250x350.jpg"
+    },
+    {
+     "from": "admin.manga18.us",
+     "to": "bk.18porncomic.com"
+    }
+   ]
+  },
+  "needsCustomLogic": true,
+  "notes": "Overrides parseMangaList (a real parsing method) to rewrite cover URLs — datafied via coverReplacements, so behaviour is fully reproduced; flagged for the method override per task definition.",
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "hanman18",
+  "name": "Hanman18",
+  "lang": "zh",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "manga18",
+  "domain": "hanman18.com",
+  "config": {
+   "chaptersHaveDate": false,
+   "disableTags": true
+  },
+  "needsCustomLogic": true,
+  "notes": "Chinese. Overrides getChapters (a real parsing method — chapters carry no date, uploadDate=0) and getFilterOptions (empty tags). Datafied via chaptersHaveDate=false + disableTags=true; flagged for the getChapters override.",
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ }
+]

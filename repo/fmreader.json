@@ -1,0 +1,68 @@
+[
+ {
+  "id": "weloma",
+  "name": "Weloma",
+  "lang": "ja",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "fmreader",
+  "domain": "weloma.art",
+  "needsCustomLogic": false,
+  "config": {},
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "welovemanga",
+  "name": "WeLoveManga",
+  "lang": "ja",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "fmreader",
+  "domain": "welovemanga.one",
+  "needsCustomLogic": true,
+  "notes": "Overrides getChapters + getPages (real parsing methods). The chapter list is fetched from an ajax fragment cont.Listchapter.php?mid={mid} (mid read from 'div.cmt input') whose rows wrap an inner <a>, and the page list from cont.listImg.php?cid={cid} (cid from '#chapter'). Fully datafied via chaptersAjaxUrl + chapterLinkSelector + pagesAjaxUrl; no residual custom code needed.",
+  "config": {
+   "chaptersAjaxUrl": "/app/manga/controllers/cont.Listchapter.php?mid={mid}",
+   "chapterLinkSelector": "a",
+   "chaptersMidSelector": "div.cmt input",
+   "chaptersMidAttr": "value",
+   "pagesAjaxUrl": "/app/manga/controllers/cont.listImg.php?cid={cid}",
+   "pagesCidSelector": "#chapter",
+   "pagesCidAttr": "value",
+   "pagesAjaxImgSelector": "img"
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "klz9",
+  "name": "Klz9",
+  "lang": "ja",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "fmreader",
+  "domain": "klz9.com",
+  "needsCustomLogic": true,
+  "notes": "NOT representable by FmreaderEngine. Klz9 replaces the entire pipeline (getListPage/getDetails/getChapters/getPages) with a private JSON API (/api/manga/list, /api/manga/slug/{slug}, /api/chapter/{id}) that requires per-request auth headers x-client-ts + x-client-sig = SHA-256(timestamp + '.' + clientSecret). The clientSecret and crypto signing cannot be expressed as pure HTML/selector data and demand a dedicated engine. Row kept for inventory; config is a stub and this source will not function on the generic engine.",
+  "config": {},
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "olimposcans",
+  "name": "OlimpoScans",
+  "lang": "es",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "fmreader",
+  "domain": "olympusxyz.com",
+  "needsCustomLogic": true,
+  "notes": "NOT an FmreaderParser. Although it lives in the site/fmreader/es folder, OlimpoScans extends PagedMangaParser directly and is a bespoke JSON API (dashboard.{domain}/api/series, /api/rankings, /api/new-chapters, /api/capitulo/...) with its own pagination, ranking-based popular feed, comic-type filtering and ISO date parsing. None of it maps to the Fmreader HTML pipeline; it needs its own dedicated engine. Row kept for inventory only.",
+  "config": {},
+  "pageSize": 24,
+  "broken": false
+ }
+]

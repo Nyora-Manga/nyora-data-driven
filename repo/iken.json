@@ -1,0 +1,162 @@
+[
+ {
+  "id": "VORTEXSCANS",
+  "name": "VortexScans",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "iken",
+  "domain": "vortexscans.org",
+  "altDomains": [],
+  "className": "VortexScans",
+  "file": "en/VortexScans.kt",
+  "config": {
+   "useAPI": true
+  },
+  "configComplex": {},
+  "overriddenMethods": [],
+  "parsingOverrides": [],
+  "needsCustomLogic": false,
+  "warnings": [],
+  "pageSize": 18,
+  "broken": false
+ },
+ {
+  "id": "MAGUSMANGA",
+  "name": "MagusToon",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "iken",
+  "domain": "magustoon.org",
+  "altDomains": [],
+  "className": "MagusToon",
+  "file": "en/MagusToon.kt",
+  "config": {
+   "useAPI": true
+  },
+  "configComplex": {},
+  "overriddenMethods": [],
+  "parsingOverrides": [],
+  "needsCustomLogic": false,
+  "warnings": [],
+  "pageSize": 18,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "HIVECOMIC",
+  "name": "HiveComic",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "iken",
+  "domain": "hivetoons.org",
+  "altDomains": [],
+  "className": "HiveComic",
+  "file": "en/HiveComic.kt",
+  "config": {
+   "useAPI": true
+  },
+  "configComplex": {},
+  "overriddenMethods": [],
+  "parsingOverrides": [],
+  "needsCustomLogic": false,
+  "warnings": [],
+  "pageSize": 18,
+  "broken": false
+ },
+ {
+  "id": "MANGAGALAXY",
+  "name": "MangaGalaxy",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "iken",
+  "domain": "vortexscans.org",
+  "altDomains": [],
+  "className": "MangaGalaxyParser",
+  "file": "en/MangaGalaxyParser.kt",
+  "config": {
+   "useAPI": false
+  },
+  "configComplex": {},
+  "overriddenMethods": [],
+  "parsingOverrides": [],
+  "needsCustomLogic": false,
+  "warnings": [
+   "broken",
+   "@Broken: redirects to VortexScans; shares vortexscans.org domain but does NOT use the api. subdomain (useAPI=false), so reader images come from the Next.js HTML fallback only"
+  ],
+  "pageSize": 18,
+  "broken": true
+ },
+ {
+  "id": "NYXSCANS",
+  "name": "Nyx Scans",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "iken",
+  "domain": "nyxscans.com",
+  "altDomains": [],
+  "className": "NyxScans",
+  "file": "en/NyxScans.kt",
+  "config": {
+   "useAPI": true
+  },
+  "configComplex": {},
+  "overriddenMethods": [
+   "getListPage",
+   "parseMangaList",
+   "getPages"
+  ],
+  "parsingOverrides": [
+   "getListPage",
+   "parseMangaList",
+   "getPages"
+  ],
+  "needsCustomLogic": true,
+  "warnings": [
+   "Base list/details/tags are served by the engine, but three real parsing methods are overridden and NOT captured by config: (1) POPULARITY+empty filter on page 1 scrapes the 'popularPosts' Next.js blob off the homepage before falling back to /api/query; (2) parseMangaList drops titles containing '[Novel]'; (3) getPages resolves the numeric chapterId by slug via /api/query + /api/chapters when chapter.id is absent, and its HTML fallback uses selectPages + img.src().distinct() with an explicit 'images unavailable' error. Engine gives correct browse/details; page-list edge cases and [Novel] filtering need custom logic."
+  ],
+  "pageSize": 18,
+  "broken": false
+ },
+ {
+  "id": "QISCANS",
+  "name": "Qi Scans",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "iken",
+  "domain": "qimanga.com",
+  "altDomains": [
+   "api.qimanhwa.com"
+  ],
+  "className": "QiScans",
+  "file": "en/QiScans.kt",
+  "config": {},
+  "configComplex": {},
+  "overriddenMethods": [
+   "getListPage",
+   "getDetails",
+   "getPages",
+   "getFilterOptions",
+   "availableSortOrders",
+   "parseState"
+  ],
+  "parsingOverrides": [
+   "getListPage",
+   "getDetails",
+   "getPages"
+  ],
+  "needsCustomLogic": true,
+  "warnings": [
+   "NOT a true IkenParser subclass: QiScans extends PagedMangaParser directly and reimplements a WHOLLY DIFFERENT REST API (https://api.qimanhwa.com/api/v1 with /series, /series/search, /series/{slug}, /series/{slug}/chapters, /series/{slug}/chapters/{chapterSlug}). Different JSON shapes (data[] arrays, avgRating/5, alternativeTitles split on ' • '), paginated chapter fetch (perPage=30), chapter.url is a JSON {slug,chapterSlug} blob, sort orders UPDATED/POPULARITY/NEWEST, and a distinct status map (HIATUS->PAUSED, MASS_RELEASED->ONGOING). NONE of this is expressible in IkenConfig; it is retained here only for family completeness and requires its own engine."
+  ],
+  "pageSize": 20,
+  "broken": false
+ }
+]

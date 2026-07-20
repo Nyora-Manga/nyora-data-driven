@@ -1,0 +1,100 @@
+[
+ {
+  "id": "fmteam",
+  "name": "FmTeam",
+  "lang": "fr",
+  "engine": "pizzareader",
+  "domain": "fmteam.fr",
+  "config": {
+   "ongoingFilter": "en cours",
+   "completedFilter": "terminé"
+  },
+  "pageSize": 0,
+  "broken": false
+ },
+ {
+  "id": "hniscantrad",
+  "name": "HniScantrad",
+  "lang": "fr",
+  "engine": "pizzareader",
+  "domain": "hni-scantrad.net",
+  "config": {
+   "ongoingFilter": "en cours",
+   "completedFilter": "terminé"
+  },
+  "pageSize": 0,
+  "broken": false
+ },
+ {
+  "id": "gtothegreatsite",
+  "name": "GtoTheGreatSite",
+  "lang": "it",
+  "engine": "pizzareader",
+  "domain": "reader.gtothegreatsite.net",
+  "config": {},
+  "pageSize": 0,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "hastateam",
+  "name": "HastaTeamDdt",
+  "lang": "it",
+  "engine": "pizzareader",
+  "domain": "ddt.hastateam.com",
+  "config": {},
+  "pageSize": 0,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "hastateam_reader",
+  "name": "HastaTeamReader",
+  "lang": "it",
+  "engine": "pizzareader",
+  "domain": "reader.hastateam.com",
+  "config": {},
+  "pageSize": 0,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "lupiteam",
+  "name": "LupiTeam",
+  "lang": "it",
+  "engine": "pizzareader",
+  "domain": "lupiteam.net",
+  "config": {},
+  "pageSize": 0,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "phoenixscans",
+  "name": "PhoenixScans",
+  "lang": "it",
+  "engine": "pizzareader",
+  "domain": "www.phoenixscans.com",
+  "config": {},
+  "pageSize": 0,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "A"
+ },
+ {
+  "id": "tuttoanimemanga",
+  "name": "TuttoAnimeManga",
+  "lang": "it",
+  "engine": "pizzareader",
+  "domain": "tuttoanimemanga.net",
+  "config": {
+   "completedFilter": "completato"
+  },
+  "pageSize": 0,
+  "broken": false
+ }
+]

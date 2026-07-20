@@ -1,0 +1,92 @@
+[
+ {
+  "id": "mangasect",
+  "name": "MangaSect",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "liliana",
+  "domain": "mangasect.net",
+  "config": {
+   "pageSize": 24
+  },
+  "pageSize": 24,
+  "broken": false
+ },
+ {
+  "id": "manhuagold",
+  "name": "ManhuaGold",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANHUA",
+  "engine": "liliana",
+  "domain": "manhuagold.top",
+  "config": {
+   "pageSize": 24
+  },
+  "pageSize": 24,
+  "broken": false
+ },
+ {
+  "id": "manhuaplusorg",
+  "name": "ManhuaPlus.org",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANHUA",
+  "engine": "liliana",
+  "domain": "manhuaplus.org",
+  "config": {
+   "pageSize": 24
+  },
+  "pageSize": 24,
+  "broken": false
+ },
+ {
+  "id": "mangakoma01",
+  "name": "MangaKoma01",
+  "lang": "ja",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "liliana",
+  "domain": "mangakoma01.top",
+  "config": {
+   "pageSize": 24
+  },
+  "pageSize": 24,
+  "broken": false
+ },
+ {
+  "id": "raw1001",
+  "name": "Raw1001",
+  "lang": "ja",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "liliana",
+  "domain": "raw1001.net",
+  "config": {
+   "pageSize": 24
+  },
+  "pageSize": 24,
+  "broken": false
+ },
+ {
+  "id": "doctruyen5s",
+  "name": "DocTruyen5s",
+  "lang": "vi",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "liliana",
+  "domain": "manga.io.vn",
+  "needsCustomLogic": true,
+  "config": {
+   "pageSize": 42,
+   "referer": "no-referrer",
+   "cdnFallback": true,
+   "selectors": {
+    "pageCdnAnchor": "div.separator a"
+   }
+  },
+  "pageSize": 42,
+  "broken": false
+ }
+]

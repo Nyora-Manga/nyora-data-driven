@@ -1,0 +1,77 @@
+[
+ {
+  "id": "hentaiseason",
+  "name": "HentaiSeason",
+  "lang": "pt",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "gattsu",
+  "domain": "hentaiseason.com",
+  "needsCustomLogic": false,
+  "config": {},
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "hentaitokyo",
+  "name": "HentaiTokyo",
+  "lang": "pt",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "gattsu",
+  "domain": "hentaitokyo.net",
+  "needsCustomLogic": false,
+  "config": {
+   "tagUrl": "tags"
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "mundohentaioficial",
+  "name": "MundoHentaiOficial",
+  "lang": "pt",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "gattsu",
+  "domain": "mundohentaioficial.com",
+  "needsCustomLogic": true,
+  "notes": "Overrides parseMangaList: list cards take the LAST anchor + LAST title element instead of the first. Fully datafied via anchorLast=true; no residual custom code needed.",
+  "config": {
+   "tagUrl": "tags",
+   "anchorLast": true
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "universohentai",
+  "name": "UniversoHentai",
+  "lang": "pt",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "gattsu",
+  "domain": "universohentai.com",
+  "needsCustomLogic": true,
+  "notes": "Overrides getPages/getPageUrl (single-page gallery: all images on one page under #galeria, no paginator) plus fetchAvailableTags/parseTags (tags from #menu-topo, /category/ hrefs) and tagPrefix. Fully datafied via galleryMode=single + galleryId + tagContainerId + tagHrefContains + tagPrefix + multipleTags; no residual custom code needed.",
+  "config": {
+   "tagPrefix": "category",
+   "tagUrl": "tags",
+   "multipleTags": true,
+   "tagContainerId": "menu-topo",
+   "tagHrefContains": "/category/",
+   "galleryMode": "single",
+   "galleryId": "galeria"
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ }
+]

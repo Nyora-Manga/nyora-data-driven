@@ -1,0 +1,13 @@
+[
+ {
+  "id": "mangago",
+  "name": "Mangago",
+  "lang": "en",
+  "nsfw": true,
+  "contentType": "MANGA",
+  "engine": "mangago",
+  "domain": "www.mangago.me",
+  "config": {},
+  "broken": false
+ }
+]

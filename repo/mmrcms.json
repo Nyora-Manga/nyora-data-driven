@@ -1,0 +1,289 @@
+[
+ {
+  "id": "bananascan_com",
+  "name": "BananaScan.Com",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "mmrcms",
+  "domain": "bananascans.com",
+  "needsCustomLogic": false,
+  "config": {},
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "anzmangashd",
+  "name": "AnzMangasHd",
+  "lang": "es",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "mmrcms",
+  "domain": "www.anzmanga25.com",
+  "needsCustomLogic": false,
+  "config": {
+   "locale": "en",
+   "selectors": {
+    "state": "dt:contains(Estado)",
+    "alt": "dt:contains(Otros nombres)",
+    "author": "dt:contains(Autor(es))",
+    "tag": "dt:contains(Categorías)"
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "mangadoor",
+  "name": "MangaDoor",
+  "lang": "es",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "mmrcms",
+  "domain": "mangadoor.com",
+  "needsCustomLogic": false,
+  "broken": true,
+  "config": {
+   "locale": "en",
+   "selectors": {
+    "state": "dt:contains(Estado)",
+    "alt": "dt:contains(Otros nombres)",
+    "author": "dt:contains(Autor(es))",
+    "tag": "dt:contains(Categorías)"
+   }
+  },
+  "pageSize": 20
+ },
+ {
+  "id": "bentoscan",
+  "name": "BentoScan",
+  "lang": "fr",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "mmrcms",
+  "domain": "bentoscan.com",
+  "needsCustomLogic": false,
+  "broken": true,
+  "config": {
+   "locale": "en",
+   "imgUpdated": ".jpg"
+  },
+  "pageSize": 20
+ },
+ {
+  "id": "frscanscom",
+  "name": "FrScans.com",
+  "lang": "fr",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "mmrcms",
+  "domain": "frscans.com",
+  "needsCustomLogic": false,
+  "broken": true,
+  "config": {
+   "locale": "en"
+  },
+  "pageSize": 20
+ },
+ {
+  "id": "jpmangas",
+  "name": "JpMangas",
+  "lang": "fr",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "mmrcms",
+  "domain": "jpmangas.xyz",
+  "needsCustomLogic": false,
+  "broken": true,
+  "config": {
+   "locale": "en"
+  },
+  "pageSize": 20
+ },
+ {
+  "id": "jpscanvf",
+  "name": "LireScanVf.com",
+  "lang": "fr",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "mmrcms",
+  "domain": "lirescanvf.com",
+  "needsCustomLogic": false,
+  "broken": true,
+  "config": {
+   "locale": "en"
+  },
+  "pageSize": 20
+ },
+ {
+  "id": "manga_scan",
+  "name": "MangaScan",
+  "lang": "fr",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "mmrcms",
+  "domain": "mangascan-fr.net",
+  "needsCustomLogic": false,
+  "broken": true,
+  "config": {
+   "locale": "en",
+   "imgUpdated": ".jpg"
+  },
+  "pageSize": 20
+ },
+ {
+  "id": "scanmanga",
+  "name": "ScanManga",
+  "lang": "fr",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "mmrcms",
+  "domain": "scan-manga.me",
+  "needsCustomLogic": false,
+  "broken": true,
+  "config": {
+   "locale": "en",
+   "imgUpdated": ".jpg"
+  },
+  "pageSize": 20
+ },
+ {
+  "id": "scanmangavf_ws",
+  "name": "ScanMangaVf.ws",
+  "lang": "fr",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "mmrcms",
+  "domain": "scanmanga-vf.me",
+  "needsCustomLogic": false,
+  "broken": true,
+  "config": {
+   "locale": "en",
+   "imgUpdated": ".jpg",
+   "selectors": {
+    "alt": "dt:contains(Appelé aussi)",
+    "tag": "dt:contains(Genres)"
+   }
+  },
+  "pageSize": 20
+ },
+ {
+  "id": "scanvf",
+  "name": "ScanVf",
+  "lang": "fr",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "mmrcms",
+  "domain": "www.scan-vf.net",
+  "needsCustomLogic": false,
+  "config": {
+   "locale": "en"
+  },
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ },
+ {
+  "id": "komikid",
+  "name": "KomikId",
+  "lang": "id",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "mmrcms",
+  "domain": "komiku.org",
+  "needsCustomLogic": false,
+  "broken": true,
+  "config": {
+   "locale": "en",
+   "selectors": {
+    "state": "dt:contains(Status)",
+    "alt": "dt:contains(Other names)",
+    "author": "dt:contains(Author(s))",
+    "tag": "dt:contains(Categories)"
+   }
+  },
+  "pageSize": 20
+ },
+ {
+  "id": "mangaid",
+  "name": "MangaId",
+  "lang": "id",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "mmrcms",
+  "domain": "mangaid.click",
+  "needsCustomLogic": false,
+  "broken": true,
+  "config": {
+   "locale": "en",
+   "selectors": {
+    "state": "dt:contains(Status)",
+    "alt": "dt:contains(Other names)",
+    "author": "dt:contains(Author(s))",
+    "tag": "dt:contains(Categories)"
+   }
+  },
+  "pageSize": 20
+ },
+ {
+  "id": "manga_denizi",
+  "name": "MangaDenizi",
+  "lang": "tr",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "mmrcms",
+  "domain": "www.mangadenizi.net",
+  "needsCustomLogic": false,
+  "config": {
+   "locale": "en",
+   "datePattern": "dd.MM.yyyy",
+   "selectors": {
+    "state": "dt:contains(Durum)",
+    "alt": "dt:contains(Diğer Adları)",
+    "author": "dt:contains(Yazar & Çizer)",
+    "tag": "dt:contains(Kategoriler)"
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "onma",
+  "name": "Onma",
+  "lang": "ar",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "mmrcms",
+  "domain": "onma.me",
+  "needsCustomLogic": true,
+  "customReason": "Overrides getListPage (separate JSON /search endpoint + tag-filter fallback), parseMangaList (div.chapter-container markup), fetchAvailableTags (1-based index keys), and getDetails (div.panel-body layout where fields are the selected node's own text, not nextElementSibling). Not served by the generic MmrcmsEngine.",
+  "config": {
+   "locale": "en",
+   "selectors": {
+    "state": "h3:contains(الحالة) .text",
+    "alt": "h3:contains(أسماء أخرى) .text",
+    "author": "h3:contains(المؤلف) .text",
+    "tag": "h3:contains(التصنيفات) .text"
+   }
+  },
+  "pageSize": 20,
+  "broken": false
+ },
+ {
+  "id": "readcomicsonline",
+  "name": "ReadComicsOnline.ru",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "COMICS",
+  "engine": "mmrcms",
+  "domain": "readcomicsonline.ru",
+  "needsCustomLogic": true,
+  "customReason": "A wholly redesigned Tailwind-class site: comic-list browse endpoint, Referer interceptor, bespoke list/detail/chapter/page selectors, ABANDONED-aware status parsing, and cover guessing. Overrides availableSortOrders, filterCapabilities, getFilterOptions, intercept, getListPage, getDetails, getChapters, and getPages. Not served by the generic MmrcmsEngine.",
+  "config": {},
+  "pageSize": 20,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
+ }
+]
