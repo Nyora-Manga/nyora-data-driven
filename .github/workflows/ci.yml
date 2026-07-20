@@ -12,6 +12,10 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    # Weekly domain-liveness refresh (Mon 05:00 UTC) so sources whose domain has died
+    # drop out of the catalogue without a manual run.
+    - cron: '0 5 * * 1'
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -56,5 +60,33 @@ jobs:
           else
             git add catalogue.json
             git commit -m "chore: sync catalogue.json with repo/"
+            git push
+          fi
+
+  # DNS-liveness refresh: drop sources whose domain no longer resolves. Scheduled/manual only
+  # (probing hundreds of domains on every push would be wasteful). DNS is used deliberately — a
+  # Cloudflare-walled site answers 403/503 but resolves fine, so status-based checks would wrongly
+  # kill it; a dead domain fails DNS outright.
+  liveness:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Probe domains + rebuild catalogue
+        run: |
+          python3 tools/check-liveness.py
+          python3 tools/build-catalogue.py
+      - name: Commit if changed
+        run: |
+          git config user.name  "hasan72341"
+          git config user.email "hasan72341@users.noreply.github.com"
+          git add liveness.json catalogue.json
+          if git diff --cached --quiet; then
+            echo "no liveness changes"
+          else
+            git commit -m "chore: refresh domain liveness"
             git push
           fi

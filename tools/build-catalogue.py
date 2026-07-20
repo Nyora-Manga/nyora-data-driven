@@ -31,7 +31,18 @@ def rows_of(doc):
     return doc if isinstance(doc, list) else doc.get("sources", [])
 
 
+def load_dead_ids():
+    # Optional liveness overlay (tools/check-liveness.py). Sources whose domain no longer
+    # resolves are marked broken here so the app drops them, without mutating the extracted
+    # repo/*.json — a domain that comes back just drops out of liveness.json on the next probe.
+    f = ROOT / "liveness.json"
+    if not f.exists():
+        return set()
+    return set(json.loads(f.read_text()).get("deadIds", []))
+
+
 def build():
+    dead_ids = load_dead_ids()
     sources = []
     for f in sorted(REPO.glob("*.json")):
         for r in rows_of(json.loads(f.read_text())):
@@ -39,6 +50,9 @@ def build():
             # `engine` is required to route to a runtime engine; fall back to the
             # filename (every engine file is named for its engine) if a row omits it.
             row.setdefault("engine", f.stem)
+            if row.get("id") in dead_ids and not row.get("broken"):
+                row["broken"] = True
+                row["brokenReason"] = "domain does not resolve"
             sources.append(row)
     sources.sort(key=lambda r: (r.get("engine", ""), r.get("id", "")))
     live = [r for r in sources if not r.get("broken")]
