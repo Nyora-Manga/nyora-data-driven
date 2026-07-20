@@ -1,0 +1,110 @@
+[
+ {
+  "id": "MANGAFIRE_EN",
+  "name": "MangaFire",
+  "lang": "en",
+  "nsfw": false,
+  "engine": "mangafire",
+  "domain": "mangafire.to",
+  "altDomains": [],
+  "broken": false,
+  "pageSize": 50,
+  "config": {
+   "language": "en"
+  },
+  "configComplex": {},
+  "warnings": [
+   "Blocks datacenter IPs at the Cloudflare edge; works on-device but cannot be tested from CI or a cloud runner."
+  ]
+ },
+ {
+  "id": "MANGAFIRE_ES",
+  "name": "MangaFire (ES)",
+  "lang": "es",
+  "nsfw": false,
+  "engine": "mangafire",
+  "domain": "mangafire.to",
+  "altDomains": [],
+  "broken": false,
+  "pageSize": 50,
+  "config": {
+   "language": "es"
+  },
+  "configComplex": {},
+  "warnings": [
+   "Blocks datacenter IPs at the Cloudflare edge; works on-device but cannot be tested from CI or a cloud runner."
+  ]
+ },
+ {
+  "id": "MANGAFIRE_ES_LA",
+  "name": "MangaFire (LATAM)",
+  "lang": "es",
+  "nsfw": false,
+  "engine": "mangafire",
+  "domain": "mangafire.to",
+  "altDomains": [],
+  "broken": false,
+  "pageSize": 50,
+  "config": {
+   "language": "es-la"
+  },
+  "configComplex": {},
+  "warnings": [
+   "Blocks datacenter IPs at the Cloudflare edge; works on-device but cannot be tested from CI or a cloud runner."
+  ]
+ },
+ {
+  "id": "MANGAFIRE_FR",
+  "name": "MangaFire (FR)",
+  "lang": "fr",
+  "nsfw": false,
+  "engine": "mangafire",
+  "domain": "mangafire.to",
+  "altDomains": [],
+  "broken": false,
+  "pageSize": 50,
+  "config": {
+   "language": "fr"
+  },
+  "configComplex": {},
+  "warnings": [
+   "Blocks datacenter IPs at the Cloudflare edge; works on-device but cannot be tested from CI or a cloud runner."
+  ]
+ },
+ {
+  "id": "MANGAFIRE_JA",
+  "name": "MangaFire (JA)",
+  "lang": "ja",
+  "nsfw": false,
+  "engine": "mangafire",
+  "domain": "mangafire.to",
+  "altDomains": [],
+  "broken": false,
+  "pageSize": 50,
+  "config": {
+   "language": "ja"
+  },
+  "configComplex": {},
+  "warnings": [
+   "Blocks datacenter IPs at the Cloudflare edge; works on-device but cannot be tested from CI or a cloud runner."
+  ]
+ },
+ {
+  "id": "MANGAFIRE_PT_BR",
+  "name": "MangaFire (PT-BR)",
+  "lang": "pt",
+  "nsfw": false,
+  "engine": "mangafire",
+  "domain": "mangafire.to",
+  "altDomains": [],
+  "broken": false,
+  "pageSize": 50,
+  "config": {
+   "language": "pt-br"
+  },
+  "configComplex": {},
+  "warnings": [
+   "Blocks datacenter IPs at the Cloudflare edge; works on-device but cannot be tested from CI or a cloud runner."
+  ]
+ }
+]
