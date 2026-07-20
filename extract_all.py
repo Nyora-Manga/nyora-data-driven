@@ -26,7 +26,7 @@ import copy
 
 ROOT = "/tmp/kotatsu-src/src/main/kotlin/org/koitharu/kotatsu/parsers"
 SITE = os.path.join(ROOT, "site")
-REPO = "/Users/hasanraza/Desktop/kotatsu/Nyora/nyora-data-driven/repo"
+REPO = os.path.join(os.path.dirname(os.path.abspath(__file__)), "repo")
 
 FAMILIES = ("madara mangareader zeistmanga onemanga wpcomics mmrcms keyoapp "
             "hotcomics galleryadults madtheme foolslide pizzareader scan heancms "

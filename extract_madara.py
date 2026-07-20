@@ -12,7 +12,7 @@ import glob
 
 SRC_ROOT = "/tmp/kotatsu-src/src/main/kotlin/org/koitharu/kotatsu/parsers/site/madara"
 LANGS = "en pt tr es ar fr id vi th all de it ja ko pl ru zh".split()
-OUT = "/Users/hasanraza/Desktop/kotatsu/Nyora/nyora-data-driven/repo/madara.json"
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "repo", "madara.json")
 
 # Real parsing methods -> mark needsCustomLogic when overridden.
 PARSING_METHODS = {
