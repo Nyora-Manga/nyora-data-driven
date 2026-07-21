@@ -1791,13 +1791,12 @@
    "engine": "madara",
    "domain": "hunterscan.net",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
    "config": {
     "datePattern": "dd/MM/yyyy",
     "withoutAjax": true
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "ANIKIGA",
@@ -2838,15 +2837,14 @@
    "engine": "madara",
    "domain": "doujinshell.net",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 10,
    "config": {
     "datePattern": "dd MMMM, yyyy",
     "listUrl": "doujin/",
     "tagPrefix": "doujin-genero/",
     "selectPage": "img:not(.aligncenter)"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "DOUJINZA",
@@ -2953,10 +2951,9 @@
    "engine": "madara",
    "domain": "elitemanga.net",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
-   "config": {},
-   "brokenReason": "dead upstream (no working successor)"
+   "config": {}
   },
   {
    "id": "EMPERORSCAN",
@@ -3076,10 +3073,9 @@
    "engine": "madara",
    "domain": "factmanga.com",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
-   "config": {},
-   "brokenReason": "dead upstream (no working successor)"
+   "config": {}
   },
   {
    "id": "FAYSCANS",
@@ -3242,12 +3238,11 @@
    "engine": "madara",
    "domain": "freemangatop.com",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
    "config": {
     "datePattern": "MM/dd/yyyy"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "FREEWEBTOONCOINS",
@@ -3425,10 +3420,9 @@
    "engine": "madara",
    "domain": "gmanga.site",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
-   "config": {},
-   "brokenReason": "dead upstream (no working successor)"
+   "config": {}
   },
   {
    "id": "GOODGIRLS",
@@ -3469,14 +3463,13 @@
    "engine": "madara",
    "domain": "gourmetsupremacy.com",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
    "config": {
     "listUrl": "project/",
     "tagPrefix": "genre/",
     "stylePage": ""
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "GRABBER",
@@ -3504,13 +3497,12 @@
    "engine": "madara",
    "domain": "siyahmelek.fun",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 20,
    "config": {
     "datePattern": "d MMMM yyyy",
     "listUrl": "seri/"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "GUNCEL_MANGA",
@@ -3686,13 +3678,12 @@
    "engine": "madara",
    "domain": "hentaiteca.online",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 10,
    "config": {
     "datePattern": "MM/dd/yyyy",
     "tagPrefix": "genero/"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "HENTAIVNPLUS",
@@ -3782,14 +3773,13 @@
    "engine": "madara",
    "domain": "hentaiz2.com",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 24,
    "config": {
     "listUrl": "truyen-hentai/",
     "tagPrefix": "the-loai/",
     "datePattern": "dd/MM/yyyy"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "HENTAIZONE",
@@ -4038,12 +4028,11 @@
    "engine": "madara",
    "domain": "risentoons.xyz",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
    "config": {
     "datePattern": "dd/MM/yyyy"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "INDO18H",
@@ -4203,10 +4192,9 @@
    "engine": "madara",
    "domain": "s2read.com",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
-   "config": {},
-   "brokenReason": "dead upstream (no working successor)"
+   "config": {}
   },
   {
    "id": "KABUSMANGA",
@@ -4217,12 +4205,11 @@
    "engine": "madara",
    "domain": "kabusmanga.com",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
    "config": {
     "datePattern": "dd/MM/yyyy"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "KAKUSEIPROJECT",
@@ -4247,12 +4234,11 @@
    "engine": "madara",
    "domain": "kalango.org",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
    "config": {
     "datePattern": "dd 'de' MMMM 'de' yyyy"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "KEDI",
@@ -4384,12 +4370,11 @@
    "engine": "madara",
    "domain": "nabicix.com",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 10,
    "config": {
     "datePattern": "d MMMM"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "KSGROUPSCANS",
@@ -4536,12 +4521,11 @@
    "engine": "madara",
    "domain": "escaneodeleyendas.com",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 10,
    "config": {
     "datePattern": "dd/MM/yyyy"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "LEITORDEMANGA",
@@ -4841,12 +4825,11 @@
    "engine": "madara",
    "domain": "lmtos.net",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
    "config": {
     "datePattern": "dd/MM"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "LOLICONMOBI",
@@ -5413,10 +5396,9 @@
    "engine": "madara",
    "domain": "mangakiss.org",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 10,
-   "config": {},
-   "brokenReason": "dead upstream (no working successor)"
+   "config": {}
   },
   {
    "id": "MANGALAND",
@@ -5539,14 +5521,13 @@
    "engine": "madara",
    "domain": "mangalivre.net",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
    "config": {
     "datePattern": "MMMM dd, yyyy",
     "withoutAjax": true,
     "stylePage": ""
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "MANGAMAMMY",
@@ -5667,13 +5648,12 @@
    "engine": "madara",
    "domain": "mangaonelove.site",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 10,
    "config": {
     "datePattern": "dd.MM.yyyy",
     "postReq": true
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "MANGAONLINETEAM",
@@ -5742,12 +5722,11 @@
    "engine": "madara",
    "domain": "mangaowl.io",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
    "config": {
     "postReq": true
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "MANGAOWL_US",
@@ -5833,13 +5812,12 @@
    "engine": "madara",
    "domain": "mangaread.co",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 16,
    "config": {
     "tagPrefix": "m-genre/",
     "datePattern": "yyyy-MM-dd"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "MANGAROCK",
@@ -6463,12 +6441,11 @@
    "engine": "madara",
    "domain": "manhuaes.com",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
    "config": {
     "postReq": true
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "MANHUAFAST",
@@ -6565,13 +6542,12 @@
    "engine": "madara",
    "domain": "manhuasy.co.in",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
    "config": {
     "listUrl": "manhua/",
     "tagPrefix": "manhua-genre/"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "MANHUAUS",
@@ -6915,12 +6891,11 @@
    "engine": "madara",
    "domain": "manhwasco.net",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
    "config": {
     "selectGenre": "div.mg_genres a"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "MANHWAS_ES",
@@ -7407,13 +7382,12 @@
    "engine": "madara",
    "domain": "inkreads.com",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 100,
    "config": {
     "postReq": true,
     "listUrl": "mangax/"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "NABISCANS",
@@ -8246,12 +8220,11 @@
    "engine": "madara",
    "domain": "evilflowers.com",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 10,
    "config": {
     "listUrl": "project/"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "READFREECOMICS",
@@ -8366,10 +8339,9 @@
    "engine": "madara",
    "domain": "zinmanga.net",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 10,
-   "config": {},
-   "brokenReason": "dead upstream (no working successor)"
+   "config": {}
   },
   {
    "id": "ROCKSMANGA",
@@ -8451,12 +8423,11 @@
    "engine": "madara",
    "domain": "ruahapchanhday2.com",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 30,
    "config": {
     "datePattern": "dd/MM/yyyy"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "RUYAMANGA",
@@ -8540,14 +8511,13 @@
    "engine": "madara",
    "domain": "phetruyen.com",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 40,
    "config": {
     "tagPrefix": "genre/",
     "withoutAjax": true,
     "listUrl": "public/genre/manga/"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "SCAMBERTRASLATOR",
@@ -8630,12 +8600,11 @@
    "engine": "madara",
    "domain": "sectscans.com",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
    "config": {
     "listUrl": "comics/"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "SETSUSCANS",
@@ -8689,12 +8658,11 @@
    "engine": "madara",
    "domain": "shootingstarscans.com",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
    "config": {
     "tagPrefix": "manga-tag/"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "SINENSISSCANS",
@@ -8720,12 +8688,11 @@
    "engine": "madara",
    "domain": "sitemanga.com",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
    "config": {
     "datePattern": "MM/dd/yyyy"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "SLEEPYTRANSLATIONS",
@@ -8841,12 +8808,11 @@
    "engine": "madara",
    "domain": "sweetscan.blogspot.com",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
    "config": {
     "datePattern": "dd 'de' MMMMM 'de' yyyy"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "TANKOUHENTAI",
@@ -8888,12 +8854,11 @@
    "engine": "madara",
    "domain": "taurus.topmanhuas.org",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
    "config": {
     "datePattern": "dd/MM/yyyy"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "TCBSCANSMANGA",
@@ -8904,12 +8869,11 @@
    "engine": "madara",
    "domain": "tcbscans-manga.com",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 10,
    "config": {
     "selectPage": "img"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "TECNOPROJECTS",
@@ -8950,12 +8914,11 @@
    "engine": "madara",
    "domain": "territorioleal.com",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
    "config": {
     "datePattern": "d 'de' MMMM 'de' yyyy"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "THEGUILDSCANS",
@@ -8996,13 +8959,12 @@
    "engine": "madara",
    "domain": "timenaight.org",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
    "config": {
     "postReq": true,
     "datePattern": "dd/MM/yyyy"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "TITANMANGA",
@@ -9201,12 +9163,11 @@
    "engine": "madara",
    "domain": "traduccionesamistosas.topmanhuas.org",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 10,
    "config": {
     "datePattern": "d 'de' MMMMM 'de' yyyy"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "TREE_MANGA",
@@ -9738,12 +9699,11 @@
    "engine": "madara",
    "domain": "yaoitr.org",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 16,
    "config": {
     "datePattern": "d MMMM yyyy"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "YAOIX3",
@@ -9956,10 +9916,9 @@
    "engine": "madara",
    "domain": "zinmanga.net",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
-   "config": {},
-   "brokenReason": "dead upstream (no working successor)"
+   "config": {}
   },
   {
    "id": "ZINMANGA_MS",
@@ -9970,13 +9929,12 @@
    "engine": "madara",
    "domain": "zinmanga.net",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
    "config": {
     "listUrl": "manga-1/",
     "tagPrefix": "manga-genre-1/"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "ZIN_MANGA_COM",
@@ -9987,12 +9945,11 @@
    "engine": "madara",
    "domain": "zin-manga.com",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
    "config": {
     "selectPage": "img"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "BEEHENTAI",
@@ -10059,7 +10016,7 @@
    "engine": "madtheme",
    "domain": "mgjinx.com",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 48,
    "config": {
     "listUrl": "search",
@@ -10067,8 +10024,7 @@
     "chapterIdPrefix": "bookId = ",
     "chapterIdSuffix": ";",
     "chapterApiPath": "/service/backend/chaplist/?manga_id={id}"
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "MANGAPUMA",
@@ -10105,7 +10061,7 @@
    "engine": "madtheme",
    "domain": "kaliscan.io",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 48,
    "config": {
     "listUrl": "search",
@@ -10125,8 +10081,7 @@
      "date": ".chapter-update",
      "chapter": "#chapter-list > li, #chapter-list-inner .chapter-list > li"
     }
-   },
-   "brokenReason": "dead upstream (no working successor)"
+   }
   },
   {
    "id": "TOONILY_ME",
@@ -17550,6 +17505,6 @@
   }
  ],
  "count": 1077,
- "liveCount": 604,
- "hash": "bde99603cefd6d74"
+ "liveCount": 649,
+ "hash": "3460324cd4238c5d"
 }

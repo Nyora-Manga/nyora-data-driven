@@ -61,7 +61,7 @@ def build():
     patches = load_patches()
     domain_overrides = patches["domainOverrides"]
     title_overrides = patches["titleOverrides"]
-    dead_sources = patches["deadSources"]
+    # patches["deadSources"] is intentionally not consulted here (see note in the loop below).
     sources = []
     for f in sorted(REPO.glob("*.json")):
         for r in rows_of(json.loads(f.read_text())):
@@ -80,15 +80,16 @@ def build():
                 row.pop("brokenReason", None)
             if sid in title_overrides:
                 row["name"] = title_overrides[sid]
-            # Curated dead set (mirrors SourcePatches.DEAD_SOURCES) and the DNS-liveness overlay,
-            # both keyed by id. Neither can revive a relocated source (handled above).
-            if not overridden:
-                if sid in dead_sources and not row.get("broken"):
-                    row["broken"] = True
-                    row["brokenReason"] = "dead upstream (no working successor)"
-                if sid in dead_ids and not row.get("broken"):
-                    row["broken"] = True
-                    row["brokenReason"] = "domain does not resolve"
+            # NOTE: patches.deadSources (mirroring SourcePatches.DEAD_SOURCES) is deliberately NOT
+            # applied to catalogue visibility. On the iOS/desktop ports that set only controls which
+            # sources are seeded/enabled by DEFAULT — the catalog itself (nativeParserCatalog) still
+            # lists every non-@Broken source. Data-driven sources use our own generic engines, not the
+            # dead native parsers, so a source "dead" for kotatsu is often fine here; hiding them just
+            # drops ~45 usable sources. Only the DNS-liveness overlay (a domain that literally doesn't
+            # resolve) hides a source, and even that never overrides a relocated one.
+            if not overridden and sid in dead_ids and not row.get("broken"):
+                row["broken"] = True
+                row["brokenReason"] = "domain does not resolve"
             sources.append(row)
     sources.sort(key=lambda r: (r.get("engine", ""), r.get("id", "")))
     live = [r for r in sources if not r.get("broken")]
