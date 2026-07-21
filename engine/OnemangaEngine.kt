@@ -155,7 +155,11 @@ class OnemangaEngine(
 	override suspend fun getPageList(chapter: MangaChapter): List<MangaPage> {
 		val doc = fetchDoc(chapter.url.toAbsoluteUrl(domain))
 		return doc.select(cfg.selPageImg).map { img ->
-			val url = img.requireSrc().toRelativeUrl(domain)
+			// kotatsu stores the ABSOLUTE requireSrc() url verbatim (getPageUrl is a pass-through).
+			// Do NOT relativize: OneManga is Elementor+Jetpack, so page images are frequently served
+			// from a CDN host that contains the domain in its PATH (e.g. i0.wp.com/<domain>/...). The
+			// relativize→re-absolutize round-trip would strip that CDN host and break image loading.
+			val url = img.requireSrc()
 			MangaPage(id = uid(url), url = url, preview = null, source = source.id)
 		}
 	}
@@ -224,10 +228,7 @@ class OnemangaEngine(
 	/** Relativize to [domain]; urls on a different host (e.g. an image CDN) are returned unchanged. */
 	private fun String.toRelativeUrl(domain: String): String {
 		if (isEmpty() || startsWith("/")) return this
-		val i = indexOf(domain)
-		if (i < 0) return this
-		val rel = substring(i + domain.length)
-		return rel.ifEmpty { "/" }
+		return replace(Regex("^[^/]{2,6}://${Regex.escape(domain)}+/", RegexOption.IGNORE_CASE), "/")
 	}
 
 	private companion object {

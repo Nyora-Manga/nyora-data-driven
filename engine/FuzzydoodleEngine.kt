@@ -268,7 +268,10 @@ class FuzzydoodleEngine(
 	override suspend fun getPageList(chapter: MangaChapter): List<MangaPage> {
 		val doc = fetchDoc(chapter.url.toAbsoluteUrl(domain))
 		return doc.select(cfg.selectPages).map { img ->
-			val url = img.requireSrc().toRelativeUrl(domain)
+			// kotatsu stores the raw ABSOLUTE image src (img.requireSrc()) as the page url. Do NOT
+			// round-trip through toRelativeUrl(domain): its naive indexOf(domain) collapses CDN
+			// subdomains (cdn.example.com -> example.com) and corrupts the image URL.
+			val url = img.requireSrc()
 			MangaPage(id = url, url = url, preview = null, source = source.id)
 		}
 	}
@@ -359,10 +362,7 @@ class FuzzydoodleEngine(
 
 	private fun String.toRelativeUrl(domain: String): String {
 		if (isEmpty() || startsWith("/")) return this
-		val i = indexOf(domain)
-		if (i < 0) return this
-		val rel = substring(i + domain.length)
-		return rel.ifEmpty { "/" }
+		return replace(Regex("^[^/]{2,6}://${Regex.escape(domain)}+/", RegexOption.IGNORE_CASE), "/")
 	}
 
 	private fun String.urlEncoded(): String = URLEncoder.encode(this, "UTF-8")

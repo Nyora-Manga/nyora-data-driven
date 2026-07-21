@@ -413,9 +413,7 @@ class ZeistmangaEngine(
 
 	private fun String.toRelativeUrl(domain: String): String {
 		if (isEmpty() || startsWith("/")) return this
-		val i = indexOf(domain)
-		if (i < 0) return this
-		return substring(i + domain.length).ifEmpty { "/" }
+		return replace(Regex("^[^/]{2,6}://${Regex.escape(domain)}+/", RegexOption.IGNORE_CASE), "/")
 	}
 
 	private fun String.urlEncoded(): String = URLEncoder.encode(this, "UTF-8")
@@ -446,7 +444,20 @@ class ZeistmangaEngine(
 		private const val DEF_TAG_ROOT = "div.filter"
 		private const val DEF_TAG_ITEM = "ul li"
 
-		private val PAGE_IMG_ATTRS = listOf("data-src", "data-lazy-src", "src")
+		// kotatsu Element.src() attribute order (util/Jsoup.kt) — the reader lazy-loads via any of
+		// these; a narrowed list returns the placeholder in `src` and images fail to load.
+		private val PAGE_IMG_ATTRS = listOf(
+			"data-src",
+			"data-cfsrc",
+			"data-original",
+			"data-cdn",
+			"data-sizes",
+			"data-lazy-src",
+			"data-srcset",
+			"original-src",
+			"data-wpfc-original-src",
+			"src",
+		)
 
 		// ---- multilingual status vocabulary (kotatsu hashSetOf dictionaries, ported verbatim) ----
 		private val ONGOING = setOf(

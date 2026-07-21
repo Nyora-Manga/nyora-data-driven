@@ -1076,7 +1076,7 @@
    "nsfw": false,
    "contentType": "MANGA",
    "engine": "hotcomics",
-   "domain": "daycomics.com",
+   "domain": "daycomics.me",
    "broken": false,
    "pageSize": 24,
    "config": {
@@ -17506,5 +17506,5 @@
  ],
  "count": 1077,
  "liveCount": 649,
- "hash": "3460324cd4238c5d"
+ "hash": "e103cf581fa9f3bd"
 }

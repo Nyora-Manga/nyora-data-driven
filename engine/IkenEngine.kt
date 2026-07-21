@@ -262,7 +262,9 @@ class IkenEngine(
 			headers = apiHeaders(),
 		)
 		val chapterJson = json.optJSONObject("chapter") ?: return emptyList()
-		if (chapterJson.optBoolean("isLocked", false) || chapterJson.opt("isAccessible") == false) {
+		// kotatsu NyxScans.readChapterImages gates ONLY on `isLocked`; an extra `isAccessible == false`
+		// gate spuriously throws "unlock" (re-raised by getPageList) on chapters the reference reads.
+		if (chapterJson.optBoolean("isLocked", false)) {
 			throw ParseException("Need to unlock chapter!", "chapterId=$chapterId")
 		}
 		val images = chapterJson.optJSONArray("images") ?: return emptyList()

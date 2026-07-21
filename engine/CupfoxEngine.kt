@@ -274,10 +274,7 @@ class CupfoxEngine(
 
 	private fun String.toRelativeUrl(domain: String): String {
 		if (isEmpty() || startsWith("/")) return this
-		val i = indexOf(domain)
-		if (i < 0) return this
-		val rel = substring(i + domain.length)
-		return rel.ifEmpty { "/" }
+		return replace(Regex("^[^/]{2,6}://${Regex.escape(domain)}+/", RegexOption.IGNORE_CASE), "/")
 	}
 
 	private fun String.urlEncoded(): String = URLEncoder.encode(this, "UTF-8")
@@ -295,13 +292,14 @@ class CupfoxEngine(
 		else -> throw IllegalArgumentException("Expected at most one element, got $size")
 	}
 
-	/** kotatsu mapChapters: reversed DOM iteration so the oldest chapter becomes number 1; the index
-	 * advances only for kept (non-null) rows. Result de-duplicated on chapter id. */
+	/** kotatsu mapChapters: forward DOM iteration (CupFox calls it with the default reversed=false, so
+	 * the FIRST chapter row in document order becomes number 1); the index advances only for kept
+	 * (non-null) rows. Result de-duplicated on chapter id. */
 	private inline fun List<Element>.mapChapters(transform: (Int, Element) -> MangaChapter?): List<MangaChapter> {
 		val out = ArrayList<MangaChapter>(size)
 		val seen = HashSet<String>(size)
 		var index = 0
-		for (el in this.asReversed()) {
+		for (el in this) {
 			val ch = transform(index, el) ?: continue
 			if (seen.add(ch.id)) {
 				out.add(ch)

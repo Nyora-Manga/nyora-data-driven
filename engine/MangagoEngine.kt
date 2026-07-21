@@ -118,11 +118,16 @@ class MangagoEngine(
 		query: String?,
 		filter: MangaListFilter,
 	): List<Manga> {
+		// kotatsu's MangagoParser leaves paginator.firstPage at its default of 1 (it never calls
+		// setFirstPage), so its first list request targets the site's 1-based first page. Nyora hands
+		// engines a 0-based page index (see MadaraEngine / MangaReaderEngine, which both do `page + 1`),
+		// so convert here — feeding the raw 0 would request `/0/` and return empty content.
+		val sitePage = page + 1
 		if (!query.isNullOrEmpty()) {
 			val url = buildString {
 				append("https://").append(domain)
 				append("/r/l_search?name=").append(query.urlEncoded())
-				append("&page=").append(page)
+				append("&page=").append(sitePage)
 			}
 			return parseMangaList(fetchDoc(url))
 		}
@@ -131,12 +136,12 @@ class MangagoEngine(
 			SortOrder.NEWEST -> buildString {
 				append("https://").append(domain).append("/list/new/")
 				if (filter.tags.isNotEmpty()) filter.tags.joinTo(this, ",") { it.key } else append("all")
-				append("/").append(page).append("/")
+				append("/").append(sitePage).append("/")
 			}
 			else -> buildString {
 				append("https://").append(domain).append("/genre/")
 				if (filter.tags.isNotEmpty()) filter.tags.joinTo(this, ",") { it.key } else append("all")
-				append("/").append(page).append("/?")
+				append("/").append(sitePage).append("/?")
 				val states = filter.states
 				val showFinished = states.isEmpty() || states.contains(MangaState.FINISHED)
 				val showOngoing = states.isEmpty() || states.contains(MangaState.ONGOING)
@@ -622,10 +627,7 @@ class MangagoEngine(
 
 	private fun String.toRelativeUrl(domain: String): String {
 		if (isEmpty() || startsWith("/")) return this
-		val i = indexOf(domain)
-		if (i < 0) return this
-		val rel = substring(i + domain.length)
-		return rel.ifEmpty { "/" }
+		return replace(Regex("^[^/]{2,6}://${Regex.escape(domain)}+/", RegexOption.IGNORE_CASE), "/")
 	}
 
 	private fun String.urlEncoded(): String = URLEncoder.encode(this, "UTF-8")

@@ -303,9 +303,7 @@ class PizzareaderEngine(
 
 	private fun String.toRelativeUrl(domain: String): String {
 		if (isEmpty() || startsWith("/")) return this
-		val i = indexOf(domain)
-		if (i < 0) return this
-		return substring(i + domain.length).ifEmpty { "/" }
+		return replace(Regex("^[^/]{2,6}://${Regex.escape(domain)}+/", RegexOption.IGNORE_CASE), "/")
 	}
 
 	private fun String.urlEncoded(): String = URLEncoder.encode(this, "UTF-8")

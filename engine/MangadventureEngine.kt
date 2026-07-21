@@ -148,7 +148,7 @@ class MangadventureEngine(
         val out = ArrayList<Manga>(results.length())
         for (i in 0 until results.length()) {
             val it = results.optJSONObject(i) ?: continue
-            if (it.isNull("chapters")) continue // exclude licensed series
+            if (it.opt("chapters") == JSONObject.NULL) continue // exclude licensed series (present & null only; absent => keep)
             val path = it.optString("url").takeIf { u -> u.isNotBlank() } ?: continue
             out.add(
                 Manga(

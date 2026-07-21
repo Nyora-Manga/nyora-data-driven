@@ -1043,8 +1043,25 @@ private fun String.toAbsoluteUrl(domain: String): String = when {
     else -> "https://$domain/$this"
 }
 
-private fun String.toRelativeUrl(domain: String): String =
-    resolveUrl("https://$domain/", this).toRelativeUrlOrSelf()
+// kotatsu String.toRelativeUrl(domain) is DOMAIN-AWARE: it only strips the host when the url is on
+// [domain]; a url on a different host (a separate image CDN, very common for MangaThemesia readers)
+// is returned UNCHANGED/absolute. The old blanket toRelativeUrlOrSelf() stripped ANY host, so a
+// cross-domain reader image "https://cdn.x/01.jpg" became "/01.jpg" and getPageImageUrl then
+// re-prefixed the SITE domain -> "https://site/01.jpg" (wrong host) => images never load.
+private fun String.toRelativeUrl(domain: String): String {
+    if (isEmpty() || startsWith("/")) return this
+    val abs = resolveUrl("https://$domain/", this)
+    val schemeIdx = abs.indexOf("://")
+    if (schemeIdx < 0) return abs
+    val hostStart = schemeIdx + 3
+    val pathStart = abs.indexOf('/', hostStart)
+    val host = if (pathStart < 0) abs.substring(hostStart) else abs.substring(hostStart, pathStart)
+    return if (host.equals(domain, ignoreCase = true)) {
+        if (pathStart < 0) "/" else abs.substring(pathStart)
+    } else {
+        abs
+    }
+}
 
 private fun String.toRelativeUrlOrSelf(): String {
     val schemeIdx = indexOf("://")

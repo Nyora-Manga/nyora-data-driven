@@ -100,11 +100,13 @@ class ScanEngine(
 	 *    unescaped ([unescapeJson]) then parsed as a body fragment (kotatsu `parseRaw` + `unescapeJson`
 	 *    + `Jsoup.parseBodyFragment`). NO page number is used on this path (kotatsu ignores it).
 	 *  - browse -> GET {domain}{listUrl}?q={orderKey}&search[tags][]={k}...&page={page}
-	 *    (kotatsu hands 0-indexed pages straight through — this template is 0-based, NOT +1).
+	 *    (kotatsu PagedMangaParser paginator.firstPage defaults to 1; the [SourceEngine] contract hands
+	 *    0-indexed pages, so the site page number is `page + 1`).
 	 */
 	private suspend fun getListPage(page: Int, order: SortOrder, filter: MangaListFilter): List<Manga> {
 		val query = filter.query
 		val isQuery = !query.isNullOrEmpty()
+		val sitePage = page + 1
 
 		val url = buildString {
 			append("https://")
@@ -129,7 +131,7 @@ class ScanEngine(
 					append(it.key)
 				}
 				append("&page=")
-				append(page.toString())
+				append(sitePage.toString())
 			}
 		}
 
@@ -328,10 +330,7 @@ class ScanEngine(
 	/** Relativize to [domain]; urls on a different host (e.g. an image CDN) are returned unchanged. */
 	private fun String.toRelativeUrl(domain: String): String {
 		if (isEmpty() || startsWith("/")) return this
-		val i = indexOf(domain)
-		if (i < 0) return this
-		val rel = substring(i + domain.length)
-		return rel.ifEmpty { "/" }
+		return replace(Regex("^[^/]{2,6}://${Regex.escape(domain)}+/", RegexOption.IGNORE_CASE), "/")
 	}
 
 	private fun String.urlEncoded(): String =

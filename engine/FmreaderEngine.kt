@@ -426,13 +426,16 @@ class FmreaderEngine(
 		else -> "https://$domain/$this"
 	}
 
-	/** Relativize to [domain]; urls on a different host (e.g. an image CDN) are returned unchanged. */
+	/**
+	 * kotatsu `String.toRelativeUrl(domain)`: strip only a leading `scheme://domain/` prefix.
+	 * Urls on a DIFFERENT host — including an image CDN on a *subdomain* of [domain]
+	 * (e.g. `https://i3.$domain/x.jpg`) — are returned unchanged. A prior port used
+	 * `indexOf(domain)` (substring-anywhere), which mangled such CDN urls to `/x.jpg` and made
+	 * `getPageImageUrl` resolve them against the bare domain → wrong host → images never loaded.
+	 */
 	private fun String.toRelativeUrl(domain: String): String {
 		if (isEmpty() || startsWith("/")) return this
-		val i = indexOf(domain)
-		if (i < 0) return this
-		val rel = substring(i + domain.length)
-		return rel.ifEmpty { "/" }
+		return replace(Regex("^[^/]{2,6}://${Regex.escape(domain)}+/", RegexOption.IGNORE_CASE), "/")
 	}
 
 	private fun String.toTitleCase(locale: Locale): String =

@@ -255,11 +255,12 @@ class HeancmsaltEngine(
 	}
 
 	private fun String.toRelativeUrl(domain: String): String {
+		// kotatsu Parse.toRelativeUrl: only strip a LEADING scheme://<domain>/ whose host EXACTLY
+		// matches [domain]; a different host (e.g. a CDN/media subdomain "cdn.$domain") must stay
+		// absolute. The old indexOf() matched [domain] anywhere and dropped subdomains, so
+		// getPageImageUrl rebuilt CDN image urls onto the wrong host → pages never loaded.
 		if (isEmpty() || startsWith("/")) return this
-		val i = indexOf(domain)
-		if (i < 0) return this
-		val rel = substring(i + domain.length)
-		return rel.ifEmpty { "/" }
+		return replace(Regex("^[^/]{2,6}://${Regex.escape(domain)}+/", RegexOption.IGNORE_CASE), "/")
 	}
 
 	private fun SimpleDateFormat.parseSafe(text: String?): Long {
