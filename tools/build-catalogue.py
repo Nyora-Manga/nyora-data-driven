@@ -41,8 +41,27 @@ def load_dead_ids():
     return set(json.loads(f.read_text()).get("deadIds", []))
 
 
+def load_patches():
+    # Source-fix overlay mirroring nyora-shared's SourcePatches.kt (the same fixes the iOS/desktop
+    # ports apply at runtime): relocated live domains, rebrands, and curated dead sources. Applied
+    # here so the runtime catalogue matches the other clients without mutating the extracted repo/*.json.
+    f = ROOT / "patches.json"
+    if not f.exists():
+        return {"domainOverrides": {}, "titleOverrides": {}, "deadSources": []}
+    p = json.loads(f.read_text())
+    return {
+        "domainOverrides": p.get("domainOverrides", {}),
+        "titleOverrides": p.get("titleOverrides", {}),
+        "deadSources": set(p.get("deadSources", [])),
+    }
+
+
 def build():
     dead_ids = load_dead_ids()
+    patches = load_patches()
+    domain_overrides = patches["domainOverrides"]
+    title_overrides = patches["titleOverrides"]
+    dead_sources = patches["deadSources"]
     sources = []
     for f in sorted(REPO.glob("*.json")):
         for r in rows_of(json.loads(f.read_text())):
@@ -50,9 +69,26 @@ def build():
             # `engine` is required to route to a runtime engine; fall back to the
             # filename (every engine file is named for its engine) if a row omits it.
             row.setdefault("engine", f.stem)
-            if row.get("id") in dead_ids and not row.get("broken"):
-                row["broken"] = True
-                row["brokenReason"] = "domain does not resolve"
+            sid = row.get("id")
+            # A relocated source lives at a new domain; point it there and clear any stale
+            # broken flag (the old domain's deadness no longer applies). Overrides win over
+            # every dead-marking below, since those probed/curated the now-abandoned domain.
+            overridden = sid in domain_overrides
+            if overridden:
+                row["domain"] = domain_overrides[sid]
+                row["broken"] = False
+                row.pop("brokenReason", None)
+            if sid in title_overrides:
+                row["name"] = title_overrides[sid]
+            # Curated dead set (mirrors SourcePatches.DEAD_SOURCES) and the DNS-liveness overlay,
+            # both keyed by id. Neither can revive a relocated source (handled above).
+            if not overridden:
+                if sid in dead_sources and not row.get("broken"):
+                    row["broken"] = True
+                    row["brokenReason"] = "dead upstream (no working successor)"
+                if sid in dead_ids and not row.get("broken"):
+                    row["broken"] = True
+                    row["brokenReason"] = "domain does not resolve"
             sources.append(row)
     sources.sort(key=lambda r: (r.get("engine", ""), r.get("id", "")))
     live = [r for r in sources if not r.get("broken")]
