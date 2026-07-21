@@ -32,9 +32,7 @@ def rows_of(doc):
 
 
 def load_dead_ids():
-    # Optional liveness overlay (tools/check-liveness.py). Sources whose domain no longer
-    # resolves are marked broken here so the app drops them, without mutating the extracted
-    # repo/*.json — a domain that comes back just drops out of liveness.json on the next probe.
+    # Liveness overlay (tools/check-liveness.py): ids whose domain no longer resolves.
     f = ROOT / "liveness.json"
     if not f.exists():
         return set()
@@ -42,9 +40,7 @@ def load_dead_ids():
 
 
 def load_patches():
-    # Source-fix overlay mirroring nyora-shared's SourcePatches.kt (the same fixes the iOS/desktop
-    # ports apply at runtime): relocated live domains, rebrands, and curated dead sources. Applied
-    # here so the runtime catalogue matches the other clients without mutating the extracted repo/*.json.
+    # Overlay mirroring nyora-shared SourcePatches.kt: relocated domains, rebrands, dead sources.
     f = ROOT / "patches.json"
     if not f.exists():
         return {"domainOverrides": {}, "titleOverrides": {}, "deadSources": []}
@@ -66,13 +62,11 @@ def build():
     for f in sorted(REPO.glob("*.json")):
         for r in rows_of(json.loads(f.read_text())):
             row = {k: r[k] for k in KEEP if k in r}
-            # `engine` is required to route to a runtime engine; fall back to the
-            # filename (every engine file is named for its engine) if a row omits it.
+            # Fall back to the filename for engine (each file is named for its engine).
             row.setdefault("engine", f.stem)
             sid = row.get("id")
-            # A relocated source lives at a new domain; point it there and clear any stale
-            # broken flag (the old domain's deadness no longer applies). Overrides win over
-            # every dead-marking below, since those probed/curated the now-abandoned domain.
+            # Relocated source: point it at the new domain and clear the stale broken flag.
+            # Overrides win over the dead-marking below (those probed the abandoned domain).
             overridden = sid in domain_overrides
             if overridden:
                 row["domain"] = domain_overrides[sid]
@@ -80,13 +74,8 @@ def build():
                 row.pop("brokenReason", None)
             if sid in title_overrides:
                 row["name"] = title_overrides[sid]
-            # NOTE: patches.deadSources (mirroring SourcePatches.DEAD_SOURCES) is deliberately NOT
-            # applied to catalogue visibility. On the iOS/desktop ports that set only controls which
-            # sources are seeded/enabled by DEFAULT — the catalog itself (nativeParserCatalog) still
-            # lists every non-@Broken source. Data-driven sources use our own generic engines, not the
-            # dead native parsers, so a source "dead" for kotatsu is often fine here; hiding them just
-            # drops ~45 usable sources. Only the DNS-liveness overlay (a domain that literally doesn't
-            # resolve) hides a source, and even that never overrides a relocated one.
+            # patches.deadSources is a default-enabled concern, not a visibility one, so it's not
+            # applied here (see IosCuratedSources / nativeParserCatalog). Only DNS-dead domains hide.
             if not overridden and sid in dead_ids and not row.get("broken"):
                 row["broken"] = True
                 row["brokenReason"] = "domain does not resolve"

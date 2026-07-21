@@ -1,5 +1,5 @@
 {
- "_comment": "Overlay mirroring nyora-shared SourcePatches.kt (the iOS/desktop runtime source-fix set). Applied by tools/build-catalogue.py so the data-driven catalogue reflects relocated domains, rebrands, and dead sources. Keyed by the upstream source id. TOONILY_ME is data-driven-specific: it is backed by the app's native ToonDexMangaRepository (toondex.io), so its domain is pinned here and its dead flag cleared, mirroring how MangaFire's rows stay live.",
+ "_comment": "Overlay mirroring nyora-shared SourcePatches.kt, applied by tools/build-catalogue.py. Keyed by source id. deadSources is kept for parity but not applied to visibility. TOONILY_ME is pinned to toondex.io (backed by the app's native ToonDexMangaRepository).",
  "domainOverrides": {
   "TOONILY_ME": "toondex.io",
   "ALTAYSCANS": "witchscans.com",
