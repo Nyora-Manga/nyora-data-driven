@@ -1,35 +1,7 @@
 {
-  "_comment": "Canonical source-fix overlay for the whole Nyora ecosystem. Edit HERE only; run tools/generate-overlays.py to regenerate every client's SourcePatches.kt + blocked-sources.json. Invariant: deadSources never overlaps domainOverrides.",
-  "domainOverrides": {
-    "TOONILY_ME": "toondex.io",
-    "ALTAYSCANS": "witchscans.com",
-    "ASTRASCANS": "astracomic.com",
-    "FLOWERMANGA": "flowermangas.net",
-    "MANGAGEZGINI": "mangagezgini.online",
-    "MANHUAUSS": "manhua.us.com",
-    "MHSCANS": "mhscans.com",
-    "ISEKAISCAN_EU": "isekaiscan.top",
-    "RUYAMANGA": "ruyamanga2.com",
-    "TRUYENTRANHFULL": "truyentranhfull.vip",
-    "MANGATILKISI": "tilkiscans.com",
-    "YAOIBAR": "yaoibar.lol",
-    "AINZSCANS": "ainzscans.net",
-    "DOCTRUYEN3Q": "doctruyen3qhub.org",
-    "YUGEN_MANGAS_ES": "visualikigai.com",
-    "LEITORDEMANGA": "leitordemangas.com",
-    "LILYUMFANSUB": "lilyumfansub.pro"
-  },
-  "titleOverrides": {
-    "ASTRASCANS": "Astra Comic",
-    "MANGATILKISI": "Tilki Scans",
-    "ISEKAISCAN_EU": "IsekaiScan",
-    "YUGEN_MANGAS_ES": "Visual Ikigai",
-    "TOONILY_ME": "ToonDex"
-  },
-  "nativeBacked": [
-    "TOONILY_ME"
-  ],
-  "deadSources": [
+  "_comment": "AUTO-GENERATED from patches.json \u2014 do not edit. Canonical dead-source ids.",
+  "count": 241,
+  "deadSourceIds": [
     "ADONISFANSUB",
     "AIYUMANGASCANLATION",
     "ALCEASCAN",

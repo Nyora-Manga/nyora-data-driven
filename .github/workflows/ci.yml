@@ -51,15 +51,20 @@ jobs:
       # don't retrigger CI, so this can't loop.
       - name: Rebuild catalogue.json
         run: python3 tools/build-catalogue.py
+      # patches.json is the single source of truth for source fixes; regenerate the derived
+      # blocked-sources.json (client SourcePatches.kt are regenerated locally, where the sibling
+      # repos are checked out).
+      - name: Regenerate overlays from patches.json
+        run: python3 tools/generate-overlays.py
       - name: Commit if changed
         run: |
           git config user.name  "hasan72341"
           git config user.email "hasan72341@users.noreply.github.com"
-          if git diff --quiet catalogue.json; then
-            echo "catalogue.json already in sync"
+          if git diff --quiet catalogue.json blocked-sources.json; then
+            echo "catalogue.json + blocked-sources.json already in sync"
           else
-            git add catalogue.json
-            git commit -m "chore: sync catalogue.json with repo/"
+            git add catalogue.json blocked-sources.json
+            git commit -m "chore: sync catalogue.json + blocked-sources.json"
             git push
           fi
 
