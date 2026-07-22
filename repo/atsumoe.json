@@ -1,0 +1,12 @@
+[
+  {
+    "id": "ATSUMOE",
+    "name": "Atsu.moe",
+    "lang": "en",
+    "nsfw": false,
+    "contentType": "MANGA",
+    "engine": "atsumoe",
+    "domain": "atsu.moe",
+    "config": {}
+  }
+]

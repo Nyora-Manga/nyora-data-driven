@@ -1,0 +1,17 @@
+[
+  {
+    "id": "BAOZIMH",
+    "name": "Baozimh",
+    "lang": "zh",
+    "nsfw": false,
+    "contentType": "MANGA",
+    "engine": "baozimh",
+    "domain": "www.baozimh.com",
+    "config": {
+      "listApiPath": "/api/bzmhq/amp_comic_list",
+      "searchPath": "/search",
+      "tagsPath": "/classify",
+      "pageSize": 36
+    }
+  }
+]

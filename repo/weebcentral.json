@@ -1,0 +1,12 @@
+[
+  {
+    "id": "WEEBCENTRAL",
+    "name": "Weeb Central",
+    "lang": "en",
+    "nsfw": false,
+    "contentType": "MANGA",
+    "engine": "weebcentral",
+    "domain": "weebcentral.com",
+    "config": {}
+  }
+]

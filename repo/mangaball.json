@@ -1,0 +1,105 @@
+[
+  {
+    "id": "MANGABALL_DE",
+    "name": "Manga Ball (German)",
+    "lang": "de",
+    "nsfw": false,
+    "contentType": "MANGA",
+    "engine": "mangaball",
+    "domain": "mangaball.net",
+    "config": {
+      "siteLanguages": [
+        "de"
+      ]
+    }
+  },
+  {
+    "id": "MANGABALL_EN",
+    "name": "Manga Ball (English)",
+    "lang": "en",
+    "nsfw": false,
+    "contentType": "MANGA",
+    "engine": "mangaball",
+    "domain": "mangaball.net",
+    "config": {
+      "siteLanguages": [
+        "en"
+      ]
+    }
+  },
+  {
+    "id": "MANGABALL_HI",
+    "name": "Manga Ball (Hindi)",
+    "lang": "hi",
+    "nsfw": false,
+    "contentType": "MANGA",
+    "engine": "mangaball",
+    "domain": "mangaball.net",
+    "config": {
+      "siteLanguages": [
+        "hi"
+      ]
+    }
+  },
+  {
+    "id": "MANGABALL_JA",
+    "name": "Manga Ball (Japanese)",
+    "lang": "ja",
+    "nsfw": false,
+    "contentType": "MANGA",
+    "engine": "mangaball",
+    "domain": "mangaball.net",
+    "config": {
+      "siteLanguages": [
+        "jp"
+      ]
+    }
+  },
+  {
+    "id": "MANGABALL_KO",
+    "name": "Manga Ball (Korean)",
+    "lang": "ko",
+    "nsfw": false,
+    "contentType": "MANGA",
+    "engine": "mangaball",
+    "domain": "mangaball.net",
+    "config": {
+      "siteLanguages": [
+        "kr"
+      ]
+    }
+  },
+  {
+    "id": "MANGABALL_MS",
+    "name": "Manga Ball (Malay)",
+    "lang": "ms",
+    "nsfw": false,
+    "contentType": "MANGA",
+    "engine": "mangaball",
+    "domain": "mangaball.net",
+    "config": {
+      "siteLanguages": [
+        "ms"
+      ]
+    }
+  },
+  {
+    "id": "MANGABALL_ZH",
+    "name": "Manga Ball (Chinese)",
+    "lang": "zh",
+    "nsfw": false,
+    "contentType": "MANGA",
+    "engine": "mangaball",
+    "domain": "mangaball.net",
+    "config": {
+      "siteLanguages": [
+        "zh",
+        "zh-cn",
+        "zh-hk",
+        "zh-mo",
+        "zh-sg",
+        "zh-tw"
+      ]
+    }
+  }
+]

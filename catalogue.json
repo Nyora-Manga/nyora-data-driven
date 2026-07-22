@@ -79,6 +79,31 @@
    "config": {}
   },
   {
+   "id": "ATSUMOE",
+   "name": "Atsu.moe",
+   "lang": "en",
+   "nsfw": false,
+   "contentType": "MANGA",
+   "engine": "atsumoe",
+   "domain": "atsu.moe",
+   "config": {}
+  },
+  {
+   "id": "BAOZIMH",
+   "name": "Baozimh",
+   "lang": "zh",
+   "nsfw": false,
+   "contentType": "MANGA",
+   "engine": "baozimh",
+   "domain": "www.baozimh.com",
+   "config": {
+    "listApiPath": "/api/bzmhq/amp_comic_list",
+    "searchPath": "/search",
+    "tagsPath": "/classify",
+    "pageSize": 36
+   }
+  },
+  {
    "id": "batoto",
    "name": "Bato.To",
    "lang": "all",
@@ -179,6 +204,16 @@
    "broken": true,
    "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)",
    "pageSize": 24,
+   "config": {}
+  },
+  {
+   "id": "DEMONICSCANS",
+   "name": "DemonicScans",
+   "lang": "en",
+   "nsfw": false,
+   "contentType": "MANGA",
+   "engine": "demonicscans",
+   "domain": "demonicscans.org",
    "config": {}
   },
   {
@@ -10226,6 +10261,109 @@
    }
   },
   {
+   "id": "MANGABALL_DE",
+   "name": "Manga Ball (German)",
+   "lang": "de",
+   "nsfw": false,
+   "contentType": "MANGA",
+   "engine": "mangaball",
+   "domain": "mangaball.net",
+   "config": {
+    "siteLanguages": [
+     "de"
+    ]
+   }
+  },
+  {
+   "id": "MANGABALL_EN",
+   "name": "Manga Ball (English)",
+   "lang": "en",
+   "nsfw": false,
+   "contentType": "MANGA",
+   "engine": "mangaball",
+   "domain": "mangaball.net",
+   "config": {
+    "siteLanguages": [
+     "en"
+    ]
+   }
+  },
+  {
+   "id": "MANGABALL_HI",
+   "name": "Manga Ball (Hindi)",
+   "lang": "hi",
+   "nsfw": false,
+   "contentType": "MANGA",
+   "engine": "mangaball",
+   "domain": "mangaball.net",
+   "config": {
+    "siteLanguages": [
+     "hi"
+    ]
+   }
+  },
+  {
+   "id": "MANGABALL_JA",
+   "name": "Manga Ball (Japanese)",
+   "lang": "ja",
+   "nsfw": false,
+   "contentType": "MANGA",
+   "engine": "mangaball",
+   "domain": "mangaball.net",
+   "config": {
+    "siteLanguages": [
+     "jp"
+    ]
+   }
+  },
+  {
+   "id": "MANGABALL_KO",
+   "name": "Manga Ball (Korean)",
+   "lang": "ko",
+   "nsfw": false,
+   "contentType": "MANGA",
+   "engine": "mangaball",
+   "domain": "mangaball.net",
+   "config": {
+    "siteLanguages": [
+     "kr"
+    ]
+   }
+  },
+  {
+   "id": "MANGABALL_MS",
+   "name": "Manga Ball (Malay)",
+   "lang": "ms",
+   "nsfw": false,
+   "contentType": "MANGA",
+   "engine": "mangaball",
+   "domain": "mangaball.net",
+   "config": {
+    "siteLanguages": [
+     "ms"
+    ]
+   }
+  },
+  {
+   "id": "MANGABALL_ZH",
+   "name": "Manga Ball (Chinese)",
+   "lang": "zh",
+   "nsfw": false,
+   "contentType": "MANGA",
+   "engine": "mangaball",
+   "domain": "mangaball.net",
+   "config": {
+    "siteLanguages": [
+     "zh",
+     "zh-cn",
+     "zh-hk",
+     "zh-mo",
+     "zh-sg",
+     "zh-tw"
+    ]
+   }
+  },
+  {
    "id": "mangabat",
    "name": "MangaBat",
    "lang": "en",
@@ -10496,6 +10634,46 @@
    "engine": "mangago",
    "domain": "www.mangago.me",
    "broken": false,
+   "config": {}
+  },
+  {
+   "id": "MANGAKAWAII",
+   "name": "MangaKawaii Fr",
+   "lang": "fr",
+   "nsfw": false,
+   "contentType": "MANGA",
+   "engine": "mangakawaii",
+   "domain": "www.mangakawaii.io",
+   "config": {
+    "acceptLanguage": "fr",
+    "chaptersDir": "chapters_fr",
+    "ongoingText": "En Cours",
+    "finishedText": "Terminé"
+   }
+  },
+  {
+   "id": "MANGAKAWAII_EN",
+   "name": "MangaKawaii En",
+   "lang": "en",
+   "nsfw": false,
+   "contentType": "MANGA",
+   "engine": "mangakawaii",
+   "domain": "www.mangakawaii.io",
+   "config": {
+    "acceptLanguage": "en",
+    "chaptersDir": "chapters_en",
+    "ongoingText": "Ongoing",
+    "finishedText": ""
+   }
+  },
+  {
+   "id": "MANGAPILL",
+   "name": "MangaPill",
+   "lang": "en",
+   "nsfw": false,
+   "contentType": "MANGA",
+   "engine": "mangapill",
+   "domain": "mangapill.com",
    "config": {}
   },
   {
@@ -16255,6 +16433,28 @@
    "config": {}
   },
   {
+   "id": "WEBTOONS",
+   "name": "Webtoons",
+   "lang": "en",
+   "nsfw": false,
+   "contentType": "MANHWA",
+   "engine": "webtoons",
+   "domain": "webtoons.com",
+   "config": {
+    "languageCode": "en"
+   }
+  },
+  {
+   "id": "WEEBCENTRAL",
+   "name": "Weeb Central",
+   "lang": "en",
+   "nsfw": false,
+   "contentType": "MANGA",
+   "engine": "weebcentral",
+   "domain": "weebcentral.com",
+   "config": {}
+  },
+  {
    "id": "doctruyen3q",
    "name": "DocTruyen3Q",
    "lang": "vi",
@@ -17504,7 +17704,7 @@
    "config": {}
   }
  ],
- "count": 1077,
- "liveCount": 649,
- "hash": "e103cf581fa9f3bd"
+ "count": 1092,
+ "liveCount": 664,
+ "hash": "c1e0a05df912eed2"
 }

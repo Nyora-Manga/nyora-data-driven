@@ -1,0 +1,14 @@
+[
+  {
+    "id": "WEBTOONS",
+    "name": "Webtoons",
+    "lang": "en",
+    "nsfw": false,
+    "contentType": "MANHWA",
+    "engine": "webtoons",
+    "domain": "webtoons.com",
+    "config": {
+      "languageCode": "en"
+    }
+  }
+]

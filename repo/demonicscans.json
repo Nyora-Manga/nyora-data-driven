@@ -1,0 +1,12 @@
+[
+  {
+    "id": "DEMONICSCANS",
+    "name": "DemonicScans",
+    "lang": "en",
+    "nsfw": false,
+    "contentType": "MANGA",
+    "engine": "demonicscans",
+    "domain": "demonicscans.org",
+    "config": {}
+  }
+]

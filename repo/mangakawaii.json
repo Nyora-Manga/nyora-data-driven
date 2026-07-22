@@ -1,0 +1,32 @@
+[
+  {
+    "id": "MANGAKAWAII_EN",
+    "name": "MangaKawaii En",
+    "lang": "en",
+    "nsfw": false,
+    "contentType": "MANGA",
+    "engine": "mangakawaii",
+    "domain": "www.mangakawaii.io",
+    "config": {
+      "acceptLanguage": "en",
+      "chaptersDir": "chapters_en",
+      "ongoingText": "Ongoing",
+      "finishedText": ""
+    }
+  },
+  {
+    "id": "MANGAKAWAII",
+    "name": "MangaKawaii Fr",
+    "lang": "fr",
+    "nsfw": false,
+    "contentType": "MANGA",
+    "engine": "mangakawaii",
+    "domain": "www.mangakawaii.io",
+    "config": {
+      "acceptLanguage": "fr",
+      "chaptersDir": "chapters_fr",
+      "ongoingText": "En Cours",
+      "finishedText": "Termin\u00e9"
+    }
+  }
+]

@@ -1,0 +1,12 @@
+[
+  {
+    "id": "MANGAPILL",
+    "name": "MangaPill",
+    "lang": "en",
+    "nsfw": false,
+    "contentType": "MANGA",
+    "engine": "mangapill",
+    "domain": "mangapill.com",
+    "config": {}
+  }
+]

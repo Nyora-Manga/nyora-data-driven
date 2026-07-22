@@ -75,6 +75,16 @@ object EngineRegistry {
         "mangadventure"  to Creator { def, ctx -> MangadventureEngineFactory().create(def, ctx) },
         "mangago"        to Creator { def, ctx -> MangagoEngineFactory().create(def, ctx) },
         "onemanga"       to Creator(OnemangaEngineFactory::create),
+
+        // --- ported from custom kotatsu parsers (real-user sources missing from the catalogue) ---
+        "atsumoe"        to Creator(AtsuMoeEngineFactory::create),
+        "baozimh"        to Creator(BaozimhEngineFactory::create),
+        "demonicscans"   to Creator(DemonicScansEngineFactory::create),
+        "mangaball"      to Creator(MangaBallEngineFactory::create),
+        "mangakawaii"    to Creator(MangaKawaiiEngineFactory::create),
+        "mangapill"      to Creator(MangaPillEngineFactory::create),
+        "webtoons"       to Creator(WebtoonsEngineFactory::create),
+        "weebcentral"    to Creator(WeebCentralEngineFactory::create),
     )
 
     /** Every engine id this build can render, in declaration order. */
