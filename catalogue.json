@@ -10684,6 +10684,8 @@
    "contentType": "MANGA",
    "engine": "mangaplus",
    "domain": "mangaplus.shueisha.co.jp",
+   "broken": true,
+   "brokenReason": "MangaPlus web API is protobuf-only now; ?format=json returns 403. Needs a protobuf decoder the data-driven engine model doesn't have.",
    "config": {
     "languageCode": "de"
    }
@@ -10696,6 +10698,8 @@
    "contentType": "MANGA",
    "engine": "mangaplus",
    "domain": "mangaplus.shueisha.co.jp",
+   "broken": true,
+   "brokenReason": "MangaPlus web API is protobuf-only now; ?format=json returns 403. Needs a protobuf decoder the data-driven engine model doesn't have.",
    "config": {
     "languageCode": "en"
    }
@@ -10708,6 +10712,8 @@
    "contentType": "MANGA",
    "engine": "mangaplus",
    "domain": "mangaplus.shueisha.co.jp",
+   "broken": true,
+   "brokenReason": "MangaPlus web API is protobuf-only now; ?format=json returns 403. Needs a protobuf decoder the data-driven engine model doesn't have.",
    "config": {
     "languageCode": "es"
    }
@@ -10720,6 +10726,8 @@
    "contentType": "MANGA",
    "engine": "mangaplus",
    "domain": "mangaplus.shueisha.co.jp",
+   "broken": true,
+   "brokenReason": "MangaPlus web API is protobuf-only now; ?format=json returns 403. Needs a protobuf decoder the data-driven engine model doesn't have.",
    "config": {
     "languageCode": "fr"
    }
@@ -10732,6 +10740,8 @@
    "contentType": "MANGA",
    "engine": "mangaplus",
    "domain": "mangaplus.shueisha.co.jp",
+   "broken": true,
+   "brokenReason": "MangaPlus web API is protobuf-only now; ?format=json returns 403. Needs a protobuf decoder the data-driven engine model doesn't have.",
    "config": {
     "languageCode": "id"
    }
@@ -10744,6 +10754,8 @@
    "contentType": "MANGA",
    "engine": "mangaplus",
    "domain": "mangaplus.shueisha.co.jp",
+   "broken": true,
+   "brokenReason": "MangaPlus web API is protobuf-only now; ?format=json returns 403. Needs a protobuf decoder the data-driven engine model doesn't have.",
    "config": {
     "languageCode": "pt"
    }
@@ -10756,6 +10768,8 @@
    "contentType": "MANGA",
    "engine": "mangaplus",
    "domain": "mangaplus.shueisha.co.jp",
+   "broken": true,
+   "brokenReason": "MangaPlus web API is protobuf-only now; ?format=json returns 403. Needs a protobuf decoder the data-driven engine model doesn't have.",
    "config": {
     "languageCode": "ru"
    }
@@ -10768,6 +10782,8 @@
    "contentType": "MANGA",
    "engine": "mangaplus",
    "domain": "mangaplus.shueisha.co.jp",
+   "broken": true,
+   "brokenReason": "MangaPlus web API is protobuf-only now; ?format=json returns 403. Needs a protobuf decoder the data-driven engine model doesn't have.",
    "config": {
     "languageCode": "th"
    }
@@ -10780,6 +10796,8 @@
    "contentType": "MANGA",
    "engine": "mangaplus",
    "domain": "mangaplus.shueisha.co.jp",
+   "broken": true,
+   "brokenReason": "MangaPlus web API is protobuf-only now; ?format=json returns 403. Needs a protobuf decoder the data-driven engine model doesn't have.",
    "config": {
     "languageCode": "vi"
    }
@@ -17813,6 +17831,6 @@
   }
  ],
  "count": 1101,
- "liveCount": 673,
- "hash": "ae33ed4e716bd3fe"
+ "liveCount": 664,
+ "hash": "564a707a531e7142"
 }
