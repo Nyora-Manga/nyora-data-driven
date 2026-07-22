@@ -138,7 +138,7 @@ class MangaPillEngine(
 		return doc.select(cfg.selectList).mapNotNull { element ->
 			val href = element.attrAsRelativeUrl("href").takeIf { it.isNotEmpty() } ?: return@mapNotNull null
 			val img = element.selectFirst("img") ?: return@mapNotNull null
-			val coverUrl = img.attr("data-src").takeIf { it.isNotEmpty() }
+			val coverUrl = img.attr("data-src") // native: img.attr("data-src").orEmpty() → "" when absent
 			val title = element.parent()?.selectFirst(cfg.selectListTitle)?.text() ?: return@mapNotNull null
 			Manga(
 				id = href,
@@ -167,7 +167,9 @@ class MangaPillEngine(
 	override suspend fun getAvailableTags(): Set<MangaTag> {
 		val doc = fetchDoc("${cfg.searchUrl}".toAbsoluteUrl(domain))
 		return doc.select(cfg.selectTag).mapNotNull { element ->
-			val title = element.attr("value").takeIf { it.isNotEmpty() } ?: return@mapNotNull null
+			// native fetchTags: title = element.attr("value") with no empty-guard (mapNotNull never
+			// returns null here), so empty-value inputs are kept — mirror that exactly.
+			val title = element.attr("value")
 			val key = title.replace(" ", "+")
 			MangaTag(title = title, key = key, source = source.id)
 		}.toSet()

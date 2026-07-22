@@ -37,7 +37,7 @@ import java.net.URLEncoder
  *  - mobile API domain    : m.webtoons.com                            — /api/v1/{webtoon|canvas}/{titleNo}/episodes
  *  - static image host    : webtoon-phinf.pstatic.net                 — all page/cover images resolve here
  *  - User-Agent           : mobile Chrome UA (upstream `userAgentKey`)
- *  - Referer              : https://www.{domain}/  — REQUIRED on the image download so the static host
+ *  - Referer              : https://{domain}/  — REQUIRED on the image download so the static host
  *                           serves the bytes (see getPageImageUrl note below).
  *
  * DOMAIN-MODEL ASSUMPTION (matching FoolslideEngine.kt / MadaraEngine.kt): the canonical
@@ -217,7 +217,7 @@ class WebtoonsEngine(
 		).firstOrNull { !it.isNullOrBlank() && it != "null" }
 
 		val genreElements = doc.select(".detail_header .info .genre").ifEmpty { doc.select("h2.genre") }
-		val genres = genreElements.map { it.text() }.filter { it.isNotBlank() }.distinct()
+		val genres = genreElements.map { it.text() }.distinct()
 
 		val dayInfo = doc.select("#_asideDetail p.day_info").text().ifEmpty { doc.select(".day_info").text() }
 		val state = when {
@@ -254,19 +254,24 @@ class WebtoonsEngine(
 		val episodeList = json.optJSONObject("result")?.optJSONArray("episodeList")
 			?: throw WebtoonsParseException("No episodes found for title $titleNo", url)
 
+		// kotatsu mapChapters de-duplicates by chapter id (HashSet) and skips nulls; mirror that.
 		val out = ArrayList<MangaChapter>(episodeList.length())
+		val seenIds = HashSet<String>(episodeList.length())
 		for (i in 0 until episodeList.length()) {
 			val jo = episodeList.getJSONObject(i)
+			val episodeTitle = jo.optString("episodeTitle", "")
 			val episodeNo = jo.getInt("episodeNo")
 			val viewerLink = jo.getString("viewerLink")
+			val id = uid("$titleNo-$episodeNo")
+			if (!seenIds.add(id)) continue
 			out.add(
 				MangaChapter(
-					id = uid("$titleNo-$episodeNo"),
-					title = jo.optString("episodeTitle", "").ifEmpty { null },
+					id = id,
+					title = episodeTitle,
 					number = episodeNo.toFloat(),
 					volume = 0,
-					url = viewerLink.toRelativeUrl(domain),
-					uploadDate = jo.optLong("exposureDateMillis", 0L),
+					url = viewerLink,
+					uploadDate = jo.getLong("exposureDateMillis"),
 					branch = null,
 					scanlator = null,
 					source = source.id,
@@ -310,7 +315,7 @@ class WebtoonsEngine(
 	/**
 	 * kotatsu getPageUrl: page image urls resolve against the static host. NOTE: the static host
 	 * (webtoon-phinf.pstatic.net) hot-link-protects images — the actual byte download MUST carry a
-	 * `Referer: https://www.{domain}/` header (upstream relies on its global HTTP client to inject it).
+	 * `Referer: https://{domain}/` header (upstream relies on its global HTTP client to inject it).
 	 * This method can only return the URL string; the Nyora image loader must attach that Referer.
 	 * The required value is exposed for the loader via [imageRequestHeaders].
 	 */
@@ -319,7 +324,7 @@ class WebtoonsEngine(
 	/** Headers the image loader must attach when downloading a page/cover (Referer + mobile UA). */
 	@Suppress("unused")
 	fun imageRequestHeaders(): Map<String, String> = mapOf(
-		"Referer" to cfg.referer.ifBlank { "https://www.$domain/" },
+		"Referer" to cfg.referer.ifBlank { "https://$domain/" },
 		"User-Agent" to userAgent,
 	)
 
@@ -329,7 +334,7 @@ class WebtoonsEngine(
 
 	private fun baseHeaders(): HashMap<String, String> = HashMap<String, String>().apply {
 		put("User-Agent", userAgent)
-		put("Referer", cfg.referer.ifBlank { "https://www.$domain/" })
+		put("Referer", cfg.referer.ifBlank { "https://$domain/" })
 	}
 
 	private suspend fun fetchDoc(url: String): Document {
@@ -356,17 +361,12 @@ class WebtoonsEngine(
 	/** Namespace the String id by source, matching sibling engines' href-derived ids. */
 	private fun uid(key: String): String = "${source.id}:$key"
 
+	/** kotatsu `String.toAbsoluteUrl` (Parse.kt): identical branch order/semantics, incl. empty -> "https://$host/". */
 	private fun String.toAbsoluteUrl(host: String): String = when {
-		isEmpty() -> "https://$host"
-		startsWith("http://") || startsWith("https://") -> this
 		startsWith("//") -> "https:$this"
 		startsWith("/") -> "https://$host$this"
+		startsWith("http://") || startsWith("https://") -> this
 		else -> "https://$host/$this"
-	}
-
-	private fun String.toRelativeUrl(host: String): String {
-		if (isEmpty() || startsWith("/")) return this
-		return replace(Regex("^[^/]{2,6}://${Regex.escape(host)}+/", RegexOption.IGNORE_CASE), "/")
 	}
 
 	private fun String.urlEncoded(): String = URLEncoder.encode(this, "UTF-8")
@@ -416,7 +416,7 @@ class WebtoonsEngine(
  * @property mobileApiDomain Mobile host serving the episode JSON (kotatsu `mobileApiDomain`).
  * @property staticDomain    Static image host (kotatsu `staticDomain`).
  * @property userAgent       Mobile User-Agent (kotatsu `userAgentKey`).
- * @property referer         Referer sent on scrape + image requests; blank => "https://www.{domain}/".
+ * @property referer         Referer sent on scrape + image requests; blank => "https://{domain}/".
  */
 data class WebtoonsConfig(
 	val languageCode: String? = null,

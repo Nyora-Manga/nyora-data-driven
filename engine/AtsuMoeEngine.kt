@@ -9,7 +9,6 @@ import app.nyora.core.model.MangaState
 import app.nyora.core.model.MangaTag
 import app.nyora.core.model.SortOrder
 import org.json.JSONObject
-import java.net.URLEncoder
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
@@ -108,10 +107,12 @@ class AtsuMoeEngine(
             else -> cfg.trendingEndpoint
         }
         // kotatsu sent (paginatorPage - 1); the contract's `page` is already 0-based.
+        // kotatsu built these with OkHttp addQueryParameter, so `types` is encoded with OkHttp's
+        // QUERY_COMPONENT_ENCODE_SET (commas stay literal, spaces -> %20).
         val url = buildString {
             append(apiUrl).append(endpoint)
             append("?page=").append(page.toString())
-            append("&types=").append(cfg.contentTypes.urlEncoded())
+            append("&types=").append(cfg.contentTypes.queryEncoded())
         }
         val json = fetchJson(url)
         val items = json.optJSONArray("items") ?: return emptyList()
@@ -121,15 +122,17 @@ class AtsuMoeEngine(
     private suspend fun searchPage(page: Int, query: String): List<Manga> {
         // kotatsu sent the 1-based paginator page directly; the contract's `page` is 0-based.
         val apiPage = page + 1
+        // kotatsu built every param with OkHttp addQueryParameter, so each value is encoded with
+        // OkHttp's QUERY_COMPONENT_ENCODE_SET (commas in the multi-field params stay literal).
         val url = buildString {
             append("https://").append(domain).append("/collections/manga/documents/search")
-            append("?q=").append(query.urlEncoded())
-            append("&query_by=").append(cfg.searchQueryBy.urlEncoded())
+            append("?q=").append(query.queryEncoded())
+            append("&query_by=").append(cfg.searchQueryBy.queryEncoded())
             append("&limit=").append(cfg.pageSize.toString())
             append("&page=").append(apiPage.toString())
-            append("&query_by_weights=").append(cfg.searchQueryByWeights.urlEncoded())
-            append("&include_fields=").append(cfg.searchIncludeFields.urlEncoded())
-            append("&num_typos=").append(cfg.searchNumTypos.urlEncoded())
+            append("&query_by_weights=").append(cfg.searchQueryByWeights.queryEncoded())
+            append("&include_fields=").append(cfg.searchIncludeFields.queryEncoded())
+            append("&num_typos=").append(cfg.searchNumTypos.queryEncoded())
         }
         val json = fetchJson(url)
         val hits = json.optJSONArray("hits") ?: return emptyList()
@@ -166,7 +169,8 @@ class AtsuMoeEngine(
             url = "/manga/$id",
             publicUrl = "https://$domain/manga/$id",
             rating = RATING_UNKNOWN,
-            contentRating = if (source.nsfw) ContentRating.ADULT else ContentRating.SAFE,
+            // kotatsu hardcodes ContentRating.SAFE unconditionally (no nsfw gating).
+            contentRating = ContentRating.SAFE,
             coverUrl = coverUrl,
             tags = emptyList(),
             state = null,
@@ -181,7 +185,8 @@ class AtsuMoeEngine(
 
     override suspend fun getDetails(manga: Manga): Manga {
         val mangaId = manga.url.substringAfterLast("/")
-        val json = fetchJson("${apiUrl}manga/page?id=${mangaId.urlEncoded()}")
+        // kotatsu string-interpolates the id here (no encoding): "${apiUrl}manga/page?id=$mangaId".
+        val json = fetchJson("${apiUrl}manga/page?id=$mangaId")
         val mangaPage = json.getJSONObject("mangaPage")
 
         val title = mangaPage.optString("title").ifEmpty {
@@ -249,7 +254,8 @@ class AtsuMoeEngine(
         var totalPages = 1
 
         while (currentPage < totalPages) {
-            val url = "${apiUrl}manga/chapters?id=${mangaId.urlEncoded()}&filter=all&sort=desc&page=$currentPage"
+            // kotatsu string-interpolates the id here (no encoding).
+            val url = "${apiUrl}manga/chapters?id=$mangaId&filter=all&sort=desc&page=$currentPage"
             val json = fetchJson(url)
 
             val chaptersArray = json.optJSONArray("chapters")
@@ -301,10 +307,11 @@ class AtsuMoeEngine(
         val parts = chapter.url.split("/", limit = 2)
         val mangaId = parts.getOrElse(0) { "" }
         val chapterId = parts.getOrElse(1) { "" }
+        // kotatsu built these with OkHttp addQueryParameter (QUERY_COMPONENT_ENCODE_SET).
         val url = buildString {
             append(apiUrl).append("read/chapter")
-            append("?mangaId=").append(mangaId.urlEncoded())
-            append("&chapterId=").append(chapterId.urlEncoded())
+            append("?mangaId=").append(mangaId.queryEncoded())
+            append("&chapterId=").append(chapterId.queryEncoded())
         }
         val json = fetchJson(url)
         val readChapter = json.getJSONObject("readChapter")
@@ -335,7 +342,30 @@ class AtsuMoeEngine(
         return JSONObject(resp.body)
     }
 
-    private fun String.urlEncoded(): String = URLEncoder.encode(this, "UTF-8")
+    /**
+     * Percent-encodes a query-parameter value byte-for-byte the way kotatsu's OkHttp
+     * `HttpUrl.Builder.addQueryParameter` does: encode-set is `" \"'<>#&="` plus `%`, control chars
+     * (< 0x20), 0x7f, and all non-ASCII (as UTF-8 bytes). Commas and `+` are left LITERAL (OkHttp
+     * leaves them literal in query components), unlike JDK `URLEncoder`, which would emit `%2C` and
+     * turn spaces into `+`. Matching this exactly is what makes the requests byte-identical.
+     */
+    private fun String.queryEncoded(): String {
+        val hex = "0123456789ABCDEF"
+        val sb = StringBuilder()
+        for (b in this.toByteArray(Charsets.UTF_8)) {
+            val c = b.toInt() and 0xff
+            val ch = c.toChar()
+            val encode = c < 0x20 || c == 0x7f || c >= 0x80 ||
+                ch == ' ' || ch == '"' || ch == '\'' || ch == '<' || ch == '>' ||
+                ch == '#' || ch == '&' || ch == '=' || ch == '%'
+            if (encode) {
+                sb.append('%').append(hex[(c shr 4) and 0xf]).append(hex[c and 0xf])
+            } else {
+                sb.append(ch)
+            }
+        }
+        return sb.toString()
+    }
 
     private companion object {
         private const val KEY_DOMAIN = "domain"

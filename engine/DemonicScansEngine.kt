@@ -1,6 +1,5 @@
 package app.nyora.data.engine
 
-import app.nyora.core.model.ContentRating
 import app.nyora.core.model.Manga
 import app.nyora.core.model.MangaChapter
 import app.nyora.core.model.MangaListFilter
@@ -11,7 +10,6 @@ import app.nyora.core.model.SortOrder
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
-import java.net.URLEncoder
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -102,7 +100,8 @@ class DemonicScansEngine(
 		if (!q.isNullOrEmpty()) {
 			// Text search: single-page endpoint, no pagination (kotatsu returns all matches at once).
 			if (page > 0) return emptyList()
-			val url = "https://$domain/${cfg.searchPath}?manga=${q.urlEncoded()}"
+			// kotatsu appends the raw query un-encoded: "search.php?manga=" + filter.query.
+			val url = "https://$domain/${cfg.searchPath}?manga=$q"
 			val doc = fetchDoc(url)
 			return doc.select(cfg.searchSelector).map { parseSearchManga(it) }
 		}
@@ -138,8 +137,8 @@ class DemonicScansEngine(
 			url = href,
 			publicUrl = href.toAbsoluteUrl(domain),
 			rating = Manga.RATING_UNKNOWN,
-			contentRating = if (source.nsfw) ContentRating.ADULT else null,
-			coverUrl = element.selectFirst("div.thumb img")?.src(),
+			contentRating = null,
+			coverUrl = element.selectFirst("div.thumb img")?.srcAttr(),
 			tags = emptyList(),
 			state = null,
 			authors = emptyList(),
@@ -161,8 +160,8 @@ class DemonicScansEngine(
 			url = href,
 			publicUrl = href.toAbsoluteUrl(domain),
 			rating = Manga.RATING_UNKNOWN,
-			contentRating = if (source.nsfw) ContentRating.ADULT else null,
-			coverUrl = anchor?.selectFirst("img")?.src(),
+			contentRating = null,
+			coverUrl = anchor?.selectFirst("img")?.srcAttr(),
 			tags = emptyList(),
 			state = null,
 			authors = emptyList(),
@@ -183,8 +182,8 @@ class DemonicScansEngine(
 			url = href,
 			publicUrl = href.toAbsoluteUrl(domain),
 			rating = Manga.RATING_UNKNOWN,
-			contentRating = if (source.nsfw) ContentRating.ADULT else null,
-			coverUrl = anchor.selectFirst("img")?.src(),
+			contentRating = null,
+			coverUrl = anchor.selectFirst("img")?.srcAttr(),
 			tags = emptyList(),
 			state = null,
 			authors = emptyList(),
@@ -210,7 +209,7 @@ class DemonicScansEngine(
 		val doc = fetchDoc(manga.url.toAbsoluteUrl(domain))
 		val info = doc.selectFirst(cfg.infoContainer)
 		val title = info?.selectFirst(cfg.titleSelector)?.ownText().orEmpty()
-		val thumbnail = info?.selectFirst(cfg.coverSelector)?.src()
+		val thumbnail = info?.selectFirst(cfg.coverSelector)?.srcAttr()
 		val genre = info?.select(cfg.genreSelector)?.joinToString(", ") { it.text() }.orEmpty()
 		val description = info?.selectFirst(cfg.descSelector)?.text()?.nullIfEmpty()
 		val author = info?.select(cfg.authorSelector)?.text()?.nullIfEmpty()
@@ -221,15 +220,24 @@ class DemonicScansEngine(
 			else -> null
 		}
 
+		// kotatsu: title = it.lowercase().replace(" ", "-").toTitleCase(sourceLocale); key = it (raw genre text).
+		// toTitleCase(locale) only upper-cases the FIRST char, so "Martial Arts" -> "Martial-arts".
 		val tags = genre.split(", ")
 			.filter { it.isNotBlank() }
-			.mapTo(LinkedHashSet()) { g -> MangaTag(title = g.trim(), key = g.trim(), source = source.id) }
+			.mapTo(LinkedHashSet()) { g ->
+				MangaTag(
+					title = g.lowercase().replace(" ", "-").replaceFirstChar { c -> c.uppercase(locale) },
+					key = g,
+					source = source.id,
+				)
+			}
 
 		val chapters = getChapters(doc)
 
+		// kotatsu overwrites title/coverUrl unconditionally (no fallback to the incoming manga).
 		return manga.copy(
-			title = title.ifEmpty { manga.title },
-			coverUrl = thumbnail ?: manga.coverUrl,
+			title = title,
+			coverUrl = thumbnail,
 			tags = tags,
 			description = description,
 			state = state,
@@ -256,7 +264,7 @@ class DemonicScansEngine(
 			out.add(
 				MangaChapter(
 					id = href,
-					title = el.ownText().nullIfEmpty(),
+					title = el.ownText(),
 					number = index + 1f,
 					volume = 0,
 					url = href,
@@ -315,6 +323,16 @@ class DemonicScansEngine(
 		return null
 	}
 
+	/**
+	 * kotatsu `attr("src")` / `attrAsAbsoluteUrlOrNull("src")`: the PLAIN `src` attribute only,
+	 * resolved to absolute. Covers/thumbnails use this in kotatsu — only getPages uses the lazy [src].
+	 */
+	private fun Element.srcAttr(): String? {
+		val v = attr("src").trim()
+		if (v.isEmpty() || v.startsWith("data:")) return null
+		return v.toAbsoluteUrl(domain)
+	}
+
 	private fun String.toAbsoluteUrl(domain: String): String = when {
 		isEmpty() -> "https://$domain"
 		startsWith("http://") || startsWith("https://") -> this
@@ -328,8 +346,6 @@ class DemonicScansEngine(
 		return replace(Regex("^[^/]{2,6}://${Regex.escape(domain)}+/", RegexOption.IGNORE_CASE), "/")
 	}
 
-	private fun String.urlEncoded(): String = URLEncoder.encode(this, "UTF-8")
-
 	private fun String.nullIfEmpty(): String? = trim().takeIf { it.isNotEmpty() }
 
 	private fun SimpleDateFormat.parseSafe(text: String?): Long {
@@ -341,9 +357,10 @@ class DemonicScansEngine(
 		private const val KEY_DOMAIN = "domain"
 		private const val KEY_UA = "user-agent"
 		private const val ORDER_VIEWS_DESC = "VIEWS DESC"
-		// kotatsu requireSrc() lazy-image attribute order (`src` last).
+		// kotatsu Element.src() lazy-image attribute order (`src` last) — must match exactly.
 		private val IMG_ATTRS = listOf(
-			"data-src", "data-cfsrc", "data-original", "data-lazy-src", "data-srcset", "src",
+			"data-src", "data-cfsrc", "data-original", "data-cdn", "data-sizes",
+			"data-lazy-src", "data-srcset", "original-src", "data-wpfc-original-src", "src",
 		)
 	}
 }

@@ -12,7 +12,6 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import java.net.URLEncoder
-import java.util.Locale
 
 /**
  * MangaKawaiiEngine — a single, generic, DATA-DRIVEN [SourceEngine] for the **MangaKawaii** site
@@ -60,11 +59,6 @@ class MangaKawaiiEngine(
 	/** Optional pinned User-Agent (kotatsu adds `userAgentKey` to the config). */
 	private val userAgent: String?
 		get() = ctx.prefs.getString(KEY_UA)?.takeIf { it.isNotBlank() }
-
-	/** Locale for title-casing tags (kotatsu `sourceLocale`). */
-	private val locale: Locale = cfg.locale?.let(Locale::forLanguageTag)
-		?: source.lang.takeIf { it.isNotBlank() && it != "all" }?.let(Locale::forLanguageTag)
-		?: Locale.ROOT
 
 	// -----------------------------------------------------------------------------------------
 	// Capabilities / sort orders (kotatsu: EnumSet.of(UPDATED, ALPHABETICAL); search only)
@@ -140,12 +134,20 @@ class MangaKawaiiEngine(
 		return items.map { div ->
 			val a = div.selectFirstOrThrow("a")
 			val href = a.attrAsRelativeUrl("href")
+			// en parser: selectFirstOrThrow("h4, .media-thumbnail__name").text() (throws if absent);
+			// fr parser: selectFirst("h4, .media-thumbnail__name")?.text().orEmpty() (no throw).
+			val title = if (cfg.titleRequired) {
+				div.selectFirstOrThrow("h4, .media-thumbnail__name").text().orEmpty()
+			} else {
+				div.selectFirst("h4, .media-thumbnail__name")?.text().orEmpty()
+			}
 			Manga(
 				id = href,
-				title = (div.selectFirst("h4, .media-thumbnail__name")?.text()).orEmpty(),
+				title = title,
 				altTitles = emptyList(),
 				url = href,
-				publicUrl = href.toAbsoluteUrl(domain),
+				// kotatsu: href.toAbsoluteUrl(div.host ?: domain) — host of the parsed doc's baseUri.
+				publicUrl = href.toAbsoluteUrl(div.hostOrNull() ?: domain),
 				rating = Manga.RATING_UNKNOWN,
 				contentRating = if (source.nsfw) ContentRating.ADULT else null,
 				coverUrl = div.selectFirst("img")?.src() ?: a.attrAsAbsoluteUrlOrNull("data-bg"),
@@ -169,7 +171,8 @@ class MangaKawaiiEngine(
 		val out = LinkedHashSet<MangaTag>()
 		for (a in doc.select("ul li a.category")) {
 			val name = a.text()
-			val key = name.lowercase(locale).replace(" ", "-").replace("é", "e").replace("è", "e")
+			// kotatsu: name.lowercase() — the no-arg (locale-independent) lowercasing.
+			val key = name.lowercase().replace(" ", "-").replace("é", "e").replace("è", "e")
 			out.add(MangaTag(title = name, key = key, source = source.id))
 		}
 		return out
@@ -185,8 +188,21 @@ class MangaKawaiiEngine(
 		val chapters = loadChapters(firstChapter)
 		val author = doc.select("a[href*=author]").textOrNull()
 
-		val altTitles = doc.select("span[itemprop*=alternativeHeadline]")
-			.mapNotNull { it.text().nullIfEmpty() }
+		// en parser: doc.select(...).mapNotNullToSet { it.textOrNull() } — one entry per span.
+		// fr parser: setOfNotNull( doc.select(...).joinToString { ", " }.nullIfEmpty() ) — the fr
+		// subclass passes a transform that ignores the element and returns ", " for EVERY span, so
+		// N spans yield the string ", " joined N times by the default ", " separator (a genuine
+		// upstream quirk); 0 spans yield "" -> null -> empty. Reproduced verbatim for byte fidelity.
+		val altTitles: List<String> = if (cfg.altTitlesJoin) {
+			listOfNotNull(
+				doc.select("span[itemprop*=alternativeHeadline]")
+					.joinToString(separator = ", ") { ", " }
+					.takeUnless { it.isEmpty() }, // kotatsu nullIfEmpty() — no trimming
+			)
+		} else {
+			doc.select("span[itemprop*=alternativeHeadline]")
+				.mapNotNull { it.text().takeUnless { t -> t.isEmpty() } } // kotatsu textOrNull()
+		}
 
 		val state = when (doc.selectFirst("span.badge.bg-success.text-uppercase")?.text()) {
 			cfg.ongoingText -> MangaState.ONGOING
@@ -198,7 +214,7 @@ class MangaKawaiiEngine(
 		for (a in doc.select("a[href*=category]")) {
 			tags.add(
 				MangaTag(
-					title = a.text().toTitleCaseLocalized(locale),
+					title = a.text().toTitleCaseKt(),
 					key = a.attr("href").removeSuffix("/").substringAfterLast('/'),
 					source = source.id,
 				),
@@ -256,13 +272,17 @@ class MangaKawaiiEngine(
 
 	override suspend fun getPageList(chapter: MangaChapter): List<MangaPage> {
 		val fullUrl = chapter.url.toAbsoluteUrl(domain)
-		val body = fetchRaw(fullUrl)
+		// kotatsu runs the four regexes over doc.toString() (the re-serialized document), not the raw
+		// body — parse then serialize so the matched text is byte-identical to the native parser.
+		val body = fetchDoc(fullUrl).toString()
 		val chapterSlug = RE_CHAPTER_SLUG.find(body)?.groupValues?.get(1)
 		val mangaSlug = RE_MANGA_SLUG.find(body)?.groupValues?.get(1)
-		val cdn = RE_CHAPTER_SERVER.find(body)?.groupValues?.get(1)
+		val cdn: String? = RE_CHAPTER_SERVER.find(body)?.groupValues?.get(1)
 		// kotatsu: cdnDomain = chapter_server + domain.removePrefix("www")
-		// e.g. "cdn1" + ".mangakawaii.io" -> "cdn1.mangakawaii.io"
-		val cdnDomain = (cdn ?: "") + domain.removePrefix("www")
+		// e.g. "cdn1" + ".mangakawaii.io" -> "cdn1.mangakawaii.io". NB kotatsu concatenates the
+		// nullable `cdn` directly, so a missing chapter_server yields the literal "null" prefix —
+		// preserved here (String? + String) for exact parity.
+		val cdnDomain = cdn + domain.removePrefix("www")
 		return RE_PAGE_IMAGE.findAll(body).map { m ->
 			val url = "https://" + cdnDomain +
 				"/uploads/manga/" + mangaSlug +
@@ -284,9 +304,6 @@ class MangaKawaiiEngine(
 		return h
 	}
 
-	private suspend fun fetchRaw(url: String): String =
-		ctx.http(HttpRequest(url = url, method = "GET", headers = headers())).body
-
 	private suspend fun fetchDoc(url: String): Document {
 		val resp = ctx.http(HttpRequest(url = url, method = "GET", headers = headers()))
 		return Jsoup.parse(resp.body, resp.url)
@@ -298,6 +315,17 @@ class MangaKawaiiEngine(
 
 	private fun Element.selectFirstOrThrow(css: String): Element =
 		selectFirst(css) ?: throw MangaKawaiiParseException("Element not found: $css", baseUri())
+
+	/** kotatsu Element.host: host of the parsed document's baseUri, or null when unavailable. */
+	private fun Element.hostOrNull(): String? {
+		val uri = baseUri()
+		if (uri.isEmpty()) return null
+		return try {
+			java.net.URI(uri).host?.takeIf { it.isNotEmpty() }
+		} catch (e: Exception) {
+			null
+		}
+	}
 
 	private fun Element.attrAsRelativeUrl(attr: String): String {
 		val abs = absUrl(attr)
@@ -346,11 +374,12 @@ class MangaKawaiiEngine(
 
 	private fun String.nullIfEmpty(): String? = trim().takeIf { it.isNotEmpty() }
 
-	/** kotatsu String.toTitleCase(locale): capitalize each whitespace-separated word. */
-	private fun String.toTitleCaseLocalized(locale: Locale): String =
-		lowercase(locale).split(' ').joinToString(" ") { w ->
-			w.replaceFirstChar { if (it.isLowerCase()) it.titlecase(locale) else it.toString() }
-		}
+	/**
+	 * kotatsu String.toTitleCase() (the no-arg overload used by both parsers): uppercases ONLY the
+	 * first character of the whole string via a locale-independent uppercase, leaving the remainder
+	 * untouched — it does NOT lowercase the rest, nor title-case each word.
+	 */
+	private fun String.toTitleCaseKt(): String = replaceFirstChar { it.uppercase() }
 
 	private companion object {
 		private const val KEY_DOMAIN = "domain"
@@ -361,10 +390,12 @@ class MangaKawaiiEngine(
 		private val RE_CHAPTER_SERVER = Regex("""var chapter_server = "([^"]*)";""")
 		private val RE_PAGE_IMAGE = Regex(""""page_image":"([^"]*)"""")
 
-		// Canonical kotatsu Element.src() attribute order (`src` LAST).
+		// Canonical kotatsu Element.src() attribute order (`src` LAST). NB kotatsu's src() does NOT
+		// include "data-bg" — the listing's cover fallback uses data-bg only via the separate
+		// a.attrAsAbsoluteUrlOrNull("data-bg") call, never inside src().
 		private val COVER_IMG_ATTRS = listOf(
 			"data-src", "data-cfsrc", "data-original", "data-cdn", "data-sizes", "data-lazy-src",
-			"data-srcset", "data-bg", "original-src", "data-wpfc-original-src", "src",
+			"data-srcset", "original-src", "data-wpfc-original-src", "src",
 		)
 	}
 }
@@ -380,7 +411,10 @@ class MangaKawaiiEngine(
  *                         (default = "chapters_${lang}").
  * @property ongoingText   Localized "ongoing" status badge label ("Ongoing" / "En Cours").
  * @property finishedText  Localized "finished" status badge label ("" for en / "Terminé" for fr).
- * @property locale        BCP-47 locale for tag title-casing; defaults from top-level lang.
+ * @property titleRequired Listing title selector mode: true = en (`selectFirstOrThrow`, throws when
+ *                         the title node is absent); false = fr (`selectFirst?`, empty title). en=true.
+ * @property altTitlesJoin getDetails altTitles mode: false = en (one entry per alternativeHeadline
+ *                         span); true = fr (the upstream joinToString-that-returns-", " quirk). fr=true.
  */
 data class MangaKawaiiConfig(
 	val listUrl: String = "/manga-list",
@@ -388,7 +422,8 @@ data class MangaKawaiiConfig(
 	val chaptersDir: String = "chapters_en",
 	val ongoingText: String = "Ongoing",
 	val finishedText: String = "",
-	val locale: String? = null,
+	val titleRequired: Boolean = true,
+	val altTitlesJoin: Boolean = false,
 ) {
 	companion object {
 		fun from(raw: Map<String, Any?>, lang: String): MangaKawaiiConfig {
@@ -408,7 +443,10 @@ data class MangaKawaiiConfig(
 				} else {
 					defaultFinished
 				},
-				locale = raw.str("locale") ?: l,
+				// en throws on a missing listing title; fr tolerates it. Default from lang, overridable.
+				titleRequired = (raw["titleRequired"] as? Boolean) ?: (l != "fr"),
+				// fr reproduces the joinToString-", " altTitles quirk; en maps one entry per span.
+				altTitlesJoin = (raw["altTitlesJoin"] as? Boolean) ?: (l == "fr"),
 			)
 		}
 

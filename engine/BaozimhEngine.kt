@@ -138,7 +138,9 @@ class BaozimhEngine(
 			val j = json.getJSONObject(i)
 			val comicId = j.getString("comic_id")
 			val href = "/comic/$comicId"
-			val author = j.optString("author", "")
+			// kotatsu: `val author = j.getString("author")` (throws on absence) + `setOfNotNull(author)`.
+			// getString never returns null, so the author is ALWAYS included — even the empty string.
+			val author = j.getString("author")
 			out.add(
 				Manga(
 					id = href,
@@ -151,7 +153,7 @@ class BaozimhEngine(
 					coverUrl = "https://$coverHost/cover/" + j.getString("topic_img"),
 					tags = emptyList(),
 					state = null,
-					authors = if (author.isNotEmpty()) listOf(author) else emptyList(),
+					authors = listOf(author),
 					source = source.id,
 				),
 			)
@@ -188,8 +190,9 @@ class BaozimhEngine(
 	private suspend fun getTagMap(): Map<String, MangaTag> {
 		tagMapCache?.let { return it }
 		val doc = fetchDoc("https://$domain${cfg.tagsPath}")
-		val navs = doc.select("div.nav")
-		val tagElements = if (navs.size > 3) navs[3].select("a.item:not(.active)") else emptyList()
+		// kotatsu: `.select("div.nav")[3].select("a.item:not(.active)")` — the 4th nav block, indexed
+		// directly (throws IndexOutOfBounds if the page layout ever drops it, exactly as native does).
+		val tagElements = doc.select("div.nav")[3].select("a.item:not(.active)")
 		val map = LinkedHashMap<String, MangaTag>(tagElements.size)
 		for (el in tagElements) {
 			val name = el.text()
@@ -264,12 +267,17 @@ class BaozimhEngine(
 
 	override suspend fun getPageList(chapter: MangaChapter): List<MangaPage> {
 		val doc = fetchDoc(chapter.url.toAbsoluteUrl(domain))
+		// kotatsu dedups on generateUid(urlPage) into a HashSet<Long>; the port cannot call the
+		// kotatsu-owned generateUid, so it dedups on the raw urlPage string — an equivalent key.
 		val seen = HashSet<String>()
 
-		var pages = extractPages(doc, seen)
+		// kotatsu maps the FIRST doc's buttons unconditionally (`.map`), only recording their keys;
+		// dedup applies from the second part onward (`.mapNotNull` + idSet). Mirror that with `dedup`.
+		var pages = extractPages(doc, seen, dedup = false)
 
-		var chapterLink = doc.selectFirst("link[rel=canonical]")?.absUrl("href").orEmpty()
-		var nextChapterLink = doc.selectFirst("a#next-chapter")?.absUrl("href").orEmpty()
+		// kotatsu reads the RAW href attribute (`doc.select(...).attr("href")`) and httpGets it verbatim.
+		var chapterLink = doc.select("link[rel=canonical]").attr("href")
+		var nextChapterLink = doc.select("a#next-chapter").attr("href")
 		var part = 2
 
 		var chapterPart = chapterLink.substringAfterLast("/").substringBefore(".html")
@@ -278,25 +286,30 @@ class BaozimhEngine(
 		// While the next chapter is just the next "part" of the same chapter (..._2, _3, ...), fold it in.
 		while (nextChapterLink != "" && (nextChapterPart == chapterPart + "_" + part.toString())) {
 			val doc2 = fetchDoc(nextChapterLink)
-			pages = pages + extractPages(doc2, seen)
+			pages = pages + extractPages(doc2, seen, dedup = true)
 			part++
-			chapterLink = doc2.selectFirst("link[rel=canonical]")?.absUrl("href").orEmpty()
-			nextChapterLink = doc2.selectFirst("a#next-chapter")?.absUrl("href").orEmpty()
+			chapterLink = doc2.select("link[rel=canonical]").attr("href")
+			nextChapterLink = doc2.select("a#next-chapter").attr("href")
 			chapterPart = chapterLink.substringAfterLast("/").substringBefore(".html").substringBeforeLast("_")
 			nextChapterPart = nextChapterLink.substringAfterLast("/").substringBefore(".html")
 		}
 		return pages
 	}
 
-	/** kotatsu: read each `#__nuxt button.pure-button` AMP `on` attribute for the image url, dedup. */
-	private fun extractPages(doc: Document, seen: HashSet<String>): List<MangaPage> {
-		val root = doc.getElementById("__nuxt") ?: doc
+	/**
+	 * kotatsu: read each `#__nuxt button.pure-button` AMP `on` attribute for the image url.
+	 * `#__nuxt` is required (kotatsu `requireElementById` — throws if absent). `dedup` distinguishes
+	 * kotatsu's unconditional first-doc `.map` (dedup = false) from the later `.mapNotNull` (dedup = true).
+	 */
+	private fun extractPages(doc: Document, seen: HashSet<String>, dedup: Boolean): List<MangaPage> {
+		val root = doc.requireElementById("__nuxt")
 		val out = ArrayList<MangaPage>()
 		for (btn in root.select("button.pure-button")) {
 			// e.g. on="tap:AMP.navigateTo(url='https://.../0001.jpg?t=123')" -> slice the raw image url.
+			// kotatsu applies NO empty-string guard, so every button becomes a page.
 			val urlPage = btn.attr("on").substringAfter(": '").substringBefore("?t=")
-			if (urlPage.isEmpty()) continue
-			if (!seen.add(urlPage)) continue
+			val isNew = seen.add(urlPage)
+			if (dedup && !isNew) continue
 			out.add(MangaPage(id = urlPage, url = urlPage, preview = null, source = source.id))
 		}
 		return out
@@ -330,6 +343,10 @@ class BaozimhEngine(
 
 	private fun Element.selectFirstOrThrow(css: String): Element =
 		selectFirst(css) ?: throw BaozimhParseException("Element not found: $css", baseUri())
+
+	/** kotatsu Document.requireElementById(id): throws a ParseException if the element is absent. */
+	private fun Document.requireElementById(id: String): Element =
+		getElementById(id) ?: throw BaozimhParseException("Element #$id not found", baseUri())
 
 	private fun Element.attrAsRelativeUrl(attr: String): String {
 		val abs = absUrl(attr)

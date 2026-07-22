@@ -227,9 +227,11 @@ class MangaBallEngine(
 		val title = doc.selectFirst("#comicDetail h6")?.ownText()?.trim()?.nullIfEmpty() ?: manga.title
 		val cover = doc.selectFirst("img.featured-cover")?.absUrl("src")?.nullIfEmpty() ?: manga.coverUrl
 		val description = doc.selectFirst("#descriptionContent p")?.wholeText()?.trim()?.nullIfEmpty()
+		// kotatsu MangaBall derives ADULT strictly from the adult-tag set; it never consults an
+		// nsfw source flag, so neither do we (byte/parse parity — contentRating is otherwise the
+		// seeded value, which kotatsu seeds as null everywhere).
 		val contentRating = when {
 			tags.any { it.title in ADULT_TAG_TITLES } -> ContentRating.ADULT
-			source.nsfw -> ContentRating.ADULT
 			else -> manga.contentRating
 		}
 
@@ -239,9 +241,11 @@ class MangaBallEngine(
 			publicUrl = getMangaUrl(manga.url),
 			coverUrl = cover,
 			largeCoverUrl = cover,
-			tags = if (tags.isEmpty()) manga.tags else tags,
+			// kotatsu unconditionally assigns the freshly-parsed tags/authors (even when empty);
+			// do NOT fall back to the seed values or details-refresh would keep stale data.
+			tags = tags,
 			state = status,
-			authors = if (authors.isEmpty()) manga.authors else authors,
+			authors = authors,
 			description = description,
 			chapters = getChapterList(manga.url),
 			contentRating = contentRating,
@@ -509,7 +513,9 @@ class MangaBallEngine(
 		url = slug,
 		publicUrl = getMangaUrl(slug),
 		rating = Manga.RATING_UNKNOWN,
-		contentRating = if (source.nsfw) ContentRating.ADULT else null,
+		// kotatsu seeds contentRating = null in smartSearch/advancedSearch/seedManga (no nsfw flag);
+		// ADULT is only ever assigned later in getDetails from the adult-tag set.
+		contentRating = null,
 		coverUrl = cover,
 		tags = emptyList(),
 		state = null,

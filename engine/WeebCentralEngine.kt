@@ -313,7 +313,9 @@ internal class WeebCentralEngine(
 				MangaTag(title = it.text(), key = it.text(), source = def.id)
 			},
 			state = parseState(sectionLeft.selectFirst("ul > li:has(strong:contains(Status)) > a")?.text()),
-			authors = listOfNotNull(author.nullIfEmpty()),
+			// kotatsu getDetails uses `setOf(author)` with NO nullIfEmpty (unlike getList), so an
+			// empty author still yields a single-element list [""] — reproduced verbatim for parity.
+			authors = listOf(author),
 			description = buildDescription(sectionLeft, sectionRight),
 			chapters = chapters,
 			source = def.id,
@@ -353,35 +355,39 @@ internal class WeebCentralEngine(
 			mangaDocument
 		}
 
+		// kotatsu `mapChapters(reversed = true)` walks the DOM rows bottom-up via ChaptersListBuilder:
+		// the transform runs for EVERY row (index passed BEFORE any increment), the builder dedups by
+		// id, and `index` advances ONLY when a non-duplicate chapter is actually added. The name-number
+		// fallback is therefore the 0-based count of chapters added so far (native `i`), not `index+1`.
 		val rows = document.select("div[x-data] > a")
 		val out = ArrayList<MangaChapter>(rows.size)
 		val seen = HashSet<String>(rows.size)
 		var index = 0
 		for (element in rows.asReversed()) {
 			val chapterId = element.attrAsAbsoluteUrl("href").pathSegments()[1]
-			if (!seen.add(chapterId)) continue
 			val name = element.selectFirstOrThrow("span.flex > span").text()
-			out.add(
-				MangaChapter(
-					id = chapterId,
-					title = name,
-					number = Regex("""(?<!S)\b(\d+(\.\d+)?)\b""").find(name)
-						?.groupValues?.get(1)?.toFloatOrNull()
-						?: (index + 1).toFloat(),
-					volume = Regex("""(?:S|vol(?:ume)?)\s*(\d+)""").find(name)
-						?.groupValues?.get(1)?.toIntOrNull()
-						?: 0,
-					url = chapterId,
-					scanlator = when (element.selectFirst("svg")?.attr("stroke")) {
-						"#d8b4fe" -> "Official"
-						else -> null
-					},
-					uploadDate = parseDate(element.selectFirst("time[datetime]")?.attr("datetime")),
-					branch = null,
-					source = def.id,
-				),
+			val chapter = MangaChapter(
+				id = chapterId,
+				title = name,
+				number = Regex("""(?<!S)\b(\d+(\.\d+)?)\b""").find(name)
+					?.groupValues?.get(1)?.toFloatOrNull()
+					?: index.toFloat(),
+				volume = Regex("""(?:S|vol(?:ume)?)\s*(\d+)""").find(name)
+					?.groupValues?.get(1)?.toIntOrNull()
+					?: 0,
+				url = chapterId,
+				scanlator = when (element.selectFirst("svg")?.attr("stroke")) {
+					"#d8b4fe" -> "Official"
+					else -> null
+				},
+				uploadDate = parseDate(element.selectFirst("time[datetime]")?.attr("datetime")),
+				branch = null,
+				source = def.id,
 			)
-			index++
+			if (seen.add(chapterId)) {
+				out.add(chapter)
+				index++
+			}
 		}
 		return out
 	}
@@ -454,7 +460,10 @@ internal class WeebCentralEngine(
 		else -> "https://$domain/$this"
 	}
 
-	private fun enc(s: String): String = URLEncoder.encode(s, "UTF-8")
+	// okhttp HttpUrl.addQueryParameter percent-encodes a space as %20, whereas
+	// URLEncoder emits '+'. Normalise to %20 so the query string is byte-identical to
+	// the native parser (values here only ever contain [A-Za-z0-9] + spaces).
+	private fun enc(s: String): String = URLEncoder.encode(s, "UTF-8").replace("+", "%20")
 
 	private fun String.nullIfEmpty(): String? = trim().takeIf { it.isNotEmpty() }
 
