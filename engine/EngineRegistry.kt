@@ -83,6 +83,7 @@ object EngineRegistry {
         "mangaball"      to Creator(MangaBallEngineFactory::create),
         "mangakawaii"    to Creator(MangaKawaiiEngineFactory::create),
         "mangapill"      to Creator(MangaPillEngineFactory::create),
+        "mangaplus"      to Creator(MangaPlusEngineFactory::create),
         "webtoons"       to Creator(WebtoonsEngineFactory::create),
         "weebcentral"    to Creator(WeebCentralEngineFactory::create),
     )

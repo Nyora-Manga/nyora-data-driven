@@ -1,0 +1,110 @@
+[
+  {
+    "id": "MANGAPLUSPARSER_EN",
+    "name": "MANGA Plus English",
+    "lang": "en",
+    "nsfw": false,
+    "contentType": "MANGA",
+    "engine": "mangaplus",
+    "domain": "mangaplus.shueisha.co.jp",
+    "config": {
+      "languageCode": "en"
+    }
+  },
+  {
+    "id": "MANGAPLUSPARSER_ES",
+    "name": "MANGA Plus Spanish",
+    "lang": "es",
+    "nsfw": false,
+    "contentType": "MANGA",
+    "engine": "mangaplus",
+    "domain": "mangaplus.shueisha.co.jp",
+    "config": {
+      "languageCode": "es"
+    }
+  },
+  {
+    "id": "MANGAPLUSPARSER_FR",
+    "name": "MANGA Plus French",
+    "lang": "fr",
+    "nsfw": false,
+    "contentType": "MANGA",
+    "engine": "mangaplus",
+    "domain": "mangaplus.shueisha.co.jp",
+    "config": {
+      "languageCode": "fr"
+    }
+  },
+  {
+    "id": "MANGAPLUSPARSER_ID",
+    "name": "MANGA Plus Indonesian",
+    "lang": "id",
+    "nsfw": false,
+    "contentType": "MANGA",
+    "engine": "mangaplus",
+    "domain": "mangaplus.shueisha.co.jp",
+    "config": {
+      "languageCode": "id"
+    }
+  },
+  {
+    "id": "MANGAPLUSPARSER_PTBR",
+    "name": "MANGA Plus Portuguese (Brazil)",
+    "lang": "pt",
+    "nsfw": false,
+    "contentType": "MANGA",
+    "engine": "mangaplus",
+    "domain": "mangaplus.shueisha.co.jp",
+    "config": {
+      "languageCode": "pt"
+    }
+  },
+  {
+    "id": "MANGAPLUSPARSER_RU",
+    "name": "MANGA Plus Russian",
+    "lang": "ru",
+    "nsfw": false,
+    "contentType": "MANGA",
+    "engine": "mangaplus",
+    "domain": "mangaplus.shueisha.co.jp",
+    "config": {
+      "languageCode": "ru"
+    }
+  },
+  {
+    "id": "MANGAPLUSPARSER_TH",
+    "name": "MANGA Plus Thai",
+    "lang": "th",
+    "nsfw": false,
+    "contentType": "MANGA",
+    "engine": "mangaplus",
+    "domain": "mangaplus.shueisha.co.jp",
+    "config": {
+      "languageCode": "th"
+    }
+  },
+  {
+    "id": "MANGAPLUSPARSER_VI",
+    "name": "MANGA Plus Vietnamese",
+    "lang": "vi",
+    "nsfw": false,
+    "contentType": "MANGA",
+    "engine": "mangaplus",
+    "domain": "mangaplus.shueisha.co.jp",
+    "config": {
+      "languageCode": "vi"
+    }
+  },
+  {
+    "id": "MANGAPLUSPARSER_DE",
+    "name": "MANGA Plus German",
+    "lang": "de",
+    "nsfw": false,
+    "contentType": "MANGA",
+    "engine": "mangaplus",
+    "domain": "mangaplus.shueisha.co.jp",
+    "config": {
+      "languageCode": "de"
+    }
+  }
+]

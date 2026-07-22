@@ -80,6 +80,10 @@ data class MangaPage(
     val id: String = url,
     val preview: String? = null,
     val source: String = "",
+    // Optional per-page request headers merged into the image download (on top of the source
+    // Referer). Used by engines whose images need a per-page value at fetch time — e.g. MangaPlus
+    // carries its XOR decryption key here for an app-side image interceptor.
+    val headers: Map<String, String> = emptyMap(),
 )
 
 /** A genre / category tag. */
