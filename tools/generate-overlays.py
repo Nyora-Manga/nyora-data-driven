@@ -27,15 +27,14 @@ WORKSPACE = ROOT.parent                                 # kotatsu/  (sibling rep
 PATCHES = ROOT / "patches.json"
 BLOCKLIST_JSON = ROOT / "blocked-sources.json"
 
-# (path relative to WORKSPACE, Kotlin package). Missing targets are skipped (e.g. in CI, where only
+# (path relative to WORKSPACE, Kotlin package). Only TRACKED, DISTINCT copies belong here.
+# nyora-linux/mac/windows embed nyora-shared as a git SUBMODULE (same repo as the canonical
+# nyora-shared below), so they inherit the update via a submodule bump — writing into their
+# checkouts would just dirty the submodule. Missing targets are skipped (e.g. in CI, where only
 # this repo is checked out — only blocked-sources.json is produced there).
 KOTLIN_TARGETS = [
     ("Nyora/nyora-shared/src/commonMain/kotlin/com/nyora/hasan72341/shared/SourcePatches.kt", "com.nyora.hasan72341.shared"),
-    ("Nyora/nyora-linux/nyora-shared/src/commonMain/kotlin/com/nyora/hasan72341/shared/SourcePatches.kt", "com.nyora.hasan72341.shared"),
-    ("Nyora/nyora-windows/nyora-shared/src/commonMain/kotlin/com/nyora/hasan72341/shared/SourcePatches.kt", "com.nyora.hasan72341.shared"),
-    ("Nyora/nyora-mac/nyora-shared/src/commonMain/kotlin/com/nyora/hasan72341/shared/SourcePatches.kt", "com.nyora.hasan72341.shared"),
     ("Nyora/nyora-android/app/src/main/kotlin/com/nyora/hasan72341/core/SourcePatches.kt", "com.nyora.hasan72341.core"),
-    ("Nyora/nyora-ios/native-engine/src/main/kotlin/com/nyora/ios/engine/SourcePatches.kt", "com.nyora.ios.engine"),
     ("Nyora/nyora-mihon-extension-porter/extension/src/main/kotlin/eu/kanade/tachiyomi/extension/all/nyoralocal/SourcePatches.kt", "eu.kanade.tachiyomi.extension.all.nyoralocal"),
 ]
 
