@@ -71,9 +71,9 @@
    "nsfw": false,
    "contentType": "MANHWA",
    "engine": "asurascans",
-   "domain": "asuracomic.net",
+   "domain": "asurascans.com",
    "altDomains": [
-    "asurascans.com"
+    "asuracomic.net"
    ],
    "broken": false,
    "config": {}
@@ -17832,5 +17832,5 @@
  ],
  "count": 1101,
  "liveCount": 664,
- "hash": "564a707a531e7142"
+ "hash": "f4aa92023a03650c"
 }

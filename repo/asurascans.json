@@ -6,9 +6,9 @@
   "nsfw": false,
   "contentType": "MANHWA",
   "engine": "asurascans",
-  "domain": "asuracomic.net",
+  "domain": "asurascans.com",
   "altDomains": [
-   "asurascans.com"
+   "asuracomic.net"
   ],
   "className": "AsuraScansParser",
   "file": "en/AsuraScansParser.kt",
@@ -30,7 +30,7 @@
   "needsCustomLogic": true,
   "warnings": [
    "Bespoke single-source parser (NOT a Madara/MangaThemesia theme): a Next.js/Astro site whose browse page is a server-rendered #series-grid reached via GET /browse?page=&search=&genres=&status=&types=&sort=, and whose reader page ships its image list as Next.js flight data — either inline in an astro-island[component-url*='ChapterReader'] props blob, or streamed across many self.__next_f.push([...]) script chunks carrying {order,url} records. Ported to a dedicated AsuraScansEngine; config left empty (all defaults match the base). No JavaScript is executed — the flight payload is parsed as text/JSON.",
-   "kotatsu configKeyDomain default is asurascans.com; the live host serving the Astro/Next markup this engine parses is asuracomic.net (asurascans.com 301-redirects there), so domain is set to asuracomic.net and asurascans.com kept as an altDomain. User-overridable at runtime.",
+   "As of 2026-07 the live host serving the Astro/Next markup this engine parses is asurascans.com (kotatsu's original configKeyDomain default); the former asuracomic.net now 301-redirects to asurascans.com/ and DROPS the /browse path, landing on the homepage which has no #series-grid — so pointing the source at asuracomic.net returns empty. Domain is therefore asurascans.com, with asuracomic.net kept only as an altDomain. User-overridable at runtime.",
    "Chapters posted within the last 6h are hidden (kotatsu CHAPTER_HIDE_WINDOW_MS), datafied as chapterHideWindowMs.",
    "availableStates {ONGOING, FINISHED, ABANDONED, PAUSED, UPCOMING} and availableContentTypes {MANGA, MANHWA, MANHUA} are engine constants used only for building the browse-filter URL (the SourceEngine contract exposes tags via getAvailableTags but not a getFilterOptions surface)."
   ],
