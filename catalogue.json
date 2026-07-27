@@ -1112,12 +1112,13 @@
    "contentType": "MANGA",
    "engine": "hotcomics",
    "domain": "daycomics.me",
-   "broken": false,
+   "broken": true,
    "pageSize": 24,
    "config": {
     "langPath": "/en",
     "popupLoginChapters": true
-   }
+   },
+   "brokenReason": "domain does not resolve"
   },
   {
    "id": "HOTCOMICS",
@@ -3902,12 +3903,13 @@
    "engine": "madara",
    "domain": "hiper.cool",
    "altDomains": [],
-   "broken": false,
+   "broken": true,
    "pageSize": 20,
    "config": {
     "tagPrefix": "manga-tag/",
     "stylePage": ""
-   }
+   },
+   "brokenReason": "domain does not resolve"
   },
   {
    "id": "HIPERDEX",
@@ -8317,10 +8319,9 @@
    "engine": "madara",
    "domain": "reset-scans.org",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 20,
-   "config": {},
-   "brokenReason": "domain does not resolve"
+   "config": {}
   },
   {
    "id": "RHPLUSMANGA",
@@ -11340,13 +11341,12 @@
    "contentType": "HENTAI",
    "engine": "mangareader",
    "domain": "dexhentai.com",
-   "broken": true,
+   "broken": false,
    "pageSize": 40,
    "config": {
     "pageSize": 40,
     "searchPageSize": 36
-   },
-   "brokenReason": "domain does not resolve"
+   }
   },
   {
    "id": "diskusscan",
@@ -14293,14 +14293,13 @@
    "contentType": "HENTAI",
    "engine": "mangareader",
    "domain": "silencescan.com.br",
-   "broken": true,
+   "broken": false,
    "pageSize": 35,
    "config": {
     "pageSize": 35,
     "searchPageSize": 35,
     "datePattern": "MMM d, yyyy"
-   },
-   "brokenReason": "domain does not resolve"
+   }
   },
   {
    "id": "sirenkomik",
@@ -16677,7 +16676,7 @@
    "contentType": "MANGA",
    "engine": "wpcomics",
    "domain": "nettruyen1905.com",
-   "broken": true,
+   "broken": false,
    "pageSize": 20,
    "config": {
     "pageSize": 20,
@@ -16701,8 +16700,7 @@
      "tagsExclusion": true,
      "search": true
     }
-   },
-   "brokenReason": "domain does not resolve"
+   }
   },
   {
    "id": "nettruyenfe",
@@ -16712,7 +16710,7 @@
    "contentType": "MANGA",
    "engine": "wpcomics",
    "domain": "nettruyen1905.com",
-   "broken": true,
+   "broken": false,
    "pageSize": 20,
    "config": {
     "pageSize": 20,
@@ -16736,8 +16734,7 @@
      "tagsExclusion": true,
      "search": true
     }
-   },
-   "brokenReason": "domain does not resolve"
+   }
   },
   {
    "id": "nettruyenhe",
@@ -16781,7 +16778,7 @@
    "contentType": "MANGA",
    "engine": "wpcomics",
    "domain": "nettruyen1905.com",
-   "broken": true,
+   "broken": false,
    "pageSize": 20,
    "config": {
     "pageSize": 20,
@@ -16805,8 +16802,7 @@
      "tagsExclusion": true,
      "search": true
     }
-   },
-   "brokenReason": "domain does not resolve"
+   }
   },
   {
    "id": "nettruyenssr",
@@ -16816,7 +16812,7 @@
    "contentType": "MANGA",
    "engine": "wpcomics",
    "domain": "nettruyen1905.com",
-   "broken": true,
+   "broken": false,
    "pageSize": 20,
    "config": {
     "pageSize": 20,
@@ -16840,8 +16836,7 @@
      "tagsExclusion": true,
      "search": true
     }
-   },
-   "brokenReason": "domain does not resolve"
+   }
   },
   {
    "id": "nettruyenuu",
@@ -16851,7 +16846,7 @@
    "contentType": "MANGA",
    "engine": "wpcomics",
    "domain": "nettruyen1905.com",
-   "broken": true,
+   "broken": false,
    "pageSize": 20,
    "config": {
     "pageSize": 20,
@@ -16875,8 +16870,7 @@
      "tagsExclusion": true,
      "search": true
     }
-   },
-   "brokenReason": "domain does not resolve"
+   }
   },
   {
    "id": "nettruyenvie",
@@ -17831,6 +17825,6 @@
   }
  ],
  "count": 1101,
- "liveCount": 664,
- "hash": "f4aa92023a03650c"
+ "liveCount": 670,
+ "hash": "c2fd55af0c06ff65"
 }

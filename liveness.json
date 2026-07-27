@@ -1,22 +1,12 @@
 {
  "deadDomains": [
-  "dexhentai.com",
-  "mangagezginim.com",
-  "nettruyen1905.com",
-  "reset-scans.org",
-  "silencescan.com.br"
+  "daycomics.me",
+  "hiper.cool"
  ],
  "deadIds": [
-  "MANGAGEZGINI",
-  "RESETSCANS",
-  "dexhentai",
-  "nettruyen1975",
-  "nettruyenfe",
-  "nettruyenll",
-  "nettruyenssr",
-  "nettruyenuu",
-  "silencescan"
+  "DAYCOMICS",
+  "HIPERCOOL"
  ],
- "deadDomainCount": 5,
- "deadSourceCount": 9
+ "deadDomainCount": 2,
+ "deadSourceCount": 2
 }
