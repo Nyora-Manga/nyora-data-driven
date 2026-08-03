@@ -1,12 +1,22 @@
 {
  "deadDomains": [
-  "daycomics.me",
-  "hiper.cool"
+  "manga-sehri.com",
+  "nettruyen1905.com",
+  "reset-scans.org",
+  "silencescan.com.br",
+  "yonabar.xyz"
  ],
  "deadIds": [
-  "DAYCOMICS",
-  "HIPERCOOL"
+  "MANGASEHRI",
+  "RESETSCANS",
+  "YONABAR",
+  "nettruyen1975",
+  "nettruyenfe",
+  "nettruyenll",
+  "nettruyenssr",
+  "nettruyenuu",
+  "silencescan"
  ],
- "deadDomainCount": 2,
- "deadSourceCount": 2
+ "deadDomainCount": 5,
+ "deadSourceCount": 9
 }
