@@ -339,7 +339,18 @@ class BatotoEngine(
 				body = payload.toString(),
 			),
 		)
-		val json = JSONObject(resp.body)
+		// Anti-bot walls and maintenance pages (e.g. xcat.tv's plain-text "Under maintenance!",
+		// Cloudflare "Just a moment..." HTML) are not JSON — surface a clear ParseException
+		// instead of an opaque JSONException from the tokener.
+		val body = resp.body.trimStart()
+		if (!body.startsWith('{') && !body.startsWith('[')) {
+			throw ParseException(
+				"non-JSON GraphQL response (anti-bot wall or maintenance page?): " +
+					body.take(120),
+				endpoint,
+			)
+		}
+		val json = JSONObject(body)
 		json.optJSONArray("errors")?.let { errors ->
 			if (errors.length() != 0) {
 				val msg = (0 until errors.length()).joinToString("\n") {
