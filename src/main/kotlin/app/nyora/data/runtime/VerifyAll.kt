@@ -48,8 +48,13 @@ fun main(args: Array<String>) = runBlocking {
         val candidates = (0 until rows.length())
             .map { rows.getJSONObject(it) }
             .filter { !it.optBoolean("broken", false) }
+            // cfWall "B" = Cloudflare JS interstitial (PLATFORM_GATING.md): those rows are gated to
+            // cloud-dependent clients and CANNOT be verified from plain OkHttp — the wall page would
+            // reach the parser and show up as a bogus PARSE_FAIL. Wall "A" rows stay in (OkHttp 5
+            // already clears fingerprint-only walls, validated live).
+            .filter { it.optString("cfWall") != "B" }
         if (candidates.isEmpty()) {
-            results[engineKey] = EngineResult(engineKey, 0, Status.NO_LIVE_ROWS, "all rows broken:true or none")
+            results[engineKey] = EngineResult(engineKey, 0, Status.NO_LIVE_ROWS, "all rows broken:true, cfWall:B-gated, or none")
             println("%-16s : NO_LIVE_ROWS (%d rows)".format(engineKey, rows.length()))
             continue
         }
