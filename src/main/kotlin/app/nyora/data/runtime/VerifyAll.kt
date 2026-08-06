@@ -1,17 +1,22 @@
 package app.nyora.data.runtime
 
 import app.nyora.core.model.Manga
+import app.nyora.data.engine.AntiBotKind
 import app.nyora.data.engine.ContentType
 import app.nyora.data.engine.EngineConfig
+import app.nyora.data.engine.EngineContext
 import app.nyora.data.engine.EngineId
 import app.nyora.data.engine.EngineRegistry
+import app.nyora.data.engine.HtmlDocument
+import app.nyora.data.engine.HttpRequest
+import app.nyora.data.engine.HttpResponse
 import app.nyora.data.engine.SourceDef
+import app.nyora.data.engine.SourcePrefs
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
-import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import javax.net.ssl.SSLException
@@ -94,12 +99,47 @@ fun main(args: Array<String>) = runBlocking {
 
 private enum class Status(val rank: Int) {
     UNREACHABLE(0),
-    NO_LIVE_ROWS(1),
-    PARSE_FAIL(2),      // ranks above UNREACHABLE so a real bug isn't masked by a later network miss
-    EMPTY_PAGES(3),
-    EMPTY_CHAPTERS(4),
-    EMPTY_POPULAR(5),
-    PASS(6),
+    CF_WALL(1),         // reached the site but got a Cloudflare challenge, not the real page
+    NO_LIVE_ROWS(2),
+    PARSE_FAIL(3),      // ranks above UNREACHABLE so a real bug isn't masked by a later network miss
+    EMPTY_PAGES(4),
+    EMPTY_CHAPTERS(5),
+    EMPTY_POPULAR(6),
+    PASS(7),
+}
+
+/**
+ * Decorates an [EngineContext] to record whether any response in a single source pipeline was a
+ * Cloudflare interstitial. An untagged CF wall otherwise reaches the parser as valid-but-contentless
+ * HTML and is misreported as EMPTY_* — a bogus "engine bug". This lets [tryOne] reclassify those as
+ * [Status.CF_WALL] (a data/gating gap, not an engine defect).
+ */
+private class CfSniffingContext(private val delegate: EngineContext) : EngineContext {
+    var sawCloudflare = false
+        private set
+
+    override val prefs: SourcePrefs get() = delegate.prefs
+    override fun parseHtml(html: String, baseUrl: String): HtmlDocument = delegate.parseHtml(html, baseUrl)
+    override suspend fun solveAntiBot(kind: AntiBotKind, url: String): Map<String, String> =
+        delegate.solveAntiBot(kind, url)
+
+    override suspend fun http(request: HttpRequest): HttpResponse {
+        val resp = delegate.http(request)
+        if (isCloudflareChallenge(resp)) sawCloudflare = true
+        return resp
+    }
+
+    private fun isCloudflareChallenge(resp: HttpResponse): Boolean {
+        // The JS interstitial is served with 403/503 and carries these stable markers; a plain 200
+        // real page never does. cf-mitigated header is set on the challenge response too.
+        if (resp.code != 403 && resp.code != 503) return false
+        if (resp.headers.keys.any { it.equals("cf-mitigated", ignoreCase = true) }) return true
+        val head = resp.body.take(1500)
+        return "Just a moment" in head ||
+            "challenges.cloudflare.com" in head ||
+            "cf-chl" in head ||
+            "_cf_chl_opt" in head
+    }
 }
 
 private data class EngineResult(val engine: String, val liveRows: Int, val status: Status, val detail: String)
@@ -110,11 +150,15 @@ private suspend fun tryOne(
     ctx: DefaultEngineContext,
     perCall: Long,
 ): Pair<Status, String> {
+    // A per-source CF sniffer so an untagged Cloudflare wall is reported as CF_WALL, not a bogus
+    // EMPTY_* / PARSE_FAIL that looks like an engine bug.
+    val cf = CfSniffingContext(ctx)
     return try {
         val def = buildSourceDef(engineKey, row)
-        val engine = EngineRegistry.create(engineKey, def, ctx)
+        val engine = EngineRegistry.create(engineKey, def, cf)
         val popular: List<Manga> = withTimeout(perCall) { engine.getPopular(0) }
-        if (popular.isEmpty()) return Status.EMPTY_POPULAR to "0 popular"
+        if (popular.isEmpty()) return (if (cf.sawCloudflare) Status.CF_WALL else Status.EMPTY_POPULAR) to
+            (if (cf.sawCloudflare) "Cloudflare challenge" else "0 popular")
         val detailed = withTimeout(perCall) { engine.getDetails(popular.first()) }
         val chapters = detailed.chapters.orEmpty()
         if (chapters.isEmpty()) return Status.EMPTY_CHAPTERS to "${popular.size} popular, 0 chapters"
@@ -124,12 +168,23 @@ private suspend fun tryOne(
         Status.PASS to "popular=${popular.size}, chapters=${chapters.size}, pages=${pages.size}, img=${img?.take(60)}"
     } catch (e: Throwable) {
         val net = generateSequence(e as Throwable?) { it.cause }.any {
+            // SocketException covers "Connection reset" / "Broken pipe" (peer drops the connection —
+            // common on rate-limited or geo-blocked hosts); it is transport, never an engine defect.
+            // Its subclasses ConnectException are matched by the same check. Other IOExceptions from
+            // OkHttp ("unexpected end of stream", "Canceled") are transport too.
             it is SocketTimeoutException || it is UnknownHostException ||
-                it is ConnectException || it is SSLException ||
-                it is kotlinx.coroutines.TimeoutCancellationException
+                it is java.net.SocketException || it is SSLException ||
+                it is kotlinx.coroutines.TimeoutCancellationException ||
+                (it is java.io.IOException && it.message?.let { m ->
+                    "reset" in m || "unexpected end of stream" in m ||
+                        "Broken pipe" in m || "Canceled" in m
+                } == true)
         }
-        if (net) Status.UNREACHABLE to (e.javaClass.simpleName)
-        else Status.PARSE_FAIL to "${e.javaClass.simpleName}: ${e.message?.take(90)}"
+        when {
+            cf.sawCloudflare -> Status.CF_WALL to "Cloudflare challenge (${e.javaClass.simpleName})"
+            net -> Status.UNREACHABLE to (e.javaClass.simpleName)
+            else -> Status.PARSE_FAIL to "${e.javaClass.simpleName}: ${e.message?.take(90)}"
+        }
     }
 }
 
