@@ -1040,16 +1040,23 @@ class MadaraEngine(
 		private const val KEY_DOMAIN = "domain"
 		private const val RATING_UNKNOWN = -1f
 
-		// admin-ajax madara_load_more template (kotatsu createRequestTemplate, verbatim).
+		// admin-ajax madara_load_more template (kotatsu createRequestTemplate).
+		// Keys and values are RAW (unencoded): the template is parsed into a String map and handed
+		// to the EngineContext as form fields, which percent-encodes each field exactly once when it
+		// builds the request body (OkHttp FormBody.add). The dynamically-added sort/filter keys
+		// (vars[meta_key], vars[orderby], ...) are likewise raw, so every field is encoded uniformly.
+		// (Pre-encoding these keys here would double-encode them — `vars[post_type]` would arrive as
+		// literal `vars%5Bpost_type%5D`, the query would drop post_type=wp-manga, and EVERY madara
+		// source would return an empty listing.)
 		private const val AJAX_TEMPLATE =
-			"action=madara_load_more&page=0&template=madara-core%2Fcontent%2Fcontent-search" +
-				"&vars%5Bs%5D=&vars%5Bpaged%5D=1&vars%5Btemplate%5D=search" +
-				"&vars%5Bmeta_query%5D%5B0%5D%5Brelation%5D=AND&vars%5Bmeta_query%5D%5Brelation%5D=AND" +
-				"&vars%5Bpost_type%5D=wp-manga&vars%5Bpost_status%5D=publish" +
-				"&vars%5Bmanga_archives_item_layout%5D=default"
+			"action=madara_load_more&page=0&template=madara-core/content/content-search" +
+				"&vars[s]=&vars[paged]=1&vars[template]=search" +
+				"&vars[meta_query][0][relation]=AND&vars[meta_query][relation]=AND" +
+				"&vars[post_type]=wp-manga&vars[post_status]=publish" +
+				"&vars[manga_archives_item_layout]=default"
 
-		// PHP-serialized a:1:{i:0;s:3:"yes";} url-encoded (adult content marker).
-		private const val ADULT_SERIALIZED = "a%3A1%3A%7Bi%3A0%3Bs%3A3%3A%22yes%22%3B%7D"
+		// PHP-serialized a:1:{i:0;s:3:"yes";} (adult content marker), raw — encoded once by the context.
+		private const val ADULT_SERIALIZED = "a:1:{i:0;s:3:\"yes\";}"
 
 		private fun createRequestTemplate(): LinkedHashMap<String, String> =
 			AJAX_TEMPLATE.split('&').associateTo(LinkedHashMap()) {
