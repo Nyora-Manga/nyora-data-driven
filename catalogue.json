@@ -1112,12 +1112,13 @@
    "contentType": "MANGA",
    "engine": "hotcomics",
    "domain": "daycomics.me",
-   "broken": false,
+   "broken": true,
    "pageSize": 24,
    "config": {
     "langPath": "/en",
     "popupLoginChapters": true
-   }
+   },
+   "brokenReason": "domain does not resolve"
   },
   {
    "id": "HOTCOMICS",
@@ -3335,11 +3336,12 @@
    "engine": "madara",
    "domain": "garciamanga.com",
    "altDomains": [],
-   "broken": false,
+   "broken": true,
    "pageSize": 20,
    "config": {
     "selectPage": "img"
-   }
+   },
+   "brokenReason": "domain does not resolve"
   },
   {
    "id": "GATEMANGA",
@@ -3902,12 +3904,13 @@
    "engine": "madara",
    "domain": "hiper.cool",
    "altDomains": [],
-   "broken": false,
+   "broken": true,
    "pageSize": 20,
    "config": {
     "tagPrefix": "manga-tag/",
     "stylePage": ""
-   }
+   },
+   "brokenReason": "domain does not resolve"
   },
   {
    "id": "HIPERDEX",
@@ -5972,12 +5975,11 @@
    "engine": "madara",
    "domain": "manga-sehri.com",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 18,
    "config": {
     "datePattern": "dd/MM/yyyy"
-   },
-   "brokenReason": "domain does not resolve"
+   }
   },
   {
    "id": "MANGASEHRINET",
@@ -8318,10 +8320,9 @@
    "engine": "madara",
    "domain": "reset-scans.org",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 20,
-   "config": {},
-   "brokenReason": "domain does not resolve"
+   "config": {}
   },
   {
    "id": "RHPLUSMANGA",
@@ -9797,12 +9798,11 @@
    "engine": "madara",
    "domain": "yonabar.xyz",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 10,
    "config": {
     "listUrl": "yaoi/"
-   },
-   "brokenReason": "domain does not resolve"
+   }
   },
   {
    "id": "YUBIKIRI",
@@ -14294,14 +14294,13 @@
    "contentType": "HENTAI",
    "engine": "mangareader",
    "domain": "silencescan.com.br",
-   "broken": true,
+   "broken": false,
    "pageSize": 35,
    "config": {
     "pageSize": 35,
     "searchPageSize": 35,
     "datePattern": "MMM d, yyyy"
-   },
-   "brokenReason": "domain does not resolve"
+   }
   },
   {
    "id": "sirenkomik",
@@ -16678,7 +16677,7 @@
    "contentType": "MANGA",
    "engine": "wpcomics",
    "domain": "nettruyen1905.com",
-   "broken": true,
+   "broken": false,
    "pageSize": 20,
    "config": {
     "pageSize": 20,
@@ -16702,8 +16701,7 @@
      "tagsExclusion": true,
      "search": true
     }
-   },
-   "brokenReason": "domain does not resolve"
+   }
   },
   {
    "id": "nettruyenfe",
@@ -16713,7 +16711,7 @@
    "contentType": "MANGA",
    "engine": "wpcomics",
    "domain": "nettruyen1905.com",
-   "broken": true,
+   "broken": false,
    "pageSize": 20,
    "config": {
     "pageSize": 20,
@@ -16737,8 +16735,7 @@
      "tagsExclusion": true,
      "search": true
     }
-   },
-   "brokenReason": "domain does not resolve"
+   }
   },
   {
    "id": "nettruyenhe",
@@ -16782,7 +16779,7 @@
    "contentType": "MANGA",
    "engine": "wpcomics",
    "domain": "nettruyen1905.com",
-   "broken": true,
+   "broken": false,
    "pageSize": 20,
    "config": {
     "pageSize": 20,
@@ -16806,8 +16803,7 @@
      "tagsExclusion": true,
      "search": true
     }
-   },
-   "brokenReason": "domain does not resolve"
+   }
   },
   {
    "id": "nettruyenssr",
@@ -16817,7 +16813,7 @@
    "contentType": "MANGA",
    "engine": "wpcomics",
    "domain": "nettruyen1905.com",
-   "broken": true,
+   "broken": false,
    "pageSize": 20,
    "config": {
     "pageSize": 20,
@@ -16841,8 +16837,7 @@
      "tagsExclusion": true,
      "search": true
     }
-   },
-   "brokenReason": "domain does not resolve"
+   }
   },
   {
    "id": "nettruyenuu",
@@ -16852,7 +16847,7 @@
    "contentType": "MANGA",
    "engine": "wpcomics",
    "domain": "nettruyen1905.com",
-   "broken": true,
+   "broken": false,
    "pageSize": 20,
    "config": {
     "pageSize": 20,
@@ -16876,8 +16871,7 @@
      "tagsExclusion": true,
      "search": true
     }
-   },
-   "brokenReason": "domain does not resolve"
+   }
   },
   {
    "id": "nettruyenvie",
@@ -17832,6 +17826,6 @@
   }
  ],
  "count": 1101,
- "liveCount": 663,
- "hash": "25ed92276e01b8ce"
+ "liveCount": 669,
+ "hash": "4203e3da0dd53a1f"
 }
