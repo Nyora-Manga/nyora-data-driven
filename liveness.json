@@ -1,14 +1,20 @@
 {
  "deadDomains": [
-  "daycomics.me",
-  "garciamanga.com",
-  "hiper.cool"
+  "manga-sehri.com",
+  "neroxus.com.br",
+  "reset-scans.org",
+  "silencescan.com.br",
+  "yonabar.xyz",
+  "yurilabs.my.id"
  ],
  "deadIds": [
-  "DAYCOMICS",
-  "GARCIAMANGA",
-  "HIPERCOOL"
+  "MANGASEHRI",
+  "NEROXUS",
+  "RESETSCANS",
+  "YONABAR",
+  "YURILAB",
+  "silencescan"
  ],
- "deadDomainCount": 3,
- "deadSourceCount": 3
+ "deadDomainCount": 6,
+ "deadSourceCount": 6
 }
