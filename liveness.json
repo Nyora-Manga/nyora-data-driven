@@ -1,20 +1,24 @@
 {
  "deadDomains": [
-  "manga-sehri.com",
-  "neroxus.com.br",
-  "reset-scans.org",
-  "silencescan.com.br",
-  "yonabar.xyz",
-  "yurilabs.my.id"
+  "daycomics.me",
+  "hiper.cool",
+  "jiangzaitoon.top",
+  "mangakita.id",
+  "manhuascan.us",
+  "manhwahub.net",
+  "manhwaraw18.com",
+  "tumanhwas.club"
  ],
  "deadIds": [
-  "MANGASEHRI",
-  "NEROXUS",
-  "RESETSCANS",
-  "YONABAR",
-  "YURILAB",
-  "silencescan"
+  "DAYCOMICS",
+  "HIPERCOOL",
+  "JIANGZAITOON",
+  "MANHWAHUB",
+  "MANHWARAW_COM",
+  "mangakita",
+  "manhuascanus",
+  "tumanhwas"
  ],
- "deadDomainCount": 6,
- "deadSourceCount": 6
+ "deadDomainCount": 8,
+ "deadSourceCount": 8
 }

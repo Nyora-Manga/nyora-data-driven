@@ -1112,12 +1112,13 @@
    "contentType": "MANGA",
    "engine": "hotcomics",
    "domain": "daycomics.me",
-   "broken": false,
+   "broken": true,
    "pageSize": 24,
    "config": {
     "langPath": "/en",
     "popupLoginChapters": true
-   }
+   },
+   "brokenReason": "domain does not resolve"
   },
   {
    "id": "HOTCOMICS",
@@ -3902,12 +3903,13 @@
    "engine": "madara",
    "domain": "hiper.cool",
    "altDomains": [],
-   "broken": false,
+   "broken": true,
    "pageSize": 20,
    "config": {
     "tagPrefix": "manga-tag/",
     "stylePage": ""
-   }
+   },
+   "brokenReason": "domain does not resolve"
   },
   {
    "id": "HIPERDEX",
@@ -4211,12 +4213,13 @@
    "engine": "madara",
    "domain": "jiangzaitoon.top",
    "altDomains": [],
-   "broken": false,
+   "broken": true,
    "pageSize": 12,
    "config": {
     "datePattern": "d MMMM yyyy",
     "postReq": true
-   }
+   },
+   "brokenReason": "domain does not resolve"
   },
   {
    "id": "JIMANGA",
@@ -5972,12 +5975,11 @@
    "engine": "madara",
    "domain": "manga-sehri.com",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 18,
    "config": {
     "datePattern": "dd/MM/yyyy"
-   },
-   "brokenReason": "domain does not resolve"
+   }
   },
   {
    "id": "MANGASEHRINET",
@@ -6817,7 +6819,7 @@
    "engine": "madara",
    "domain": "manhwahub.net",
    "altDomains": [],
-   "broken": false,
+   "broken": true,
    "pageSize": 40,
    "config": {
     "tagPrefix": "genre/",
@@ -6825,7 +6827,8 @@
     "withoutAjax": true,
     "listUrl": "genre/manhwa",
     "selectTestAsync": "ul.box-list-chapter"
-   }
+   },
+   "brokenReason": "domain does not resolve"
   },
   {
    "id": "MANHWALATINO",
@@ -6910,13 +6913,14 @@
    "engine": "madara",
    "domain": "manhwaraw18.com",
    "altDomains": [],
-   "broken": false,
+   "broken": true,
    "pageSize": 12,
    "config": {
     "postReq": true,
     "listUrl": "manhwa-raw/",
     "tagPrefix": "manhwa-raw-genre/"
-   }
+   },
+   "brokenReason": "domain does not resolve"
   },
   {
    "id": "MANHWASCO",
@@ -7496,12 +7500,11 @@
    "engine": "madara",
    "domain": "neroxus.com.br",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 10,
    "config": {
     "datePattern": "MMM d, yyyy"
-   },
-   "brokenReason": "domain does not resolve"
+   }
   },
   {
    "id": "NEWMANHUA",
@@ -8319,10 +8322,9 @@
    "engine": "madara",
    "domain": "reset-scans.org",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 20,
-   "config": {},
-   "brokenReason": "domain does not resolve"
+   "config": {}
   },
   {
    "id": "RHPLUSMANGA",
@@ -9798,12 +9800,11 @@
    "engine": "madara",
    "domain": "yonabar.xyz",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 10,
    "config": {
     "listUrl": "yaoi/"
-   },
-   "brokenReason": "domain does not resolve"
+   }
   },
   {
    "id": "YUBIKIRI",
@@ -9830,14 +9831,13 @@
    "engine": "madara",
    "domain": "yurilabs.my.id",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 30,
    "config": {
     "withoutAjax": true,
     "selectGenre": ".genres-content a[href*='genre'], .tags-content a[href*='tag']",
     "selectChapter": "ul.version-chap li.wp-manga-chapter"
-   },
-   "brokenReason": "domain does not resolve"
+   }
   },
   {
    "id": "YURILIVE",
@@ -10255,14 +10255,15 @@
    "contentType": "HENTAI",
    "engine": "manga18",
    "domain": "tumanhwas.club",
-   "broken": false,
+   "broken": true,
    "pageSize": 20,
    "config": {
     "selectors": {
      "selectTag": "div.item:contains(Géneros) div.info_value a",
      "selectAlt": "div.item:contains(Títulos alternativos) div.info_value"
     }
-   }
+   },
+   "brokenReason": "domain does not resolve"
   },
   {
    "id": "MANGABALL_DE",
@@ -12880,7 +12881,7 @@
    "lang": "id",
    "engine": "mangareader",
    "domain": "mangakita.id",
-   "broken": false,
+   "broken": true,
    "pageSize": 20,
    "config": {
     "pageSize": 20,
@@ -12889,7 +12890,8 @@
     "capabilities": {
      "tagsExclusion": false
     }
-   }
+   },
+   "brokenReason": "domain does not resolve"
   },
   {
    "id": "mangakoleji",
@@ -13166,14 +13168,15 @@
    "contentType": "HENTAI",
    "engine": "mangareader",
    "domain": "manhuascan.us",
-   "broken": false,
+   "broken": true,
    "pageSize": 30,
    "config": {
     "pageSize": 30,
     "searchPageSize": 30,
     "listUrl": "/manga-list",
     "datePattern": "dd-MM-yyyy"
-   }
+   },
+   "brokenReason": "domain does not resolve"
   },
   {
    "id": "manhwa_freak",
@@ -14296,14 +14299,13 @@
    "contentType": "HENTAI",
    "engine": "mangareader",
    "domain": "silencescan.com.br",
-   "broken": true,
+   "broken": false,
    "pageSize": 35,
    "config": {
     "pageSize": 35,
     "searchPageSize": 35,
     "datePattern": "MMM d, yyyy"
-   },
-   "brokenReason": "domain does not resolve"
+   }
   },
   {
    "id": "sirenkomik",
@@ -17829,6 +17831,6 @@
   }
  ],
  "count": 1101,
- "liveCount": 666,
- "hash": "6f2abbfd0517cfef"
+ "liveCount": 664,
+ "hash": "77ce9335365bb5aa"
 }
