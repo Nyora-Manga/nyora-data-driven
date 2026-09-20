@@ -11,7 +11,7 @@
     "id": {
       "type": "string",
       "description": "Stable unique source id within the repo (e.g. \"hiperdex\"). Used as the Nyora MangaSource key and to namespace String manga/chapter ids.",
-      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
       "minLength": 1,
       "maxLength": 64
     },
@@ -46,14 +46,23 @@
         "hotcomics", "iken", "keyoapp", "liliana", "madtheme", "manga18", "mangabox",
         "mangadex", "mangadventure", "mangago", "mmrcms", "natsu", "onemanga",
         "pizzareader", "scan", "signedrest", "sinmh", "wpcomics", "zeistmanga", "zmanga",
-        "atsumoe", "baozimh", "demonicscans", "mangaball", "mangakawaii", "mangapill",
-        "webtoons", "weebcentral", "mangaplus"
+        "eightmuses", "ehentai", "hitomi", "atsumoe", "baozimh", "demonicscans", "mangaball", "mangakawaii", "mangapill",
+        "webtoons", "weebcentral", "mangaplus", "mangafire", "pagedmanga", "initmanga"
       ]
     },
     "domain": {
       "type": "string",
       "description": "Primary host, without scheme (e.g. \"hiperdex.com\"). All URLs are built as https://{domain}/... . User-overridable at runtime.",
       "pattern": "^([a-z0-9-]+\\.)+[a-z]{2,}$"
+    },
+    "altDomains": {
+      "type": "array",
+      "description": "Optional verified mirror hosts, without schemes. The primary domain remains authoritative.",
+      "items": {
+        "type": "string",
+        "pattern": "^([a-z0-9-]+\\.)+[a-z]{2,}$"
+      },
+      "uniqueItems": true
     },
     "config": {
       "type": "object",
@@ -77,6 +86,10 @@
       "type": "string",
       "description": "When antiBot=cloudflare, which Cloudflare wall (measured 2026-07 via curl_cffi Chrome impersonation). \"A\" = fingerprint-only 403, cleared at ZERO per-request load by TLS/JA3 impersonation (impersonator-okhttp) — recoverable everywhere once the helper impersonates. \"B\" = JS interstitial (\"Just a moment\", cf_chl), needs a one-time headless cf_clearance solve. See CF_BYPASS.md.",
       "enum": ["A", "B"]
+    },
+    "needsCustomLogic": {
+      "type": "boolean",
+      "description": "Extraction provenance warning. True means the upstream parser historically overrode generic behavior; clients preserve this metadata, while source-health patches decide whether the current bundled engine is sufficient."
     },
     "pageSize": {
       "type": "integer",
@@ -253,6 +266,17 @@
           "propertyNames": { "enum": ["MANGA", "MANHWA", "MANHUA", "COMICS", "NOVEL"] },
           "additionalProperties": { "type": "string" }
         },
+        "json": {
+          "type": "object", "additionalProperties": false,
+          "description": "Optional JSON catalogue response mapping; absent uses HTML cards.",
+          "properties": {
+            "itemsField": { "type": "string", "default": "items" },
+            "urlField": { "type": "string", "default": "url" },
+            "urlTemplate": { "type": "string", "default": "{value}" },
+            "titleField": { "type": "string", "default": "title" },
+            "coverField": { "type": "string", "default": "cover" }
+          }
+        },
         "extraBrowseParams": { "type": "object", "additionalProperties": { "type": "string" }, "description": "Fixed browse-only params (e.g. format=...)." },
         "yearParam": { "type": "string", "description": "Year filter param, emitted when filter.year != 0 (e.g. BacaKomik \"yearx\")." },
         "authorParam": { "type": "string", "description": "Author filter param (e.g. BacaKomik \"author\")." },
@@ -263,7 +287,10 @@
           "properties": {
             "mode": { "type": "string", "enum": ["PATH", "QUERY", "QUERY_FIRST"], "default": "QUERY", "description": "PATH=/page/{n}/, QUERY=&page={n} at browse end, QUERY_FIRST=?page={n} emitted first." },
             "param": { "type": "string", "default": "page", "description": "Page param name (e.g. \"paged\")." },
-            "inSearch": { "type": "boolean", "default": false, "description": "Also emit the page number on the search branch (Normoyun)." }
+            "inSearch": { "type": "boolean", "default": false, "description": "Also emit the page number on the search branch (Normoyun)." },
+            "pathTemplate": { "type": "string", "description": "Tokenized browse path for page > 1; supports {listUrl} and {page}." },
+            "firstPathTemplate": { "type": "string", "description": "Optional tokenized page-1 browse path when it differs from pathTemplate." },
+            "omitFirst": { "type": "boolean", "default": false, "description": "Do not emit the page query parameter on page 1." }
           }
         },
         "search": {
@@ -272,10 +299,24 @@
           "description": "Search-endpoint grammar.",
           "properties": {
             "supported": { "type": "boolean", "default": true, "description": "false => search throws SEARCH_NOT_SUPPORTED (Revolution)." },
-            "mode": { "type": "string", "enum": ["PATH_PAGE", "QUERY"], "default": "PATH_PAGE", "description": "PATH_PAGE=base /page/{n}/?s=, QUERY=query-param endpoint." },
+            "mode": { "type": "string", "enum": ["PATH_PAGE", "QUERY", "BROWSE"], "default": "PATH_PAGE", "description": "PATH_PAGE=base /page/{n}/?s=, QUERY=query-param endpoint, BROWSE=place the search query into the configured browse grammar." },
             "path": { "type": "string", "description": "Search path (/search, /lista, \"\"); omitted => reuse the /page/{n}/?s= base." },
             "param": { "type": "string", "default": "s", "description": "Search query param (search, q, title)." },
             "fixedParams": { "type": "object", "additionalProperties": { "type": "string" }, "description": "Fixed search params (e.g. post_type=manga | post_type=webtoon)." }
+          }
+        },
+        "pagedRequest": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["url"],
+          "description": "Optional alternate HTTP request for later browse pages (for themes whose load-more control posts to admin-ajax instead of exposing a page URL). Templates support {domain}, {listUrl}, {page}, {order}, {genre}, and {query}.",
+          "properties": {
+            "fromPage": { "type": "integer", "minimum": 1, "default": 2, "description": "First one-based page served by this request; earlier pages keep the normal browse URL." },
+            "url": { "type": "string", "minLength": 1, "description": "Absolute or source-relative request URL template." },
+            "method": { "type": "string", "enum": ["GET", "POST"], "default": "POST" },
+            "browseOnly": { "type": "boolean", "default": false, "description": "When true, text-search pagination keeps the normal search route instead of using this request." },
+            "headers": { "type": "object", "additionalProperties": { "type": "string" }, "description": "Templated request headers." },
+            "form": { "type": "object", "additionalProperties": { "type": "string" }, "description": "Templated application/x-www-form-urlencoded fields." }
           }
         },
         "singlePage": { "type": "boolean", "default": false, "description": "page>1 => empty list (single-page sources / paging guard)." }
@@ -298,7 +339,7 @@
       "description": "Reader page-extraction tuning for getPageList (absorbs the getPages overrides). Absent/all-default => stock ts_reader-JSON-then-img-scrape behavior. Layers on top of the existing encodedSrc / netshield / cloudflare flags.",
       "additionalProperties": false,
       "properties": {
-        "mode": { "type": "string", "enum": ["auto", "images", "json", "api"], "default": "auto", "description": "auto=JSON-if-present else img-scrape (base, keeps fallback), images=force the scrape path even when a ts_reader script exists, json=force ts_reader JSON, api=JSON-API reader." },
+        "mode": { "type": "string", "enum": ["auto", "images", "json", "api", "next_data"], "default": "auto", "description": "auto=JSON-if-present else img-scrape (base, keeps fallback), images=force the scrape path even when a ts_reader script exists, json=force ts_reader JSON, api=JSON-API reader." },
         "dedup": { "type": "boolean", "default": false, "description": "distinct() the resolved url list (Rokari, AlucardScans)." },
         "tolerateMissingSrc": { "type": "boolean", "default": false, "description": "Skip src-less <img> instead of throwing (base requireSrc throws)." },
         "skipDataUri": { "type": "boolean", "default": true, "description": "Drop data: urls (ThunderScans)." },
@@ -311,6 +352,7 @@
         "imageUrlReplacements": { "type": "array", "items": { "$ref": "#/$defs/stringPair" }, "description": "[from,to] rewrites applied to each image url (e.g. strip a stray backslash)." },
         "httpsFromProtocolRelative": { "type": "boolean", "default": false, "description": "Rewrite //host => https://host on each url (LectorHentai)." },
         "iframeReader": { "type": "boolean", "default": false, "description": "GET the first <iframe src> before parsing pages (CatharsisFantasy)." },
+        "nextDataPath": { "type": "string", "minLength": 1, "default": "chapter.pages", "description": "Dot-separated path to the image URL array in streamed Next.js JSON records; used only by next_data mode." },
         "api": { "$ref": "#/$defs/mangaReaderPagesApi" }
       }
     },
@@ -351,9 +393,11 @@
             "state": { "type": "string", "description": "Status row." },
             "alt": { "type": "string", "description": "Alt titles." },
             "author": { "type": "string", "default": "div.author-content a, div.artist-content a", "description": "Details-page author box (stock wp-manga). Absorbs the getDetails author-extraction overrides; previously authors were always empty on details." },
-            "testAsync": { "type": "string", "description": "Presence test: inline vs ajax-loaded chapters. default div.listing-chapters_wrap" }
+            "testAsync": { "type": "string", "description": "Presence test: inline vs ajax-loaded chapters. default div.listing-chapters_wrap" },
+            "requiredLogin": { "type": "string", "description": "Selector identifying a login-gated chapter/page response." }
           }
         },
+        "authUrl": { "type": "string", "description": "Optional source login URL retained for native clients that support authenticated browsing." },
         "images": {
           "type": "object",
           "description": "Page-image extraction knobs that absorb most getPages overrides.",
@@ -367,7 +411,8 @@
               "default": ["src", "data-src", "data-lazy-src"]
             },
             "pageImgSelector": { "type": "string", "description": "Override <img> selector inside a page container (also the flat img selector when flatPages=true)." },
-            "flatPages": { "type": "boolean", "default": false, "description": "Select <img> in a single level from the bodyPage root (root.select(pageImgSelector ?: \"img\")) instead of the base two-level page-break -> img descent. Composes with bodyPage (use \"body\" for whole-doc) / pageImgSelector / imgAttrCandidates. false = unchanged base behavior." }
+            "flatPages": { "type": "boolean", "default": false, "description": "Select <img> in a single level from the bodyPage root (root.select(pageImgSelector ?: \"img\")) instead of the base two-level page-break -> img descent. Composes with bodyPage (use \"body\" for whole-doc) / pageImgSelector / imgAttrCandidates. false = unchanged base behavior." },
+            "referer": { "type": "string", "minLength": 1, "description": "Optional Referer header required by hotlink-protected page images. The {domain} token expands to the effective source domain." }
           }
         },
         "staticTags": {

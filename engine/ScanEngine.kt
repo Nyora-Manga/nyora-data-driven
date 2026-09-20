@@ -47,9 +47,9 @@ import java.util.Locale
  * network surface. NO source JavaScript is ever executed — the only "script-ish" step is the search
  * endpoint returning a JSON-escaped HTML fragment, which is unescaped with a pure string routine.
  *
- * NOT fully datafiable (needsCustomLogic, flagged in repo/scan.json):
- *  - ScanIta.org: `getDetails` fetches chapters from a SEPARATE `/manga/{id}/books` page keyed off a
- *    button `data-path` attribute — a two-request flow the base (and thus this engine) does not model.
+ * ScanIta.org's two-document details flow is represented by [ScanConfig.chaptersDocumentSelector]
+ * and [ScanConfig.chaptersDocumentAttr]: the details page supplies the chapter document's path in a
+ * button attribute, and the fixed engine pipeline fetches that document before parsing chapters.
  * ---------------------------------------------------------------------------------------------
  */
 class ScanEngine(
@@ -106,6 +106,7 @@ class ScanEngine(
 	private suspend fun getListPage(page: Int, order: SortOrder, filter: MangaListFilter): List<Manga> {
 		val query = filter.query
 		val isQuery = !query.isNullOrEmpty()
+		if (isQuery && page > 0) return emptyList()
 		val sitePage = page + 1
 
 		val url = buildString {
@@ -200,6 +201,12 @@ class ScanEngine(
 
 	override suspend fun getDetails(manga: Manga): Manga {
 		val doc = fetchDoc(manga.url.toAbsoluteUrl(domain))
+		val chaptersDoc = cfg.chaptersDocumentSelector?.let { selector ->
+			val path = doc.selectFirstOrThrow(selector).attr(cfg.chaptersDocumentAttr)
+				.takeIf { it.isNotBlank() }
+				?: throw ParseException("Chapter document path is blank", manga.url.toAbsoluteUrl(domain))
+			fetchDoc(path.toAbsoluteUrl(domain))
+		} ?: doc
 		val dateFormat = SimpleDateFormat(cfg.datePattern, locale)
 
 		val tags: List<MangaTag> = if (cfg.discoverTags) {
@@ -214,10 +221,10 @@ class ScanEngine(
 
 		// kotatsu quirk (ported verbatim): the chapter uploadDate reads the FIRST `h5 div` of the
 		// WHOLE document, so every chapter shares that one date.
-		val chapterDateText = doc.selectFirst(cfg.chapterDate)?.text()
+		val chapterDateText = chaptersDoc.selectFirst(cfg.chapterDate)?.text()
 		val uploadDate = dateFormat.parseSafe(chapterDateText)
 
-		val chapters = doc.select(cfg.chapterList).mapChaptersReversed { i, div ->
+		val chapters = chaptersDoc.select(cfg.chapterList).mapChaptersReversed { i, div ->
 			val href = div.selectFirstOrThrow(cfg.chapterLink).attrAsRelativeUrl("href")
 			MangaChapter(
 				id = uid(href),
@@ -407,6 +414,8 @@ data class ScanConfig(
 	 * per-details tag resolution (its `getFilterOptions` returns empty + details set tags empty).
 	 */
 	val discoverTags: Boolean = true,
+	val chaptersDocumentSelector: String? = null,
+	val chaptersDocumentAttr: String = "data-path",
 	/** availableSortOrders override; null → {ALPHABETICAL, UPDATED, POPULARITY, RATING}. */
 	val sortOrders: List<SortOrder>? = null,
 	val capabilities: FilterCapabilities = DEFAULT_CAPS,
@@ -480,6 +489,8 @@ data class ScanConfig(
 				datePattern = raw.str("datePattern", d.datePattern),
 				locale = raw.strOrNull("locale") ?: d.locale,
 				discoverTags = raw.bool("discoverTags", d.discoverTags),
+				chaptersDocumentSelector = raw.strOrNull("chaptersDocumentSelector"),
+				chaptersDocumentAttr = raw.str("chaptersDocumentAttr", d.chaptersDocumentAttr),
 				sortOrders = raw.sortOrders("sortOrders") ?: d.sortOrders,
 				capabilities = raw.caps("capabilities"),
 				selSeries = raw.str("selSeries", d.selSeries),

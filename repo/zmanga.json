@@ -14,20 +14,6 @@
   "pageSize": 16
  },
  {
-  "id": "komikindo-info",
-  "name": "KomikIndo.info",
-  "lang": "id",
-  "nsfw": true,
-  "contentType": "HENTAI",
-  "engine": "zmanga",
-  "domain": "mangasusuku.com",
-  "broken": true,
-  "config": {
-   "datePattern": "dd MMM yyyy"
-  },
-  "pageSize": 16
- },
- {
   "id": "maid-id",
   "name": "MaidId",
   "lang": "id",

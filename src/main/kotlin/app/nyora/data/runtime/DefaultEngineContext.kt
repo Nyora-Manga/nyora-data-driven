@@ -12,6 +12,7 @@ import kotlinx.coroutines.withContext
 import okhttp3.FormBody
 import okhttp3.Headers.Companion.toHeaders
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -31,36 +32,56 @@ import java.util.concurrent.TimeUnit
  *   via `Jsoup.parse` inside their own `fetchDoc`; this reconciles the one engine that goes through
  *   the [EngineContext.parseHtml] marker.)
  * - [prefs] is an in-memory key/value store (domain / UA overrides, cached tag maps).
- * - [solveAntiBot] is a STUB returning an empty cookie map — no native Cloudflare/NetShield solver
- *   is wired in this prototype, so config-gated anti-bot forwarding is a no-op.
+ * - [solveAntiBot] itself remains a no-op. Desktop callers inject their shared OkHttp client,
+ *   whose Cloudflare interceptor and WebView relay perform challenge recovery around [http].
+ *   Standalone CLI callers keep the stable plain client defined below.
  */
-class DefaultEngineContext(
+class DefaultEngineContext @JvmOverloads constructor(
     private val userAgent: String = DEFAULT_UA,
+    private val clientProvider: () -> OkHttpClient = defaultHttpClientProvider(),
+    private val effectiveDomain: (() -> String)? = null,
 ) : EngineContext {
 
-    private val client: OkHttpClient = OkHttpClient.Builder()
-        .connectTimeout(30, TimeUnit.SECONDS)
-        .readTimeout(30, TimeUnit.SECONDS)
-        .followRedirects(true)
-        .followSslRedirects(true)
-        .build()
+    /** Convenience for callers and tests that already own one long-lived client. */
+    constructor(
+        userAgent: String = DEFAULT_UA,
+        client: OkHttpClient,
+        effectiveDomain: (() -> String)? = null,
+    ) : this(userAgent, clientProvider = { client }, effectiveDomain = effectiveDomain)
 
-    override val prefs: SourcePrefs = InMemoryPrefs()
+    override val prefs: SourcePrefs = InMemoryPrefs(effectiveDomain)
 
     override suspend fun http(request: HttpRequest): HttpResponse = withContext(Dispatchers.IO) {
         val builder = Request.Builder().url(request.url)
 
-        // Default browser-ish headers, then caller overrides.
+        // Transport hint (not a real HTTP header): engines use it to select multipart/form-data.
+        val isMultipart = request.headers.entries
+            .firstOrNull { it.key.equals(HDR_ENCODING, ignoreCase = true) }
+            ?.value?.equals("multipart", ignoreCase = true) == true
+
+        // Default browser-ish headers, then caller overrides. Like Android's shared interceptor,
+        // derive a Referer from the source's effective domain only when the engine did not supply
+        // a request-specific value (chapter requests often deliberately do).
         val headers = LinkedHashMap<String, String>()
         headers["User-Agent"] = userAgent
         headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
         headers["Accept-Language"] = "en-US,en;q=0.9"
-        headers.putAll(request.headers)
+        if (request.headers.keys.none { it.equals("Referer", ignoreCase = true) }) {
+            prefs.getString(KEY_DOMAIN)?.toReferer()?.let { headers["Referer"] = it }
+        }
+        request.headers.forEach { (key, value) ->
+            if (!key.equals(HDR_ENCODING, ignoreCase = true)) headers[key] = value
+        }
         builder.headers(headers.toHeaders())
 
         when (request.method.uppercase()) {
             "POST" -> {
                 val body = when {
+                    request.form != null && isMultipart -> MultipartBody.Builder()
+                        .setType(MultipartBody.FORM)
+                        .apply { request.form!!.forEach { (k, v) -> addFormDataPart(k, v) } }
+                        .build()
+
                     request.form != null -> FormBody.Builder().apply {
                         request.form!!.forEach { (k, v) -> add(k, v) }
                     }.build()
@@ -81,12 +102,23 @@ class DefaultEngineContext(
             else -> builder.method(request.method.uppercase(), null)
         }
 
-        client.newCall(builder.build()).execute().use { resp ->
+        clientProvider().newCall(builder.build()).execute().use { resp ->
+            val bytes = if (request.binaryResponse) {
+                val limit = 16 * 1024 * 1024
+                val body = resp.body
+                if (body != null && body.contentLength() > limit) {
+                    throw java.io.IOException("Binary source response exceeds 16 MiB")
+                }
+                val result = body?.byteStream()?.use { it.readNBytes(limit + 1) } ?: byteArrayOf()
+                if (result.size > limit) throw java.io.IOException("Binary source response exceeds 16 MiB")
+                result
+            } else null
             HttpResponse(
                 url = resp.request.url.toString(),
                 code = resp.code,
-                body = resp.body?.string().orEmpty(),
+                body = if (request.binaryResponse) "" else resp.body?.string().orEmpty(),
                 headers = resp.headers.toMultimap().mapValues { it.value.joinToString(", ") },
+                bodyBytes = bytes,
             )
         }
     }
@@ -99,9 +131,16 @@ class DefaultEngineContext(
         return emptyMap()
     }
 
-    private class InMemoryPrefs : SourcePrefs {
+    private class InMemoryPrefs(
+        private val effectiveDomain: (() -> String)?,
+    ) : SourcePrefs {
         private val map = ConcurrentHashMap<String, String>()
-        override fun getString(key: String): String? = map[key]
+        override fun getString(key: String): String? = when {
+            map.containsKey(key) -> map[key]
+            key == KEY_DOMAIN -> effectiveDomain?.invoke()?.takeIf { it.isNotBlank() }
+            else -> null
+        }
+
         override fun putString(key: String, value: String?) {
             if (value == null) map.remove(key) else map[key] = value
         }
@@ -111,7 +150,28 @@ class DefaultEngineContext(
         const val DEFAULT_UA =
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 " +
                 "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+
+        private const val KEY_DOMAIN = "domain"
+        private const val HDR_ENCODING = "X-Nyora-Encoding"
+
+        private fun defaultHttpClientProvider(): () -> OkHttpClient {
+            val client = OkHttpClient.Builder()
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .followRedirects(true)
+                .followSslRedirects(true)
+                .build()
+            return { client }
+        }
     }
+}
+
+private fun String.toReferer(): String? {
+    val domain = trim()
+        .removePrefix("https://")
+        .removePrefix("http://")
+        .trimEnd('/')
+    return domain.takeIf { it.isNotBlank() }?.let { "https://$it/" }
 }
 
 /**

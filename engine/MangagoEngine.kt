@@ -41,9 +41,9 @@ import kotlin.math.min
  *     EVALUATING a slice of the obfuscated `chapter.js` via `context.evaluateJs(...)`. Nyora BANS
  *     source JavaScript, and [EngineContext] exposes no JS surface, so that live evaluation cannot
  *     be reproduced. This engine ports every native step (AES decrypt, sojson.v4 deobfuscation,
- *     string-list unscramble, cols extraction, tile-permutation math) and DEGRADES GRACEFULLY on
- *     the JS-only step: cspiclink pages are still emitted (readable), but tagged so the host image
- *     pipeline can complete the pixel-descramble IF (and only if) it can supply the key.
+ *     string-list unscramble, cols extraction, tile-permutation math). When a cspiclink page needs
+ *     the unavailable JS-derived key, the image-request boundary rejects it explicitly instead of
+ *     downloading and caching a scrambled image as if it were readable.
  *  2. PIXEL TILE-DESCRAMBLE. kotatsu redraws the downloaded bitmap in `intercept()` via
  *     `context.redrawImageResponse { ... }`. The data-only [SourceEngine] has no interceptor and no
  *     bitmap primitive. The permutation ALGORITHM is fully ported here as the pure, host-bindable
@@ -432,14 +432,24 @@ class MangagoEngine(
 		return page.url.toAbsoluteUrl(domain)
 	}
 
+	override suspend fun resolvePageImageRequest(page: MangaPage): ImageRequest {
+		val url = getPageImageUrl(page)
+		val imageUrl = url.substringBefore('#')
+		val hasDescrambleKey = url.substringAfter('#', "").startsWith("desckey=")
+		if (hasDescrambleKey || cfg.descramble && imageUrl.contains(cfg.cspiclinkMarker)) {
+			throw UnsupportedImageRequestException("Mangago descrambling is unavailable for this page")
+		}
+		return ImageRequest(url)
+	}
+
 	/**
 	 * Reproduce kotatsu's page tagging: a cspiclink image is scrambled tile-wise and must carry a
 	 * `#desckey=<key>&cols=<cols>` fragment for the downstream image de-scrambler. See FIDELITY RISK #1:
 	 * the `<key>` is produced by evaluating site JS, which the JS ban forbids. When descramble is
 	 * enabled we still natively extract `cols`; if a native key cannot be produced (the common case,
-	 * because the generator is obfuscated site JS) we emit the image WITHOUT the fragment so it renders
-	 * (scrambled) rather than failing the whole chapter. A host with a JS-free key solver can slot it
-	 * into [descramblingKeyFor].
+	 * because the generator is obfuscated site JS) the raw URL remains identifiable by its cspiclink
+	 * host marker and [resolvePageImageRequest] rejects it explicitly. A host with a JS-free key solver
+	 * can slot it into [descramblingKeyFor].
 	 */
 	private fun decorateForDescramble(imageUrl: String, js: String?, cols: String): String {
 		if (!cfg.descramble || !imageUrl.contains(cfg.cspiclinkMarker) || js == null || cols.isEmpty()) {
@@ -570,9 +580,9 @@ class MangagoEngine(
 	 * deobfuscated chapter.js and EVALUATES it with `context.evaluateJs(...)` to compute the per-image
 	 * tile-permutation key. Nyora bans source JavaScript and [EngineContext] has no JS surface, so the
 	 * live evaluation cannot be performed. The extraction (the deterministic, JS-free part) is kept so
-	 * a future native/host key-solver has the exact input it needs; absent one, this returns null and
-	 * the caller degrades gracefully (emits the scrambled image un-tagged). Returning a non-null value
-	 * here without a real solver would corrupt the image, so we intentionally do not fabricate a key.
+	 * a future native/host key-solver has the exact input it needs; absent one, this returns null and the
+	 * request boundary rejects the cspiclink image. Returning a non-null value here without a real solver
+	 * would corrupt the image, so we intentionally do not fabricate a key.
 	 */
 	@Suppress("UnusedPrivateMember")
 	private fun descramblingKeyFor(deobfChapterJs: String, imageUrl: String): String? {
@@ -585,7 +595,7 @@ class MangagoEngine(
 			.replace("img.src", "url")
 		if (imgkeys.isEmpty()) return null
 		// The key is `imgkeys` evaluated as JS against `url = imageUrl`. Not reproducible without a
-		// JS engine (BANNED). No native solver is wired, so degrade gracefully.
+		// JS engine (BANNED). No native solver is wired; the request boundary rejects this page.
 		return null
 	}
 

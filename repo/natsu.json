@@ -22,7 +22,7 @@
   "nsfw": false,
   "contentType": "MANGA",
   "engine": "natsu",
-  "domain": "v6.kiryuu.to",
+  "domain": "v7.kiryuu.to",
   "needsCustomLogic": false,
   "customMethods": [
    "getPages"
@@ -41,7 +41,7 @@
   "nsfw": false,
   "contentType": "MANGA",
   "engine": "natsu",
-  "domain": "06.ikiru.wtf",
+  "domain": "08.ikiru.wtf",
   "needsCustomLogic": false,
   "customMethods": [],
   "config": {

@@ -133,6 +133,15 @@ class Manga18Engine(
 				append("?search=")
 				append(query.urlEncoded())
 				append("&order_by=latest")
+				return@buildString
+			}
+
+			// The normal popular/latest branch is the paginated manga directory.
+			// Falling through to the site root ignores [sitePage] and repeats the
+			// same mixed homepage entries for every page in the app.
+			if (filter.tags.isEmpty() && query.isNullOrEmpty()) {
+				append(cfg.listUrl)
+				append(sitePage.toString())
 			}
 
 			append("?order_by=")

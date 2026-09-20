@@ -340,6 +340,20 @@ class MadthemeEngine(
 		return if ('#' in url) url else "$url#$IMAGE_REQUEST_FRAGMENT"
 	}
 
+	override suspend fun resolvePageImageRequest(page: MangaPage): ImageRequest {
+		val marked = getPageImageUrl(page)
+		val fragment = marked.substringAfter('#', "")
+		val requestUrl = when {
+			fragment == IMAGE_REQUEST_FRAGMENT -> marked.substringBefore('#')
+			fragment.startsWith("https://") || fragment.startsWith("http://") -> fragment
+			fragment.isEmpty() -> marked
+			else -> throw UnsupportedImageRequestException(
+				"Madtheme image URL contains an unsupported request fragment",
+			)
+		}
+		return ImageRequest(requestUrl)
+	}
+
 	private fun MutableList<MangaPage>.addPage(known: MutableSet<String>, url: String) {
 		if (known.add(url)) {
 			add(MangaPage(id = uid(url), url = url, preview = null, source = source.id))

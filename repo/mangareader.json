@@ -47,11 +47,52 @@
   "config": {
    "pageSize": 20,
    "searchPageSize": 10,
-   "listUrl": "/series",
+   "listUrl": "/api/catalog",
    "capabilities": {
     "tagsExclusion": false
    },
-   "encodedSrc": true
+   "encodedSrc": false,
+   "selectors": {
+    "mangaList": "a.cards__item",
+    "mangaListTitle": ".cards__name",
+    "mangaListImg": "img",
+    "chapter": "li:has(> a[href*=\"/chapter/\"])"
+   },
+   "listPage": {
+    "browseSeparator": "?",
+    "orderParam": "sort",
+    "orderKeys": {
+     "POPULARITY": "views",
+     "UPDATED": "updated_at"
+    },
+    "extraBrowseParams": {
+     "order": "desc"
+    },
+    "search": {
+     "mode": "BROWSE",
+     "param": "q"
+    },
+    "page": {
+     "inSearch": true
+    },
+    "json": {
+     "itemsField": "items",
+     "urlField": "slug",
+     "urlTemplate": "/manga/{value}",
+     "titleField": "title",
+     "coverField": "poster"
+    }
+   },
+   "chapters": {
+    "titleFallback": "LINK_TEXT",
+    "numberSource": "TITLE_REGEX",
+    "numberRegex": "الفصل\\s*(\\d+(?:\\.\\d+)?)",
+    "noDate": true
+   },
+   "pages": {
+    "mode": "next_data",
+    "nextDataPath": "chapter.pages"
+   }
   },
   "pageSize": 20,
   "broken": false
@@ -256,6 +297,35 @@
    "searchPageSize": 10,
    "listUrl": "/browse-manga",
    "datePattern": "yyyy/MM/dd",
+   "listPage": {
+    "orderKeys": {
+     "ALPHABETICAL": "title",
+     "POPULARITY": "popular",
+     "NEWEST": "new"
+    },
+    "orderDefault": "new",
+    "genreParam": "genre",
+    "pagedRequest": {
+     "fromPage": 2,
+     "url": "/wp-admin/admin-ajax.php",
+     "method": "POST",
+     "browseOnly": true,
+     "headers": {
+      "X-Requested-With": "XMLHttpRequest",
+      "Origin": "https://{domain}",
+      "Referer": "https://{domain}{listUrl}/?order={order}"
+     },
+     "form": {
+      "action": "ts_homepage_load_more",
+      "page": "{page}",
+      "genre": "{genre}",
+      "orderby": "{order}"
+     }
+    }
+   },
+   "pages": {
+    "scriptRegex": "(?s)ts_reader\\.run\\((\\{.*?\\})\\);"
+   },
    "sortOrders": [
     "ALPHABETICAL",
     "POPULARITY",
@@ -287,6 +357,7 @@
   "config": {
    "pageSize": 20,
    "searchPageSize": 10,
+   "listUrl": "/manga",
    "capabilities": {
     "tagsExclusion": false
    }
@@ -2211,11 +2282,43 @@
     "MANHUA",
     "COMICS"
    ],
+   "listPage": {
+    "browseSeparator": "?",
+    "yearParam": "yearx",
+    "authorParam": "author",
+    "typeValues": {
+     "MANGA": "Manga",
+     "MANHWA": "Manhwa",
+     "MANHUA": "Manhua",
+     "COMICS": "Comic"
+    },
+    "page": {
+     "mode": "PATH",
+     "firstPathTemplate": "{listUrl}/",
+     "pathTemplate": "{listUrl}/page/{page}/"
+    },
+    "search": {
+     "mode": "BROWSE",
+     "param": "title"
+    }
+   },
    "selectors": {
     "mangaList": "div.animepost",
     "mangaListImg": "div.limit img",
     "mangaListTitle": ".animposx .tt h4",
-    "chapter": "#chapter_list li"
+    "chapter": "#chapter_list li",
+    "page": "#chimg-auh img"
+   },
+   "chapters": {
+    "anchor": ".lchx a",
+    "titleSelector": ".lchx a",
+    "numberSource": "TITLE_REGEX",
+    "dateSelector": ".dt"
+   },
+   "pages": {
+    "mode": "images",
+    "dedup": true,
+    "skipNoscript": true
    }
   },
   "pageSize": 30,
@@ -2474,7 +2577,16 @@
   "config": {
    "pageSize": 20,
    "searchPageSize": 10,
+   "listUrl": "",
    "locale": "en",
+   "listPage": {
+    "browseSeparator": "?",
+    "page": {
+     "mode": "PATH",
+     "firstPathTemplate": "/",
+     "pathTemplate": "/page/{page}/"
+    }
+   },
    "capabilities": {
     "tagsExclusion": false
    },
@@ -2497,6 +2609,7 @@
   "config": {
    "pageSize": 20,
    "searchPageSize": 10,
+   "listUrl": "/komik",
    "locale": "en",
    "capabilities": {
     "tagsExclusion": false
@@ -2547,18 +2660,48 @@
     "MANHWA",
     "MANHUA"
    ],
+   "listPage": {
+    "browseSeparator": "?",
+    "statusValues": {
+     "ONGOING": "Ongoing",
+     "FINISHED": "Completed"
+    },
+    "typeValues": {
+     "MANGA": "Manga",
+     "MANHWA": "Manhwa",
+     "MANHUA": "Manhua"
+    },
+    "extraBrowseParams": {
+     "format": ""
+    },
+    "page": {
+     "mode": "PATH",
+     "firstPathTemplate": "{listUrl}/",
+     "pathTemplate": "{listUrl}/page/{page}/"
+    },
+    "search": {
+     "mode": "BROWSE",
+     "param": "title"
+    }
+   },
    "selectors": {
     "mangaList": "div.animepost",
     "mangaListImg": "div.limit img",
-    "mangaListTitle": "div.tt h4",
+    "mangaListTitle": "div.tt h3, div.tt h4",
     "chapter": "#chapter_list li",
-    "description": "div.entry-content.entry-content-single"
+    "description": "div.entry-content.entry-content-single",
+    "page": "#chimg-auh img"
+   },
+   "chapters": {
+    "anchor": ".lchx a",
+    "titleSelector": ".lchx a",
+    "numberSource": "TITLE_REGEX",
+    "dateSelector": ".dt"
    }
   },
   "pageSize": 30,
   "broken": false,
-  "antiBot": "cloudflare",
-  "cfWall": "B"
+  "antiBot": "cloudflare"
  },
  {
   "id": "komikindo_live",
@@ -2816,6 +2959,36 @@
     "description": "#Sinopsis > p",
     "page": "#Baca_Komik img",
     "testScript": "script:containsData(thisIsNeverFound)"
+   },
+   "listPage": {
+    "listHost": "api.komiku.org",
+    "browseSeparator": "?",
+    "orderParam": "orderby",
+    "orderKeys": {
+     "POPULARITY": "meta_value_num",
+     "UPDATED": "modified",
+     "NEWEST": "date",
+     "ALPHABETICAL": "title",
+     "ALPHABETICAL_DESC": "title"
+    },
+    "orderDefault": "modified",
+    "genreParam": "genre",
+    "typeParam": "tipe",
+    "statusValues": {
+     "ONGOING": "ongoing",
+     "FINISHED": "end"
+    },
+    "page": {
+     "mode": "PATH",
+     "firstPathTemplate": "{listUrl}",
+     "pathTemplate": "{listUrl}page/{page}/"
+    },
+    "search": {
+     "mode": "PATH_PAGE",
+     "fixedParams": {
+      "post_type": "manga"
+     }
+    }
    }
   },
   "pageSize": 10,
@@ -3047,12 +3220,25 @@
     "mangaListTitle": ".tt",
     "chapter": "#chapterlist li",
     "page": "#readerarea img"
+   },
+   "datePattern": "d MMMM yyyy",
+   "locale": "id",
+   "chapters": {
+    "numberSource": "ATTR",
+    "numberAttr": "data-num"
+   },
+   "pages": {
+    "imageUrlReplacements": [
+     [
+      "http://kacu.gmbr.pro/",
+      "https://kacu.gmbr.pro/"
+     ]
+    ]
    }
   },
   "pageSize": 30,
   "broken": false,
-  "antiBot": "cloudflare",
-  "cfWall": "B"
+  "antiBot": "cloudflare"
  },
  {
   "id": "manhwaland",
@@ -4763,5 +4949,27 @@
   },
   "pageSize": 20,
   "broken": false
+ },
+ {
+  "id": "komikindo-info",
+  "name": "KomikIndo.info",
+  "lang": "id",
+  "nsfw": true,
+  "contentType": "HENTAI",
+  "engine": "mangareader",
+  "domain": "mangasusuku.com",
+  "broken": false,
+  "config": {
+   "pageSize": 20,
+   "searchPageSize": 10,
+   "listUrl": "/komik",
+   "locale": "id",
+   "datePattern": "dd MMMM yyyy",
+   "chapters": {
+    "numberSource": "ATTR",
+    "numberAttr": "data-num"
+   }
+  },
+  "pageSize": 20
  }
 ]

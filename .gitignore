@@ -6,3 +6,7 @@ build/
 
 # OS / editor
 .DS_Store
+
+# Python catalogue tooling
+__pycache__/
+*.py[cod]

@@ -321,6 +321,9 @@ class WebtoonsEngine(
 	 */
 	override suspend fun getPageImageUrl(page: MangaPage): String = page.url.toAbsoluteUrl(staticDomain)
 
+	override suspend fun resolvePageImageRequest(page: MangaPage): ImageRequest =
+		ImageRequest(getPageImageUrl(page), imageRequestHeaders())
+
 	/** Headers the image loader must attach when downloading a page/cover (Referer + mobile UA). */
 	@Suppress("unused")
 	fun imageRequestHeaders(): Map<String, String> = mapOf(

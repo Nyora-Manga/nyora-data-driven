@@ -40,7 +40,7 @@
   "nsfw": true,
   "contentType": "HENTAI",
   "engine": "manga18",
-  "domain": "tumanhwas.club",
+  "domain": "manhwas.me",
   "config": {
    "selectors": {
     "selectTag": "div.item:contains(Géneros) div.info_value a",
@@ -50,7 +50,8 @@
   "needsCustomLogic": false,
   "notes": "Spanish. Overrides only selectTag + selectAlt selectors — pure config. locale defaults from lang=es for date parsing.",
   "pageSize": 20,
-  "broken": false,
+  "broken": true,
+  "brokenReason": "no currently resolvable source domain (verified 2026-08)",
   "antiBot": "cloudflare",
   "cfWall": "B"
  },
@@ -66,7 +67,8 @@
   "needsCustomLogic": false,
   "notes": "@Broken upstream (site dead). No overrides — pure-config row on stock defaults. nsfw=false (no ContentType.HENTAI on the @MangaSourceParser).",
   "pageSize": 20,
-  "broken": true
+  "broken": true,
+  "brokenReason": "site requires unsupported custom JavaScript challenge (verified 2026-08)"
  },
  {
   "id": "hentai3zcc",

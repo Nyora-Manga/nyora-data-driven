@@ -234,7 +234,7 @@ class AtsuMoeEngine(
             else -> null
         }
 
-        val chapters = fetchAllChapters(mangaId)
+        val chapters = fetchAllChapters(mangaId, mangaPage)
 
         return manga.copy(
             title = title,
@@ -247,39 +247,47 @@ class AtsuMoeEngine(
         )
     }
 
-    /** kotatsu fetchAllChapters: page `/api/manga/chapters` until `pages` is exhausted, then reverse. */
-    private suspend fun fetchAllChapters(mangaId: String): List<MangaChapter> {
-        val allChapters = ArrayList<MangaChapter>()
-        var currentPage = 0
-        var totalPages = 1
-
-        while (currentPage < totalPages) {
-            // kotatsu string-interpolates the id here (no encoding).
-            val url = "${apiUrl}manga/chapters?id=$mangaId&filter=all&sort=desc&page=$currentPage"
-            val json = fetchJson(url)
-
-            val chaptersArray = json.optJSONArray("chapters")
-            if (chaptersArray != null) {
-                for (i in 0 until chaptersArray.length()) {
-                    allChapters.add(parseChapter(chaptersArray.getJSONObject(i), mangaId))
+    /** The current endpoint includes release groups; the legacy paginated API drops them. */
+    private suspend fun fetchAllChapters(mangaId: String, mangaPage: JSONObject): List<MangaChapter> {
+        val scanlators = mangaPage.optJSONArray("scanlators")
+        val priority = LinkedHashMap<String, Int>()
+        val names = HashMap<String, String>()
+        if (scanlators != null) for (i in 0 until scanlators.length()) {
+            val scanlator = scanlators.getJSONObject(i)
+            val id = scanlator.getString("id")
+            priority[id] = i // Atsumoe's ranked order, also used by its automatic selection.
+            names[id] = scanlator.optString("name")
+        }
+        val json = fetchJson("${apiUrl}manga/allChapters?mangaId=${mangaId.queryEncoded()}")
+        val rows = json.getJSONArray("chapters")
+        val chapters = (0 until rows.length()).map { rows.getJSONObject(it) }
+            .distinctBy { it.getString("id") }
+            .sortedWith(compareBy<JSONObject> { priority[it.optString("scanlationMangaId")] ?: Int.MAX_VALUE }
+                .thenByDescending { it.optInt("index", 0) }.thenBy { it.getString("id") })
+            .distinctBy { chapter ->
+                val number = chapter.optDouble("number", Double.NaN)
+                // Unknown numbers are not all chapter zero. Keep those entries independently.
+                if (!number.isFinite()) "id:${chapter.getString("id")}" else {
+                    // Match Atsumoe's chapter families: extras/afterwords stay separate.
+                    val firstWord = chapter.optString("title").trim().substringBefore(' ')
+                        .lowercase(Locale.ROOT).trimEnd('.', ':')
+                    val family = if (firstWord.isEmpty() || firstWord.startsWith("#") ||
+                        firstWord in setOf("ch", "chap", "chapter", "episode", "ep", "rating", "log")) "chapter" else firstWord
+                    "$number:$family"
                 }
             }
-
-            totalPages = json.optInt("pages", 1)
-            currentPage++
-        }
-
-        // kotatsu returns reversed -> ascending reading order.
-        return allChapters.asReversed().toList()
+        return chapters.map { chapter ->
+            parseChapter(chapter, mangaId).copy(scanlator = names[chapter.optString("scanlationMangaId")])
+        }.sortedWith(compareBy<MangaChapter> { it.number }.thenBy { it.url })
     }
 
     private fun parseChapter(json: JSONObject, mangaId: String): MangaChapter {
         val chapterId = json.getString("id")
         val title = json.optString("title").takeIf { it.isNotEmpty() }
-        val number = json.optInt("number", 0).toFloat()
+        val number = json.optDouble("number", 0.0).toFloat().takeIf { it.isFinite() } ?: 0f
 
         val createdAtStr = json.optString("createdAt")
-        val uploadDate = if (createdAtStr.isNotEmpty()) {
+        val uploadDate = (json.opt("createdAt") as? Number)?.toLong() ?: if (createdAtStr.isNotEmpty()) {
             runCatching { dateFormat.parse(createdAtStr)?.time ?: 0L }.getOrDefault(0L)
         } else {
             0L

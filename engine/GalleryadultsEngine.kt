@@ -51,10 +51,8 @@ import java.util.Locale
  * `GALLERYADULTS` enum value + `EngineConfig.GalleryAdults` variant are eventually added upstream,
  * only the tiny config-read + factory wiring change; all parsing logic below is unaffected.
  *
- * MODEL-CAPABILITY NOTE. kotatsu's GalleryAdults base also supports a per-language browse via
- * `MangaListFilter.locale` (`/language/{lang}/?`). Nyora's canonical [MangaListFilter] exposes no
- * `locale` field, so language-path browsing is intentionally dropped here (query / single-tag /
- * default browse are ported); it can return once the model gains a locale filter.
+ * `MangaListFilter.locale` is carried through the configurable listing grammar, including the
+ * language-path and combined tag/language search variants used by GalleryAdults subclasses.
  *
  * DOMAIN-MODEL ASSUMPTION mirrors [MadaraEngine]: canonical `app.nyora.core.model` with String ids
  * (the relative href), `List` collections (kotatsu `Set`), `uploadDate` = epoch millis,
@@ -94,22 +92,36 @@ class GalleryadultsEngine(
 	// -----------------------------------------------------------------------------------------
 
 	override suspend fun getPopular(page: Int): List<Manga> =
-		listPage(page, query = null, filter = MangaListFilter.EMPTY)
+		getListPage(page, SortOrder.POPULARITY, MangaListFilter.EMPTY)
 
 	override suspend fun getLatest(page: Int): List<Manga> =
-		listPage(page, query = null, filter = MangaListFilter.EMPTY)
+		getListPage(page, SortOrder.UPDATED, MangaListFilter.EMPTY)
 
-	override suspend fun search(page: Int, query: String?, filter: MangaListFilter): List<Manga> =
-		listPage(page, query, filter)
+	override suspend fun search(page: Int, query: String?, filter: MangaListFilter): List<Manga> {
+		val effective = if (query.isNullOrEmpty()) filter else filter.copy(query = query)
+		return getListPage(page, SortOrder.UPDATED, effective)
+	}
 
-	private suspend fun listPage(page: Int, query: String?, filter: MangaListFilter): List<Manga> {
+	/** Concrete GalleryAdults listing surface, retaining the upstream order+filter combination. */
+	suspend fun getListPage(page: Int, order: SortOrder, filter: MangaListFilter): List<Manga> {
 		// kotatsu paginator is 1-based; the contract hands 0-indexed pages.
 		val p = page + 1
+		cfg.listPage?.let { listing ->
+			return parseMangaList(fetchDoc("https://$domain${listing.buildPath(p, order, filter)}"))
+		}
+		cfg.listPageTemplate?.let { template ->
+			val tag = filter.tags.oneOrThrowIfMany()?.key.orEmpty()
+			val path = template
+				.replace("{page}", p.toString())
+				.replace("{query}", filter.query.orEmpty().urlEncoded())
+				.replace("{tag}", tag.urlEncoded())
+			return parseMangaList(fetchDoc("https://$domain$path"))
+		}
 		val url = buildString {
 			append("https://").append(domain)
 			when {
-				!query.isNullOrEmpty() -> {
-					append("/search/?q=").append(query.urlEncoded()).append('&')
+				!filter.query.isNullOrEmpty() -> {
+					append("/search/?q=").append(filter.query.urlEncoded()).append('&')
 				}
 
 				else -> {
@@ -342,9 +354,100 @@ class GalleryadultsEngine(
 // stock-GalleryAdults base default.
 // =================================================================================================
 
+/**
+ * Generic template grammar for GalleryAdults subclasses whose list routing varies by query,
+ * combined filters, one tag, one locale, sort order, and page band. Templates use only the tokens
+ * documented by their field names, keeping the engine free of source ids and domains.
+ */
+data class GalleryAdultsListPageConfig(
+	val queryTemplate: String = "/search/?q={query}{pageQuery}",
+	val combinedFilterTemplate: String = "/search/?q={filters}{pageQuery}{popularQuery}",
+	val tagTemplate: String = "/tag/{tag}/{popularPath}{pagePath}",
+	val localeTemplate: String = "/language/{locale}/{popularPath}{pagePath}",
+	val firstPageTemplate: String = "",
+	val secondPageTemplate: String = "/page/{page}/",
+	val laterPageTemplate: String = "/pag/{page}/",
+	val laterPageStart: Int = 3,
+	val filteredPageTemplate: String = "pag/{page}/",
+	val filteredPageStart: Int = 2,
+	val pageQueryTemplate: String = "&page={page}",
+	val pageQueryStart: Int = 2,
+	val popularPath: String = "popular/",
+	val popularQuery: String = "&sort=popular",
+	val combineFiltersInSearch: Boolean = false,
+) {
+	fun buildPath(page: Int, order: SortOrder, filter: MangaListFilter): String {
+		val localePath = filter.locale?.toLanguagePath()
+		val isPopular = order == SortOrder.POPULARITY
+		val combinedFilters = combineFiltersInSearch && (
+			filter.tags.size > 1 || (filter.tags.isNotEmpty() && localePath != null)
+		)
+		val template = when {
+			!filter.query.isNullOrEmpty() -> queryTemplate
+			combinedFilters -> combinedFilterTemplate
+			filter.tags.isNotEmpty() -> tagTemplate
+			localePath != null -> localeTemplate
+			page == 1 -> firstPageTemplate
+			page < laterPageStart -> secondPageTemplate
+			else -> laterPageTemplate
+		}
+		val filterQuery = buildList {
+			filter.tags.forEach { add(it.key) }
+			localePath?.let { add(it) }
+		}.joinToString(" ")
+		val replacements = mapOf(
+			"{query}" to filter.query.orEmpty().urlEncodedValue(),
+			"{filters}" to filterQuery.urlEncodedValue(),
+			"{tag}" to filter.tags.firstOrNull()?.key.orEmpty().urlEncodedValue(),
+			"{locale}" to localePath.orEmpty().urlEncodedValue(),
+			"{page}" to page.toString(),
+			"{pageQuery}" to pageQueryTemplate.takeIf { page >= pageQueryStart }
+				.orEmpty().replace("{page}", page.toString()),
+			"{pagePath}" to filteredPageTemplate.takeIf { page >= filteredPageStart }
+				.orEmpty().replace("{page}", page.toString()),
+			"{popularPath}" to popularPath.takeIf { isPopular }.orEmpty(),
+			"{popularQuery}" to popularQuery.takeIf { isPopular }.orEmpty(),
+		)
+		return replacements.entries.fold(template) { path, (token, value) -> path.replace(token, value) }
+	}
+
+	companion object {
+		@Suppress("UNCHECKED_CAST")
+		fun fromRaw(any: Any?): GalleryAdultsListPageConfig? {
+			val raw = any as? Map<String, Any?> ?: return null
+			fun str(key: String, default: String): String = raw[key] as? String ?: default
+			fun int(key: String, default: Int): Int = (raw[key] as? Number)?.toInt() ?: default
+			fun bool(key: String, default: Boolean): Boolean = raw[key] as? Boolean ?: default
+			val defaults = GalleryAdultsListPageConfig()
+			return GalleryAdultsListPageConfig(
+				queryTemplate = str("queryTemplate", defaults.queryTemplate),
+				combinedFilterTemplate = str("combinedFilterTemplate", defaults.combinedFilterTemplate),
+				tagTemplate = str("tagTemplate", defaults.tagTemplate),
+				localeTemplate = str("localeTemplate", defaults.localeTemplate),
+				firstPageTemplate = str("firstPageTemplate", defaults.firstPageTemplate),
+				secondPageTemplate = str("secondPageTemplate", defaults.secondPageTemplate),
+				laterPageTemplate = str("laterPageTemplate", defaults.laterPageTemplate),
+				laterPageStart = int("laterPageStart", defaults.laterPageStart),
+				filteredPageTemplate = str("filteredPageTemplate", defaults.filteredPageTemplate),
+				filteredPageStart = int("filteredPageStart", defaults.filteredPageStart),
+				pageQueryTemplate = str("pageQueryTemplate", defaults.pageQueryTemplate),
+				pageQueryStart = int("pageQueryStart", defaults.pageQueryStart),
+				popularPath = str("popularPath", defaults.popularPath),
+				popularQuery = str("popularQuery", defaults.popularQuery),
+				combineFiltersInSearch = bool("combineFiltersInSearch", defaults.combineFiltersInSearch),
+			)
+		}
+	}
+}
+
+private fun Locale.toLanguagePath(): String = getDisplayLanguage(Locale.ENGLISH).lowercase(Locale.ENGLISH)
+private fun String.urlEncodedValue(): String = URLEncoder.encode(this, "UTF-8")
+
 data class GalleryAdultsConfig(
 	val pageSize: Int = 20,
 	val locale: String? = null,
+	val listPageTemplate: String? = null,
+	val listPage: GalleryAdultsListPageConfig? = null,
 	/** Popular-tags index path; the page number is appended verbatim (kotatsu `pathTagUrl`). */
 	val pathTagUrl: String = "/tags/popular/?page=",
 	/** Reader-image element id (kotatsu `idImg`); or a CSS selector when [pageImgIsSelector]=true. */
@@ -442,6 +545,8 @@ data class GalleryAdultsConfig(
 			return GalleryAdultsConfig(
 				pageSize = int("pageSize") ?: def.pageSize,
 				locale = str("locale"),
+				listPageTemplate = str("listPageTemplate"),
+				listPage = GalleryAdultsListPageConfig.fromRaw(raw["listPage"]),
 				pathTagUrl = str("pathTagUrl") ?: def.pathTagUrl,
 				idImg = str("idImg") ?: def.idImg,
 				sortOrders = sortList("sortOrders"),

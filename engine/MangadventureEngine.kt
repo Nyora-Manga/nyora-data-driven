@@ -137,8 +137,9 @@ class MangadventureEngine(
             else -> "-latest_upload"
         }
 
-        // kotatsu: runCatchingCancellable { getManga(...) }.getOrElse { NotFoundException -> [] }.
-        val json = runCatching { fetchJson(apiUrl(params, "series")) }.getOrNull() ?: return emptyList()
+        // Only a missing page ends pagination. Network, server and cancellation failures
+        // must reach the caller so they can be retried instead of cached as an empty catalogue.
+        val json = fetchJson(apiUrl(params, "series"), emptyOnNotFound = true)
         return parseMangaList(json)
     }
 
@@ -265,9 +266,11 @@ class MangadventureEngine(
 
     // --- networking (JSON only; no HTML surface) ------------------------------------------------
 
-    private suspend fun fetchJson(url: String): JSONObject {
+    private suspend fun fetchJson(url: String, emptyOnNotFound: Boolean = false): JSONObject {
         val headers = buildMap { userAgent?.let { put("User-Agent", it) } }
         val resp = ctx.http(HttpRequest(url = url, headers = headers))
+        if (emptyOnNotFound && resp.code == 404) return JSONObject().put("results", JSONArray())
+        if (resp.code !in 200..299) throw java.io.IOException("Source request failed (HTTP ${resp.code})")
         return JSONObject(resp.body)
     }
 

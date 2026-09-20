@@ -108,8 +108,9 @@ class ZeistmangaEngine(
 	 * PagedMangaParser is 1-based, so kotatsuPage = page + 1 and startIndex = maxMangaResults*page + 1.
 	 */
 	private suspend fun listPage(page: Int, query: String?, filter: MangaListFilter): List<Manga> {
-		val startIndex = cfg.maxMangaResults * page + 1
-		val maxResults = (cfg.maxMangaResults + 1).toString()
+		val windowSize = cfg.maxMangaResults + 1
+		val startIndex = windowSize * page + 1
+		val maxResults = windowSize.toString()
 
 		val url = buildString {
 			append("https://").append(domain).append("/feeds/posts/default/-/")

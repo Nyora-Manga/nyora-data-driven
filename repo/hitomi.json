@@ -1,0 +1,17 @@
+[
+  {
+    "id": "hitomi",
+    "name": "Hitomi",
+    "lang": "all",
+    "nsfw": true,
+    "contentType": "HENTAI",
+    "engine": "hitomi",
+    "domain": "hitomi.la",
+    "needsCustomLogic": false,
+    "customMethods": [],
+    "config": { "cdnDomain": "gold-usergeneratedcontent.net" },
+    "pageSize": 25,
+    "broken": false,
+    "notes": "Public newest and daily-popular indexes, text and namespaced search, gallery metadata, and AVIF image resolution. Requires a runtime with raw binary response support. Byte ranges and binary index lengths are checked strictly; scripts supply parsed routing data only and are never evaluated. One chapter per gallery, up to 10000 image records."
+  }
+]

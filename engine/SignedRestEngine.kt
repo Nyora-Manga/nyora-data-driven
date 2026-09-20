@@ -106,8 +106,12 @@ class SignedRestEngine(
 
 	override suspend fun search(page: Int, query: String?, filter: MangaListFilter): List<Manga> {
 		if (!query.isNullOrEmpty()) {
-			cfg.list.searchTemplate?.let { return parseSeriesArrayResponse(fetchJsonText(expandList(it, page, query)), latest = false) }
+			cfg.list.searchTemplate?.let {
+				if (page > 0 && "{page}" !in it) return emptyList()
+				return parseSeriesArrayResponse(fetchJsonText(expandList(it, page, query)), latest = false)
+			}
 			cfg.list.searchQueryTemplate?.let { tpl ->
+				if (page > 0 && "{page}" !in tpl) return emptyList()
 				// Structured-host, custom query string appended to a (possibly distinct) search path.
 				val base = "https://$apiHost" + (cfg.list.searchPath ?: cfg.list.path)
 				return parseSeriesArrayResponse(fetchJsonText(base + expandTemplate(tpl, page, query, null)), latest = false)
@@ -329,6 +333,9 @@ class SignedRestEngine(
 			.replace("{chapterSlug}", chSlug)
 		val root = JSONObject(fetchJsonText(url))
 		val array = digArray(root, cfg.pages.arrayPath) ?: return emptyList()
+		val imagePrefix = cfg.pages.imageUrlPrefixPaths.joinToString("") { path ->
+			field(root, root, listOf(path)).orEmpty()
+		}
 		val out = ArrayList<MangaPage>(array.length())
 		for (i in 0 until array.length()) {
 			val imgUrl = if (cfg.pages.imageField.isEmpty()) {
@@ -336,7 +343,8 @@ class SignedRestEngine(
 			} else {
 				array.optJSONObject(i)?.let { field(it, it, cfg.pages.imageField) }
 			} ?: continue
-			out.add(MangaPage(id = imgUrl, url = imgUrl, preview = null, source = source.id))
+			val imageUrl = imagePrefix + imgUrl
+			out.add(MangaPage(id = imageUrl, url = imageUrl, preview = null, source = source.id))
 		}
 		return out
 	}
@@ -693,6 +701,7 @@ data class PagesSpec(
 	val endpoint: String = "{chapterPath}",
 	val arrayPath: List<String> = listOf("data.images", "images"),
 	val imageField: List<String> = emptyList(), // empty => array items are plain string urls
+	val imageUrlPrefixPaths: List<String> = emptyList(), // concatenate response fields before each image filename
 	val chapterSlugPrefix: String = "",
 	val chapterSlugSuffix: String = "",
 	// Alternative to prefix/suffix: extract {chapterSlug}/{seriesSlug} by substringAfter/Before markers.
@@ -872,6 +881,7 @@ data class SignedRestConfig(
 					endpoint = strOrNull(pg["endpoint"]) ?: "{chapterPath}",
 					arrayPath = strListOrDef(pg["arrayPath"], listOf("data.images", "images")),
 					imageField = strList(pg["imageField"]),
+					imageUrlPrefixPaths = strList(pg["imageUrlPrefixPaths"]),
 					chapterSlugPrefix = strOrNull(pg["chapterSlugPrefix"]) ?: "",
 					chapterSlugSuffix = strOrNull(pg["chapterSlugSuffix"]) ?: "",
 					chapterSlugAfter = strOrNull(pg["chapterSlugAfter"]),

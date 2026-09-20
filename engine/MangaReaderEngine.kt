@@ -143,7 +143,50 @@ class MangaReaderEngine(
      */
     private suspend fun getListPage(page: Int, order: SortOrder, filter: MangaListFilter): List<Manga> {
         if (listCfg.singlePage && page > 0) return emptyList()
-        return parseMangaList(httpGetDoc(buildListUrl(page + 1, order, filter)))
+        val wpPage = page + 1
+        val pagedRequest = listCfg.pagedRequest
+        if (
+            pagedRequest != null &&
+            wpPage >= pagedRequest.fromPage &&
+            (!pagedRequest.browseOnly || filter.query.isNullOrEmpty())
+        ) {
+            val host = listCfg.listHost ?: domain
+            fun expand(template: String): String = template
+                .replace("{domain}", host)
+                .replace("{listUrl}", listUrl)
+                .replace("{page}", wpPage.toString())
+                .replace("{order}", orderToken(order))
+                .replace("{genre}", filter.tags.firstOrNull()?.key.orEmpty())
+                .replace("{query}", filter.query.orEmpty())
+            val requestUrl = expand(pagedRequest.url).toAbsoluteUrl(host)
+            val request = HttpRequest(
+                url = requestUrl,
+                method = pagedRequest.method,
+                headers = pagedRequest.headers.mapValues { (_, value) -> expand(value) },
+                form = pagedRequest.form.mapValues { (_, value) -> expand(value) },
+            )
+            return parseMangaList(httpDoc(request))
+        }
+        val url = buildListUrl(wpPage, order, filter)
+        listCfg.json?.let { config ->
+            val response = context.http(HttpRequest(url = url))
+            if (response.code !in 200..299) throw java.io.IOException("Source request failed (HTTP ${response.code})")
+            val items = JSONObject(response.body).getJSONArray(config["itemsField"] ?: "items")
+            return (0 until items.length()).map { i ->
+                val item = items.getJSONObject(i)
+                val key = item.getString(config["urlField"] ?: "url")
+                val mangaUrl = (config["urlTemplate"] ?: "{value}").replace("{value}", key)
+                Manga(
+                    id = uid(mangaUrl), url = mangaUrl,
+                    title = item.getString(config["titleField"] ?: "title"),
+                    coverUrl = item.optString(config["coverField"] ?: "cover").takeIf { it.isNotBlank() },
+                    publicUrl = mangaUrl.toAbsoluteUrl(domain),
+                    isNsfw = source.nsfw,
+                    contentRating = if (source.nsfw) ContentRating.ADULT else null,
+                )
+            }
+        }
+        return parseMangaList(httpGetDoc(url))
     }
 
     private fun buildListUrl(wpPage: Int, order: SortOrder, filter: MangaListFilter): String {
@@ -154,8 +197,11 @@ class MangaReaderEngine(
             throw UnsupportedOperationException("Search is not supported by ${source.id}")
         }
 
-        // QUERY_FIRST folds search into the browse grammar (Zahard/TuManhwas: {listUrl}?page={n}&search={q}).
-        val searchOnBrowse = hasQuery && listCfg.page.mode == PageMode.QUERY_FIRST
+        // QUERY_FIRST folds search into its terse page-first grammar (Zahard/TuManhwas).
+        // BROWSE keeps search alongside order + filters (BacaKomik/KomikIndo `title=`).
+        val searchOnBrowse = hasQuery && (
+            listCfg.page.mode == PageMode.QUERY_FIRST || listCfg.search.mode == SearchMode.BROWSE
+        )
 
         if (hasQuery && !searchOnBrowse) {
             return buildString {
@@ -174,6 +220,7 @@ class MangaReaderEngine(
                             append('&').append(listCfg.page.param).append('=').append(wpPage)
                         }
                     }
+                    SearchMode.BROWSE -> error("BROWSE search must use the browse URL grammar")
                 }
                 listCfg.search.fixedParams.forEach { (k, v) -> append('&').append(k).append('=').append(v) }
             }
@@ -182,17 +229,27 @@ class MangaReaderEngine(
         return buildString {
             append("https://").append(host)
             // path-mode paging (BacaKomik /page/{n}/, Komiku /manga/page/{n}/) rides the path.
-            if (listCfg.page.mode == PageMode.PATH) {
-                append(listUrl).append("/page/").append(wpPage)
+            val browsePath = if (listCfg.page.mode == PageMode.PATH) {
+                    (
+                        if (wpPage == 1) listCfg.page.firstPathTemplate ?: listCfg.page.pathTemplate
+                        else listCfg.page.pathTemplate
+                    ).orEmpty().ifEmpty { "{listUrl}/page/{page}" }
+                        .replace("{listUrl}", listUrl)
+                        .replace("{page}", wpPage.toString())
             } else {
-                append(listUrl)
+                listUrl
             }
-            append(listCfg.browseSeparator)
+            append(browsePath)
+            append(
+                if (browsePath.endsWith('/') && listCfg.browseSeparator.startsWith('/')) {
+                    listCfg.browseSeparator.drop(1)
+                } else {
+                    listCfg.browseSeparator
+                },
+            )
 
-            if (searchOnBrowse) {
-                if (listCfg.page.mode == PageMode.QUERY_FIRST) {
-                    append(listCfg.page.param).append('=').append(wpPage).append('&')
-                }
+            if (searchOnBrowse && listCfg.page.mode == PageMode.QUERY_FIRST) {
+                append(listCfg.page.param).append('=').append(wpPage).append('&')
                 append(listCfg.search.param).append('=').append(query!!.urlEncoded())
                 listCfg.search.fixedParams.forEach { (k, v) -> append('&').append(k).append('=').append(v) }
                 return@buildString
@@ -232,7 +289,12 @@ class MangaReaderEngine(
             }
             listCfg.extraBrowseParams.forEach { (k, v) -> append('&').append(k).append('=').append(v) }
 
-            if (listCfg.page.mode == PageMode.QUERY) {
+            if (hasQuery && listCfg.search.mode == SearchMode.BROWSE) {
+                append('&').append(listCfg.search.param).append('=').append(query!!.urlEncoded())
+                listCfg.search.fixedParams.forEach { (k, v) -> append('&').append(k).append('=').append(v) }
+            }
+
+            if (listCfg.page.mode == PageMode.QUERY && (!listCfg.page.omitFirst || wpPage > 1)) {
                 append('&').append(listCfg.page.param).append('=').append(wpPage)
             }
         }
@@ -470,11 +532,13 @@ class MangaReaderEngine(
             docs.selectFirst("iframe")?.attrAsAbsoluteUrlOrNull("src")?.let { docs = httpGetDoc(it) }
         }
 
+        if (pc.mode == PagesMode.NEXT_DATA) return pagesFromNextData(docs, pc)
+
         val hasReaderScript = docs.select(selectTestScript).isNotEmpty() || pc.scriptRegex != null
         val scrape = when (pc.mode) {
             PagesMode.IMAGES -> true
             PagesMode.JSON -> false
-            PagesMode.AUTO, PagesMode.API -> !hasReaderScript && !cfg.encodedSrc
+            PagesMode.AUTO, PagesMode.API, PagesMode.NEXT_DATA -> !hasReaderScript && !cfg.encodedSrc
         }
         if (scrape) return scrapePages(docs, pc)
 
@@ -510,6 +574,43 @@ class MangaReaderEngine(
             .let { if (pc.dedup) it.distinctBy { p -> p.url } else it }
     }
 
+    /** Decode streamed JSON string chunks only; never evaluate source JavaScript. */
+    private fun pagesFromNextData(docs: DomNode, pc: PagesConfig): List<MangaPage> {
+        val stream = buildString {
+            for (script in docs.select("script")) {
+                val body = script.data()
+                if (!body.contains("self.__next_f.push(")) continue
+                val chunk = runCatching {
+                    org.json.JSONTokener(body.substringAfter("self.__next_f.push(")).nextValue() as? JSONArray
+                }.getOrNull() ?: continue
+                if (chunk.optInt(0) == 1) append(chunk.opt(1) as? String ?: continue)
+            }
+        }
+        val path = pc.nextDataPath.split('.')
+        fun findPages(node: Any?, depth: Int = 0): JSONArray? {
+            if (depth > 64) return null
+            if (node is JSONObject) {
+                var value: Any? = node
+                for (key in path) value = (value as? JSONObject)?.opt(key)
+                if (value is JSONArray) return value
+                for (key in node.keys()) findPages(node.opt(key), depth + 1)?.let { return it }
+            } else if (node is JSONArray) {
+                for (i in 0 until node.length()) findPages(node.opt(i), depth + 1)?.let { return it }
+            }
+            return null
+        }
+        for (record in stream.lineSequence()) {
+            val node = runCatching {
+                org.json.JSONTokener(record.substringAfter(':')).nextValue()
+            }.getOrNull()
+            val images = findPages(node) ?: continue
+            return (0 until images.length()).mapNotNull { i ->
+                (images.opt(i) as? String)?.let { finalizePageUrl(it, pc) }
+            }.let { if (pc.dedup) it.distinctBy { page -> page.url } else it }
+        }
+        throw ParseException("Reader page data not found", docs.baseUri())
+    }
+
     private fun scrapePages(docs: DomNode, pc: PagesConfig): List<MangaPage> {
         val out = ArrayList<MangaPage>()
         val seen = HashSet<String>()
@@ -537,7 +638,9 @@ class MangaReaderEngine(
         pc.imageUrlReplacements.forEach { (from, to) -> u = u.replace(from, to) }
         if (pc.httpsFromProtocolRelative && u.startsWith("//")) u = "https:$u"
         if (pc.excludeUrlSubstrings.any { u.contains(it) }) return null
-        return MangaPage(url = u)
+        // Browsers encode literal spaces in src paths; the hosted proxy needs a valid URL too.
+        // Do not re-encode existing percent escapes or signed query parameters.
+        return MangaPage(url = u.replace(" ", "%20"))
     }
 
     private suspend fun pagesFromApi(chapter: MangaChapter, api: ApiConfig): List<MangaPage> {
@@ -627,20 +730,24 @@ class MangaReaderEngine(
 
     // --- networking helpers ---------------------------------------------------------------------
 
-    private suspend fun httpGetDoc(url: String): DomNode {
+    private suspend fun httpGetDoc(url: String): DomNode = httpDoc(HttpRequest(url = url))
+
+    private suspend fun httpDoc(request: HttpRequest): DomNode {
         val headers = buildMap {
             userAgent?.let { put("User-Agent", it) }
             // Native anti-bot: gated by config flags; solver returns cookies, no site JS is run.
             val cookies = when {
-                cfg.netshield -> context.solveAntiBot(AntiBotKind.NETSHIELD, url)
-                cfg.cloudflare -> context.solveAntiBot(AntiBotKind.CLOUDFLARE, url)
+                cfg.netshield -> context.solveAntiBot(AntiBotKind.NETSHIELD, request.url)
+                cfg.cloudflare -> context.solveAntiBot(AntiBotKind.CLOUDFLARE, request.url)
                 else -> emptyMap()
             }
             if (cookies.isNotEmpty()) {
                 put("Cookie", cookies.entries.joinToString("; ") { "${it.key}=${it.value}" })
             }
+            putAll(request.headers)
         }
-        val resp = context.http(HttpRequest(url = url, headers = headers))
+        val resp = context.http(request.copy(headers = headers))
+        if (resp.code >= 400) throw ParseException("Source request failed (${resp.code})", resp.url)
         return context.parseHtml(resp.body, resp.url).asDom()
     }
 
@@ -723,10 +830,11 @@ class MangaReaderEngineFactory : EngineFactory {
 // =================================================================================================
 
 private enum class PageMode { PATH, QUERY, QUERY_FIRST }
-private enum class SearchMode { PATH_PAGE, QUERY }
+private enum class SearchMode { PATH_PAGE, QUERY, BROWSE }
 
 /** `rawConfig["listPage"]` — the browse/search URL grammar, re-parameterized (getListPage overrides). */
 private data class ListPageConfig(
+    val json: Map<String, String>? = null,
     val listHost: String? = null,
     val browseSeparator: String = "/?",
     val orderParam: String = "order",
@@ -743,12 +851,16 @@ private data class ListPageConfig(
     val authorParam: String? = null,
     val page: PageParam = PageParam(),
     val search: SearchConfig = SearchConfig(),
+    val pagedRequest: PagedRequest? = null,
     val singlePage: Boolean = false,
 ) {
     data class PageParam(
         val mode: PageMode = PageMode.QUERY,
         val param: String = "page",
         val inSearch: Boolean = false,
+        val pathTemplate: String? = null,
+        val firstPathTemplate: String? = null,
+        val omitFirst: Boolean = false,
     )
     data class SearchConfig(
         val supported: Boolean = true,
@@ -757,13 +869,23 @@ private data class ListPageConfig(
         val param: String = "s",
         val fixedParams: Map<String, String> = emptyMap(),
     )
+    data class PagedRequest(
+        val fromPage: Int = 2,
+        val url: String,
+        val method: String = "POST",
+        val browseOnly: Boolean = false,
+        val headers: Map<String, String> = emptyMap(),
+        val form: Map<String, String> = emptyMap(),
+    )
 
     companion object {
         fun from(any: Any?): ListPageConfig {
             val m = any as? Map<*, *> ?: return ListPageConfig()
             val pg = m["page"] as? Map<*, *>
             val sr = m["search"] as? Map<*, *>
+            val pr = m["pagedRequest"] as? Map<*, *>
             return ListPageConfig(
+                json = (m["json"] as? Map<*, *>)?.strMap(),
                 listHost = m.str("listHost"),
                 browseSeparator = m.str("browseSeparator") ?: "/?",
                 orderParam = m.str("orderParam") ?: "order",
@@ -782,6 +904,9 @@ private data class ListPageConfig(
                     mode = pg.str("mode")?.let { runCatching { PageMode.valueOf(it) }.getOrNull() } ?: PageMode.QUERY,
                     param = pg.str("param") ?: "page",
                     inSearch = pg.bool("inSearch"),
+                    pathTemplate = pg.str("pathTemplate"),
+                    firstPathTemplate = pg.str("firstPathTemplate"),
+                    omitFirst = pg.bool("omitFirst"),
                 ),
                 search = SearchConfig(
                     supported = sr?.get("supported") as? Boolean ?: true,
@@ -790,6 +915,16 @@ private data class ListPageConfig(
                     param = sr.str("param") ?: "s",
                     fixedParams = (sr?.get("fixedParams") as? Map<*, *>)?.strMap() ?: emptyMap(),
                 ),
+                pagedRequest = pr.str("url")?.let { url ->
+                    PagedRequest(
+                        fromPage = (pr?.get("fromPage") as? Number)?.toInt()?.coerceAtLeast(1) ?: 2,
+                        url = url,
+                        method = pr.str("method")?.uppercase()?.takeIf { it == "GET" || it == "POST" } ?: "POST",
+                        browseOnly = pr.bool("browseOnly"),
+                        headers = (pr?.get("headers") as? Map<*, *>)?.strMap() ?: emptyMap(),
+                        form = (pr?.get("form") as? Map<*, *>)?.strMap() ?: emptyMap(),
+                    )
+                },
                 singlePage = m.bool("singlePage"),
             )
         }
@@ -837,11 +972,12 @@ private data class ChapterConfig(
     }
 }
 
-private enum class PagesMode { AUTO, IMAGES, JSON, API }
+private enum class PagesMode { AUTO, IMAGES, JSON, API, NEXT_DATA }
 
 /** `rawConfig["pages"]` — reader-image extraction knobs (getPages overrides). */
 private data class PagesConfig(
     val mode: PagesMode = PagesMode.AUTO,
+    val nextDataPath: String = "chapter.pages",
     val dedup: Boolean = false,
     val tolerateMissingSrc: Boolean = false,
     val skipDataUri: Boolean = true,
@@ -861,6 +997,7 @@ private data class PagesConfig(
             val m = any as? Map<*, *> ?: return PagesConfig()
             return PagesConfig(
                 mode = m.str("mode")?.let { runCatching { PagesMode.valueOf(it.uppercase()) }.getOrNull() } ?: PagesMode.AUTO,
+                nextDataPath = m.str("nextDataPath") ?: "chapter.pages",
                 dedup = m.bool("dedup"),
                 tolerateMissingSrc = m.bool("tolerateMissingSrc"),
                 skipDataUri = m["skipDataUri"] as? Boolean ?: true,
