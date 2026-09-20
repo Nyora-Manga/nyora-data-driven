@@ -648,9 +648,8 @@ class MangaReaderEngine(
         var path = api.urlTemplate
         api.urlRegex?.let { rx ->
             Regex(rx).find(chapter.url)?.let { m ->
-                val named = m.groups as? MatchNamedGroupCollection
                 for (name in namedGroupsOf(rx)) {
-                    named?.get(name)?.value?.let { path = path.replace("{$name}", it) }
+                    m.namedGroup(rx, name)?.let { path = path.replace("{$name}", it) }
                 }
             }
         }

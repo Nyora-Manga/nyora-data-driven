@@ -321,7 +321,7 @@ class KeyoappEngine(
 		val regex = cfg.cdnRegex
 		for (script in doc.select("script")) {
 			val html = script.html()
-			val host = regex.find(html)?.groups?.get("host")?.value ?: continue
+			val host = regex.find(html)?.namedGroup(regex.pattern, "host") ?: continue
 			if (host.isNotEmpty()) return "https://$host/uploads"
 		}
 		return null
