@@ -102,6 +102,11 @@
     "multipleTags": true,
     "search": true
    },
+   "listPage": {
+    "firstPageTemplate": "/",
+    "secondPageTemplate": "/{page}",
+    "laterPageTemplate": "/{page}"
+   },
    "selectors": {
     "gallery": ".doujin ",
     "galleryLink": "a",
@@ -223,9 +228,26 @@
   "contentType": "HENTAI",
   "engine": "galleryadults",
   "domain": "hentaifox.com",
-  "needsCustomLogic": true,
+  "needsCustomLogic": false,
   "config": {
    "pathTagUrl": "/tags/popular/pag/",
+   "listPage": {
+    "queryTemplate": "/search/?q={query}{pageQuery}",
+    "combinedFilterTemplate": "/search/?q={filters}{pageQuery}{popularQuery}",
+    "tagTemplate": "/tag/{tag}/{popularPath}{pagePath}",
+    "localeTemplate": "/language/{locale}/{popularPath}{pagePath}",
+    "firstPageTemplate": "",
+    "secondPageTemplate": "/page/{page}/",
+    "laterPageTemplate": "/pag/{page}/",
+    "laterPageStart": 3,
+    "filteredPageTemplate": "pag/{page}/",
+    "filteredPageStart": 2,
+    "pageQueryTemplate": "&page={page}",
+    "pageQueryStart": 2,
+    "popularPath": "popular/",
+    "popularQuery": "&sort=popular",
+    "combineFiltersInSearch": true
+   },
    "tagNameSelector": ".list_tag",
    "tagTitleCase": false,
    "sortOrders": [
@@ -256,7 +278,7 @@
   "contentType": "HENTAI",
   "engine": "galleryadults",
   "domain": "nhentai.to",
-  "needsCustomLogic": true,
+  "needsCustomLogic": false,
   "config": {
    "pageSize": 25,
    "pathTagUrl": "/tags?page=",
@@ -272,6 +294,14 @@
     "tag": ".tag-container:contains(Tags) span.tags",
     "author": "#tags div.tag-container:contains(Artists) span.name",
     "languageChapter": ".tag-container:contains(Languages) span.tags a:not(.tag-17) span.name"
+   },
+   "listPage": {
+    "firstPageTemplate": "/go?page={page}{popularQuery}",
+    "secondPageTemplate": "/go?page={page}{popularQuery}",
+    "laterPageTemplate": "/go?page={page}{popularQuery}",
+    "queryTemplate": "/search/?q={query}{pageQuery}",
+    "pageQueryStart": 1,
+    "popularQuery": "&sort=popular"
    }
   },
   "pageSize": 25,

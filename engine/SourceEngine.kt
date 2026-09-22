@@ -189,8 +189,18 @@ data class HttpRequest(
     val headers: Map<String, String> = emptyMap(),
     val form: Map<String, String>? = null,
     val body: String? = null,
+    /** Preserve binary indexes/range responses without decoding them as text. */
+    val binaryResponse: Boolean = false,
 )
-data class HttpResponse(val url: String, val code: Int, val body: String, val headers: Map<String, String>)
+data class HttpResponse(
+    val url: String,
+    val code: Int,
+    val body: String,
+    val headers: Map<String, String>,
+    val bodyBytes: ByteArray? = null,
+)
+data class ImageRequest(val url: String, val headers: Map<String, String> = emptyMap())
+class UnsupportedImageRequestException(message: String) : RuntimeException(message)
 interface HtmlDocument
 interface SourcePrefs {
     fun getString(key: String): String?
@@ -276,6 +286,9 @@ interface SourceEngine {
 
     /** Resolve a (possibly relative) page url to the final absolute image url to download. */
     suspend fun getPageImageUrl(page: MangaPage): String
+
+    /** Resolve the complete image request when a source needs headers or safe special-url handling. */
+    suspend fun resolvePageImageRequest(page: MangaPage): ImageRequest = ImageRequest(getPageImageUrl(page))
 }
 
 /**

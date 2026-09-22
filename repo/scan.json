@@ -9,17 +9,14 @@
   "domain": "scanita.org",
   "className": "ScanIta",
   "file": "it/ScanIta.kt",
-  "config": {},
-  "overriddenMethods": [
-   "getDetails"
-  ],
-  "parsingOverrides": [
-   "getDetails"
-  ],
-  "needsCustomLogic": true,
-  "warnings": [
-   "getDetails loads chapters from a SEPARATE page: it reads a `.container-fluid button.w-100` data-path attribute, extracts the manga id between `/manga/` and `/books`, then GETs https://{domain}/manga/{id}/books to parse the chapter list. The base ScanParser (and thus ScanEngine) reads chapters inline from the details page, so this source will yield NO chapters until a two-step-chapters knob is added. List/pages/search are unaffected."
-  ],
+  "config": {
+   "chaptersDocumentSelector": ".container-fluid button.w-100",
+   "chaptersDocumentAttr": "data-path"
+  },
+  "overriddenMethods": [],
+  "parsingOverrides": [],
+  "needsCustomLogic": false,
+  "warnings": [],
   "pageSize": 0,
   "broken": false
  },

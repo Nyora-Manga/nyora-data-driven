@@ -10,6 +10,7 @@ import app.nyora.core.model.SortOrder
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
+import java.net.URLEncoder
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -45,6 +46,7 @@ class DemonicScansEngine(
 	override val source: SourceDef,
 	private val ctx: EngineContext,
 ) : SourceEngine {
+	private fun String.urlEncoded(): String = URLEncoder.encode(this, "UTF-8")
 
 	private val cfg: DemonicScansConfig = DemonicScansConfig.from(source.rawConfig)
 
@@ -100,8 +102,7 @@ class DemonicScansEngine(
 		if (!q.isNullOrEmpty()) {
 			// Text search: single-page endpoint, no pagination (kotatsu returns all matches at once).
 			if (page > 0) return emptyList()
-			// kotatsu appends the raw query un-encoded: "search.php?manga=" + filter.query.
-			val url = "https://$domain/${cfg.searchPath}?manga=$q"
+			val url = "https://$domain/${cfg.searchPath}?manga=${q.urlEncoded()}"
 			val doc = fetchDoc(url)
 			return doc.select(cfg.searchSelector).map { parseSearchManga(it) }
 		}

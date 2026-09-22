@@ -393,7 +393,7 @@
   "needsCustomLogic": false,
   "warnings": [],
   "pageSize": 12,
-  "broken": true,
+  "broken": false,
   "antiBot": "cloudflare"
  },
  {
@@ -1264,7 +1264,7 @@
   "className": "InstaManhwa",
   "file": "en/InstaManhwa.kt",
   "config": {
-   "selectPage": "img"
+   "selectPage": "img[src], img[data-src]"
   },
   "configComplex": {
    "sourceLocale": "Locale.ENGLISH"
@@ -1274,7 +1274,7 @@
   "needsCustomLogic": false,
   "warnings": [],
   "pageSize": 15,
-  "broken": true
+  "broken": false
  },
  {
   "id": "ISEKAISCAN",
@@ -1748,7 +1748,9 @@
   "altDomains": [],
   "className": "Manga18x",
   "file": "en/Manga18x.kt",
-  "config": {},
+  "config": {
+   "withoutAjax": true
+  },
   "configComplex": {},
   "overriddenMethods": [],
   "parsingOverrides": [],
@@ -2813,7 +2815,7 @@
   "className": "MangaowlOne",
   "file": "en/MangaowlOne.kt",
   "config": {
-   "postReq": true
+   "postReq": false
   },
   "configComplex": {},
   "overriddenMethods": [],
@@ -7253,13 +7255,16 @@
   "nsfw": true,
   "contentType": "HENTAI",
   "engine": "madara",
-  "domain": "yuri.live",
-  "altDomains": [],
+  "domain": "yurionair.top",
+  "altDomains": [
+   "yuri.live"
+  ],
   "className": "YuriLive",
   "file": "pt/YuriLive.kt",
   "config": {
    "tagPrefix": "manga-genero/",
-   "datePattern": "dd/MM/yyyy"
+   "datePattern": "dd/MM/yyyy",
+   "withoutAjax": true
   },
   "configComplex": {},
   "overriddenMethods": [],
@@ -7267,8 +7272,7 @@
   "needsCustomLogic": false,
   "warnings": [],
   "pageSize": 12,
-  "broken": true,
-  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+  "broken": false
  },
  {
   "id": "ALLIED_FANSUB",
@@ -9954,7 +9958,11 @@
   "altDomains": [],
   "className": "MundoManhwa",
   "file": "es/MundoManhwa.kt",
-  "config": {},
+  "config": {
+   "images": {
+    "referer": "https://vermanhwa.com/"
+   }
+  },
   "configComplex": {},
   "overriddenMethods": [],
   "parsingOverrides": [],
@@ -11998,15 +12006,18 @@
   "nsfw": true,
   "contentType": "HENTAI",
   "engine": "madara",
-  "domain": "hentaivn.party",
-  "altDomains": [],
+  "domain": "hentaivn.show",
+  "altDomains": [
+   "hentaivn.party"
+  ],
   "className": "HentaiVnPlus",
   "file": "vi/HentaiVnPlus.kt",
   "config": {
    "listUrl": "truyen-hentai/",
    "tagPrefix": "the-loai/",
    "datePattern": "dd/MM/yyyy",
-   "authorSearchSupported": true
+   "authorSearchSupported": true,
+   "withoutAjax": true
   },
   "configComplex": {},
   "overriddenMethods": [
@@ -12018,8 +12029,7 @@
   "needsCustomLogic": true,
   "warnings": [],
   "pageSize": 24,
-  "broken": true,
-  "brokenReason": "dead upstream, no verified successor (2026-07 recovery sweep)"
+  "broken": false
  },
  {
   "id": "HENTAIZ",
@@ -13029,5 +13039,27 @@
   "pageSize": 12,
   "broken": true,
   "antiBot": "cloudflare"
+ },
+ {
+  "id": "HWAGO",
+  "name": "Hwago",
+  "lang": "id",
+  "nsfw": false,
+  "contentType": null,
+  "engine": "madara",
+  "domain": "01.hwago.xyz",
+  "altDomains": [],
+  "className": "Hwago",
+  "file": "id/Hwago.kt",
+  "config": {
+   "datePattern": "d MMMM yyyy"
+  },
+  "configComplex": {},
+  "overriddenMethods": [],
+  "parsingOverrides": [],
+  "needsCustomLogic": false,
+  "warnings": [],
+  "pageSize": 12,
+  "broken": false
  }
 ]

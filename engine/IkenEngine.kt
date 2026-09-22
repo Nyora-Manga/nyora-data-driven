@@ -35,10 +35,10 @@ import java.util.Locale
  *  - kotatsu PagedMangaParser numbers pages from 1; the [SourceEngine] contract hands 0-indexed
  *    pages, so every API page number is `page + 1`.
  *  - Iken deliberately uses the API's NUMERIC ids (not a url hash) as its Manga/Chapter identity:
- *    `getDetails` needs the numeric `postId` and `getPages` (API path) needs the numeric `chapterId`.
- *    To keep the engine functional under Nyora's String-id model, [Manga.id] / [MangaChapter.id]
- *    carry that numeric id AS A STRING (still stable + unique); the numeric value is recovered with
- *    `toLongOrNull()`. [Manga.url] / [MangaChapter.url] carry the human `/series/...` href.
+	 *    `getDetails` needs the numeric `postId` and `getPages` (API path) needs the numeric `chapterId`.
+	 *    Browse stubs carry the numeric API id, but callers are allowed to replace [Manga.id] with
+	 *    their own stable outward identity. On a persisted/history reopen, the engine recovers the
+	 *    post id from the public `/series/...` page, so correctness never depends on an in-memory map.
  *  - The only sort order Iken exposes is POPULARITY; the browse endpoint ignores `order` entirely,
  *    so popular / latest / search all funnel through the one `/api/query` call.
  *
@@ -187,7 +187,7 @@ class IkenEngine(
 	// -----------------------------------------------------------------------------------------
 
 	override suspend fun getDetails(manga: Manga): Manga {
-		val seriesId = manga.id
+		val seriesId = resolveSeriesId(manga)
 		val url = "https://$defaultDomain/api/chapters?postId=$seriesId&skip=0&take=900&order=desc&userid="
 		val post = httpGetJson(url).getJSONObject("post")
 		val slug = post.stringOrNull("slug")
@@ -224,6 +224,27 @@ class IkenEngine(
 			chapters = chapters.distinctBy { it.id },
 			contentRating = manga.contentRating ?: if (source.nsfw) ContentRating.ADULT else null,
 		)
+	}
+
+	/**
+	 * Nyora's cross-platform manga id is a source+URL hash, not Iken's numeric post id. The public
+	 * Next.js page embeds `postId:[0,<id>]`, making the persisted URL a durable resolver after a
+	 * process restart. Numeric browse stubs keep their zero-extra-request fast path.
+	 */
+	private suspend fun resolveSeriesId(manga: Manga): String {
+		// Iken post ids are database integers; a 19-digit positive value is a Nyora signed-Long
+		// hash, not a post id. Keep only the bounded API-id fast path.
+		manga.id.toLongOrNull()?.takeIf { it in 1..Int.MAX_VALUE.toLong() }?.let { return it.toString() }
+		val publicUrl = manga.url.toAbsoluteUrl(domain)
+		val document = httpGetDoc(publicUrl)
+		val serialized = buildString {
+			append(document.html())
+			document.select("script").forEach { append(it.data()) }
+		}
+			.replace("&quot;", "\"")
+			.replace("\\\"", "\"")
+		val postId = POST_ID_PATTERN.find(serialized)?.groupValues?.get(1)
+		return postId ?: throw ParseException("Unable to resolve Iken post id", publicUrl)
 	}
 
 	// -----------------------------------------------------------------------------------------
@@ -426,6 +447,7 @@ class IkenEngine(
 	private companion object {
 		private const val KEY_DOMAIN = "domain"
 		private const val RATING_UNKNOWN = -1f
+		private val POST_ID_PATTERN = Regex("""[\"']postId[\"']\s*:\s*(?:\[\s*0\s*,\s*)?[\"']?(\d+)""")
 	}
 }
 

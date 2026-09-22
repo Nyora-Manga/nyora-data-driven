@@ -184,7 +184,7 @@ class PizzareaderEngine(
 		// `adult` comes back as an int on some Pizzareader instances (FmTeam → 0) and a numeric
 		// string on others; optInt coerces both (and a missing key) → never throws JSONException.
 		val isNsfwSource = j.optInt("adult", 0) != 0
-		val author = j.getString("author")
+		val author = j.getStringOrNull("author")
 		// kotatsu string-splits the alt_titles JSON array verbatim; reproduced faithfully (List).
 		val altTitles = j.getJSONArray("alt_titles").toString()
 			.replace("[\"", "")
@@ -197,14 +197,14 @@ class PizzareaderEngine(
 			publicUrl = href.toAbsoluteUrl(domain),
 			coverUrl = j.getString("thumbnail"),
 			title = j.getString("title"),
-			description = j.getString("description"),
+			description = j.getStringOrNull("description"),
 			altTitles = altTitles,
 			// `rating` is a bare JSON number on some instances (fmteam.fr → 9.14) and a string on
 			// others; opt(...).toString() normalizes both to a parseable decimal, never throws.
 			rating = j.opt("rating")?.toString()?.toFloatOrNull()?.div(10f) ?: RATING_UNKNOWN,
 			tags = emptyList(),
 			authors = listOfNotNull(author),
-			state = when (j.getString("status").lowercase()) {
+			state = when (j.getStringOrNull("status")?.lowercase()) {
 				in ONGOING -> MangaState.ONGOING
 				in FINISHED -> MangaState.FINISHED
 				in PAUSED -> MangaState.PAUSED

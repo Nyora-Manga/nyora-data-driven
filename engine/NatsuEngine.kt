@@ -115,10 +115,10 @@ class NatsuEngine(
 		query: String?,
 		filter: MangaListFilter,
 	): List<Manga> {
-		val url = "https://$domain/wp-admin/admin-ajax.php?action=advanced_search"
-
 		val form = LinkedHashMap<String, String>()
 		form["nonce"] = getNonce()
+		val url = ajaxEndpoint ?: "https://$domain/wp-admin/admin-ajax.php?action=advanced_search"
+		val origin = ajaxOrigin ?: "https://$domain"
 
 		form["inclusion"] = "OR"
 		form["genre"] = if (filter.tags.isNotEmpty()) {
@@ -134,7 +134,7 @@ class NatsuEngine(
 			"[]"
 		}
 
-		form["page"] = page.toString()
+		form["page"] = (page + 1).toString()
 
 		form["author"] = if (!filter.author.isNullOrEmpty()) {
 			JSONArray(listOf(filter.author)).toString()
@@ -197,8 +197,8 @@ class NatsuEngine(
 			// Transport hints: multipart body + the base parser's search-page headers.
 			headers = mapOf(
 				HDR_MULTIPART to "multipart",
-				"Referer" to "https://$domain/advanced-search/",
-				"Origin" to "https://$domain",
+				"Referer" to "$origin/advanced-search/",
+				"Origin" to origin,
 			),
 		)
 		return parseMangaList(doc)
@@ -444,11 +444,21 @@ class NatsuEngine(
 
 	@Volatile
 	private var nonce: String? = null
+	@Volatile
+	private var ajaxEndpoint: String? = null
+	@Volatile
+	private var ajaxOrigin: String? = null
 
 	private suspend fun getNonce(): String {
 		nonce?.let { return it }
-		val doc = fetchDoc("https://$domain/wp-admin/admin-ajax.php?type=search_form&action=get_nonce")
-		val value = doc.select("input[name=search_nonce]").attr("value")
+		val response = fetchResponse("https://$domain/wp-admin/admin-ajax.php?type=search_form&action=get_nonce")
+		val origin = Regex("^https?://[^/]+", RegexOption.IGNORE_CASE).find(response.url)?.value
+			?: "https://$domain"
+		ajaxOrigin = origin
+		ajaxEndpoint = "$origin/wp-admin/admin-ajax.php?action=advanced_search"
+		val doc = Jsoup.parse(response.body, response.url)
+		val value = doc.select("input[name=search_nonce]").attr("value").trim()
+		if (value.isEmpty()) throw ParseException("Search nonce not found", response.url)
 		nonce = value
 		return value
 	}
@@ -500,13 +510,24 @@ class NatsuEngine(
 		form: Map<String, String>? = null,
 		headers: Map<String, String> = emptyMap(),
 	): Document {
+		val resp = fetchResponse(url, method, form, headers)
+		return Jsoup.parse(resp.body, resp.url)
+	}
+
+	private suspend fun fetchResponse(
+		url: String,
+		method: String = "GET",
+		form: Map<String, String>? = null,
+		headers: Map<String, String> = emptyMap(),
+	): HttpResponse {
 		val h = HashMap<String, String>(headers)
 		// kotatsu getRequestHeaders(): every request carries Referer/Origin of the source domain.
 		h.putIfAbsent("Referer", "https://$domain/")
 		h.putIfAbsent("Origin", "https://$domain")
 		cfg.userAgent?.let { h.putIfAbsent("User-Agent", it) }
-		val resp = ctx.http(HttpRequest(url = url, method = method, headers = h, form = form))
-		return Jsoup.parse(resp.body, resp.url)
+		val response = ctx.http(HttpRequest(url = url, method = method, headers = h, form = form))
+		if (response.code >= 400) throw ParseException("Source request failed (${response.code})", response.url)
+		return response
 	}
 
 	// -----------------------------------------------------------------------------------------

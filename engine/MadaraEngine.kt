@@ -201,7 +201,7 @@ class MadaraEngine(
 			val payload = createRequestTemplate()
 			payload["page"] = page.toString()
 
-			if (!query.isNullOrEmpty()) payload["vars[s]"] = query.urlEncoded()
+			if (!query.isNullOrEmpty()) payload["vars[s]"] = query
 
 			if (filter.tags.isNotEmpty()) {
 				payload["vars[tax_query][0][taxonomy]"] = "wp-manga-genre"
@@ -748,7 +748,7 @@ class MadaraEngine(
 		val protector = doc.getElementById("chapter-protector-data")
 		if (protector == null) {
 			// login-required detection (auto, config-free — faithful to kotatsu)
-			if (doc.selectFirst(DEF_REQUIRED_LOGIN) != null) {
+			if (doc.selectFirst(extras.requiredLoginSelector ?: DEF_REQUIRED_LOGIN) != null) {
 				throw AuthRequiredException(source.id)
 			}
 			val root = doc.body().selectFirst(selDef(cfg.selectors.bodyPage, DEF_BODY_PAGE))
@@ -796,6 +796,12 @@ class MadaraEngine(
 	}
 
 	override suspend fun getPageImageUrl(page: MangaPage): String = page.url.toAbsoluteUrl(domain)
+
+	override suspend fun resolvePageImageRequest(page: MangaPage): ImageRequest {
+		val referer = extras.imageReferer?.replace("{domain}", domain)
+		val headers = referer?.let { mapOf("Referer" to it) } ?: emptyMap()
+		return ImageRequest(getPageImageUrl(page), headers)
+	}
 
 	// -----------------------------------------------------------------------------------------
 	// Networking
@@ -1145,6 +1151,7 @@ private class MadaraWordSet(private vararg val words: String) {
  * no-op so a SourceDef that omits it keeps byte-for-byte stock behaviour.
  *
  *  - [flatPages]                (getPages)          single-level `<img>` descent from the body root.
+ *  - [imageReferer]             (image request)     hotlink-protection Referer header.
  *  - [authorSelector]           (getDetails)        details-page author box selector.
  *  - [chapterTitleSelector] +
  *    [chapterDateReplacements]  (getChapters)       chapter-title selector + raw-date substring fixes.
@@ -1155,6 +1162,8 @@ private class MadaraWordSet(private vararg val words: String) {
  */
 private class MadaraExtras(
 	val flatPages: Boolean,
+	val imageReferer: String?,
+	val requiredLoginSelector: String?,
 	val authorSelector: String?,
 	val chapterTitleSelector: String?,
 	val chapterDateReplacements: Map<String, String>,
@@ -1216,6 +1225,9 @@ private class MadaraExtras(
 			val selectors = raw["selectors"].asMap()
 			return MadaraExtras(
 				flatPages = images?.get("flatPages").asBool(false),
+				imageReferer = images?.get("referer").asStr(),
+				requiredLoginSelector = selectors?.get("requiredLogin").asStr()
+					?: raw["selectRequiredLogin"].asStr(),
 				authorSelector = selectors?.get("author").asStr(),
 				chapterTitleSelector = selectors?.get("chapterTitle").asStr(),
 				chapterDateReplacements = raw["chapterDateReplacements"].asStrMap(),

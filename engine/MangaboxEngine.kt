@@ -114,8 +114,11 @@ class MangaboxEngine(
 		val wpPage = page + 1 // contract pages are 0-indexed; the Mangabox paginator is 1-based
 
 		val url = when {
-			!query.isNullOrBlank() ->
-				"https://$domain${cfg.searchUrl.removeSuffix("/")}/${query.replace(" ", "-").lowercase()}"
+			!query.isNullOrBlank() -> {
+				val searchSegment = query.replace(" ", "-").lowercase().urlEncoded()
+				"https://$domain${cfg.searchUrl.removeSuffix("/")}/$searchSegment" +
+					cfg.searchPageTemplate.replace("{page}", wpPage.toString())
+			}
 
 			filter.tags.isNotEmpty() -> {
 				val genreKey = filter.tags.first().key.replace(" ", "-").lowercase()
@@ -131,11 +134,11 @@ class MangaboxEngine(
 	/** Port of base `parseSearchResults`: the multi-selector container fallback chain. */
 	private fun parseSearchResults(doc: Document): List<Manga> {
 		val elements = doc.select(".story_item")
-			.ifEmpty { doc.select(".item") }
 			.ifEmpty { doc.select(".manga-item") }
 			.ifEmpty { doc.select("div.content-genres-item") }
 			.ifEmpty { doc.select("div.list-story-item") }
 			.ifEmpty { doc.select("div.search-story-item") }
+			.ifEmpty { doc.select(".item") }
 			.ifEmpty { doc.select("div[class*=story]") }
 			.ifEmpty { doc.select("a[href*=/manga/]").mapNotNull { it.parent() ?: it } }
 
@@ -400,6 +403,8 @@ class MangaboxEngine(
 			if (w.isEmpty()) w else w.substring(0, 1).uppercase(locale) + w.substring(1).lowercase(locale)
 		}
 
+	private fun String.urlEncoded(): String = URLEncoder.encode(this, Charsets.UTF_8.name())
+
 	private fun SimpleDateFormat.parseSafe(text: String?): Long {
 		if (text.isNullOrEmpty()) return 0L
 		return runCatching { parse(text)?.time ?: 0L }.getOrDefault(0L)
@@ -434,6 +439,7 @@ internal data class MangaboxConfig(
 	val pageSize: Int = 24,
 	val listUrl: String = "/manga-list/latest-manga",
 	val searchUrl: String = "/search/story/",
+	val searchPageTemplate: String = "?page={page}",
 	val authorUrl: String = "/search/author",
 	val datePattern: String = "MMM dd,yy",
 	val otherDomain: String = "",
@@ -469,6 +475,7 @@ internal data class MangaboxConfig(
 				pageSize = (raw["pageSize"] as? Number)?.toInt() ?: base.pageSize,
 				listUrl = raw.str("listUrl") ?: base.listUrl,
 				searchUrl = raw.str("searchUrl") ?: base.searchUrl,
+				searchPageTemplate = raw.str("searchPageTemplate") ?: base.searchPageTemplate,
 				authorUrl = raw.str("authorUrl") ?: base.authorUrl,
 				datePattern = raw.str("datePattern") ?: base.datePattern,
 				otherDomain = raw.str("otherDomain") ?: base.otherDomain,

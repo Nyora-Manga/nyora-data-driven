@@ -1,0 +1,17 @@
+[
+  {
+    "id": "ehentai",
+    "name": "E-Hentai",
+    "lang": "all",
+    "nsfw": true,
+    "contentType": "HENTAI",
+    "engine": "ehentai",
+    "domain": "e-hentai.org",
+    "needsCustomLogic": false,
+    "customMethods": [],
+    "config": { "maxGalleryPages": 100 },
+    "pageSize": 25,
+    "broken": false,
+    "notes": "Public galleries and text search with cursor pagination. Each gallery is one chapter; all thumbnail pages are traversed before reading. Galleries exceeding 100 thumbnail pages fail explicitly. Latest ordering is also used for the default browse surface. No authenticated ExHentai support or shared login cookies."
+  }
+]

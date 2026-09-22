@@ -158,5 +158,39 @@
   ],
   "pageSize": 20,
   "broken": false
+ },
+ {
+  "id": "EZMANGA",
+  "name": "EzManga",
+  "lang": "en",
+  "nsfw": false,
+  "contentType": "MANGA",
+  "engine": "iken",
+  "domain": "ezmanga.org",
+  "altDomains": [],
+  "className": "EzManga",
+  "file": "en/EzManga.kt",
+  "config": {},
+  "configComplex": {},
+  "overriddenMethods": [
+   "fetchAvailableTags",
+   "getDetails",
+   "getFilterOptions",
+   "getListPage",
+   "getPages",
+   "parseMangaList"
+  ],
+  "parsingOverrides": [
+   "getDetails",
+   "getListPage",
+   "getPages",
+   "parseMangaList"
+  ],
+  "needsCustomLogic": true,
+  "warnings": [],
+  "pageSize": 18,
+  "broken": false,
+  "antiBot": "cloudflare",
+  "cfWall": "B"
  }
 ]

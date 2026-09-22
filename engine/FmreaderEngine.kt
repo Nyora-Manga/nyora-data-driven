@@ -13,6 +13,7 @@ import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import java.net.URLEncoder
 import java.text.SimpleDateFormat
+import java.util.Base64
 import java.util.Calendar
 import java.util.Locale
 
@@ -409,6 +410,12 @@ class FmreaderEngine(
 
 	/** kotatsu `Element.requireSrc`: first non-blank lazy-image attribute. */
 	private fun Element.requireSrc(): String {
+		attr("data-img").trim().takeIf { it.isNotEmpty() }?.let { encoded ->
+			val decoded = runCatching { String(Base64.getDecoder().decode(encoded), Charsets.UTF_8) }.getOrNull()
+			if (!decoded.isNullOrBlank() &&
+				(decoded.startsWith("http://") || decoded.startsWith("https://") || decoded.startsWith("//") || decoded.startsWith("/"))
+			) return decoded
+		}
 		for (a in IMG_ATTRS) {
 			val v = attr(a).trim()
 			if (v.isNotEmpty() && !v.startsWith("data:")) return v

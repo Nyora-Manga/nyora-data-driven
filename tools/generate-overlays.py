@@ -33,10 +33,54 @@ BLOCKLIST_JSON = ROOT / "blocked-sources.json"
 # checkouts would just dirty the submodule. Missing targets are skipped (e.g. in CI, where only
 # this repo is checked out — only blocked-sources.json is produced there).
 KOTLIN_TARGETS = [
+    # When this repository is vendored by nyora-shared-datadriven, generate its
+    # local shared overlay too. The path is absent (and therefore skipped) in a
+    # standalone nyora-data-driven checkout.
+    ("src/commonMain/kotlin/com/nyora/hasan72341/shared/SourcePatches.kt", "com.nyora.hasan72341.shared"),
     ("Nyora/nyora-shared/src/commonMain/kotlin/com/nyora/hasan72341/shared/SourcePatches.kt", "com.nyora.hasan72341.shared"),
     ("Nyora/nyora-android/app/src/main/kotlin/com/nyora/hasan72341/core/SourcePatches.kt", "com.nyora.hasan72341.core"),
     ("Nyora/nyora-mihon-extension-porter/extension/src/main/kotlin/eu/kanade/tachiyomi/extension/all/nyoralocal/SourcePatches.kt", "eu.kanade.tachiyomi.extension.all.nyoralocal"),
 ]
+
+
+def resolve_kotlin_targets(root=ROOT, workspace=WORKSPACE):
+    """Return existing, distinct overlays for standalone and vendored checkouts."""
+    resolved = []
+    seen = set()
+
+    def add(path, package):
+        if not path.exists():
+            return
+        canonical = path.resolve()
+        if canonical in seen:
+            return
+        seen.add(canonical)
+        resolved.append((path, package))
+
+    # Standalone nyora-data-driven layout: <workspace>/Nyora/<client>.
+    for rel, package in KOTLIN_TARGETS:
+        add(workspace / rel, package)
+
+    # Vendored layout: <workspace>/<shared>/data, with Android and the other
+    # clients beside the shared checkout rather than below <shared>/Nyora.
+    local_shared = root.parent / KOTLIN_TARGETS[0][0]
+    add(local_shared, KOTLIN_TARGETS[0][1])
+    if local_shared.exists():
+        client_workspace = root.parent.parent
+        for rel, package in KOTLIN_TARGETS[1:]:
+            rel_path = Path(rel)
+            if rel_path.parts and rel_path.parts[0] == "Nyora":
+                rel_path = Path(*rel_path.parts[1:])
+            add(client_workspace / rel_path, package)
+
+    return resolved
+
+
+def canonical_source_id(value):
+    value = str(value or "")
+    if value[:3].casefold() == "dd_":
+        value = value[3:]
+    return value.casefold()
 
 
 def load():
@@ -44,7 +88,21 @@ def load():
     dom = p.get("domainOverrides", {})
     title = p.get("titleOverrides", {})
     native = set(p.get("nativeBacked", []))
-    dead = sorted(set(p.get("deadSources", [])) - set(dom.keys()))
+    raw_dead = set(p.get("deadSources", []))
+    dead_ids = {canonical_source_id(value) for value in raw_dead}
+    for source_id in p.get("brokenReasons", {}):
+        if canonical_source_id(source_id) not in dead_ids:
+            raise ValueError(f"brokenReasons entry is not in deadSources: {source_id}")
+
+    domain_ids = {canonical_source_id(value) for value in dom}
+    # Domain relocation is authoritative across native/DD and case-drifted spellings.
+    # Emit at most one representative for every remaining logical dead source.
+    dead_by_id = {}
+    for value in sorted(raw_dead, key=lambda item: (canonical_source_id(item), item)):
+        canonical = canonical_source_id(value)
+        if canonical not in domain_ids:
+            dead_by_id.setdefault(canonical, value)
+    dead = sorted(dead_by_id.values())
     return dom, title, native, dead
 
 
@@ -60,7 +118,7 @@ def gen_kotlin(package, dom, title, native, dead):
         "// DOMAIN_OVERRIDES: relocated/rebranded sources -> current live domain (ConfigKey.Domain).",
         "// TITLE_OVERRIDES:  display renames that came with a domain move.",
         "// DEAD_SOURCES:     domain dead with no working successor; hidden from the catalogue.",
-        "// Keyed by the upstream MangaParserSource.name.",
+        "// Keys are upstream MangaParserSource names or DD_<catalogue row id>.",
         "object SourcePatches {",
         "    val DOMAIN_OVERRIDES: Map<String, String> = mapOf(",
     ]
@@ -99,10 +157,8 @@ def main():
 
     dom, title, native, dead = load()
     outputs = [(BLOCKLIST_JSON, gen_blocklist(dead))]
-    for rel, pkg in KOTLIN_TARGETS:
-        path = WORKSPACE / rel
-        if path.exists():
-            outputs.append((path, gen_kotlin(pkg, dom, title, native, dead)))
+    for path, pkg in resolve_kotlin_targets(ROOT, WORKSPACE):
+        outputs.append((path, gen_kotlin(pkg, dom, title, native, dead)))
 
     drift = [str(p) for p, c in outputs if (not p.exists()) or p.read_text() != c]
 

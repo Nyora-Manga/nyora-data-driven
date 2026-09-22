@@ -1,0 +1,22 @@
+[
+ {
+  "id": "8muses",
+  "name": "8muses",
+  "lang": "en",
+  "nsfw": true,
+  "contentType": "COMICS",
+  "engine": "eightmuses",
+  "domain": "comics.8muses.com",
+  "needsCustomLogic": false,
+  "customMethods": [],
+  "config": {
+   "maxAlbumPages": 25,
+   "maxCollectionRequests": 96,
+   "maxCollectionDepth": 6,
+   "maxCollectionImages": 2000
+  },
+  "pageSize": 72,
+  "broken": false,
+  "notes": "Public album/search support. Leaf albums read as one chapter; direct child albums become collection chapters. Nested collection chapters read public leaf albums in order with leaf-specific image referrers. Private/locked albums are excluded. Pagination, nesting, request and image limits fail explicitly instead of returning partial results. Mixed collections include their own pictures before descendant albums, preserving order within each album."
+ }
+]

@@ -46,11 +46,17 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install catalogue validation tools
+        run: python3 -m pip install -r requirements-dev.txt
+      - name: Test catalogue generators
+        run: python3 -m unittest discover -s tools -p 'test_*.py' -v
       # Regenerate the manifest from repo/*.json and commit it if it drifted, so
       # catalogue.json is never stale after a source edit. GITHUB_TOKEN commits
       # don't retrigger CI, so this can't loop.
       - name: Rebuild catalogue.json
         run: python3 tools/build-catalogue.py
+      - name: Validate generated catalogue schema
+        run: python3 tools/validate-catalogue.py
       # patches.json is the single source of truth for source fixes; regenerate the derived
       # blocked-sources.json (client SourcePatches.kt are regenerated locally, where the sibling
       # repos are checked out).

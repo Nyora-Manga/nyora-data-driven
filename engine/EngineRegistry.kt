@@ -70,6 +70,9 @@ object EngineRegistry {
         "zmanga"         to Creator(ZmangaEngineFactory::create),
 
         // --- bespoke single-site engines (String-keyed) ---
+        "eightmuses"     to Creator(EightMusesEngineFactory::create),
+        "ehentai"        to Creator(EHentaiEngineFactory::create),
+        "hitomi"         to Creator(HitomiEngineFactory::create),
         "guya"           to Creator { def, ctx -> GuyaEngineFactory().create(def, ctx) },
         "mangadex"       to Creator { def, ctx -> MangaDexEngineFactory().create(def, ctx) },
         "mangadventure"  to Creator { def, ctx -> MangadventureEngineFactory().create(def, ctx) },

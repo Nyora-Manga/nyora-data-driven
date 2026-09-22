@@ -98,6 +98,10 @@ class GattsuEngine(
 	 */
 	private suspend fun listPage(page: Int, query: String?, filter: MangaListFilter): List<Manga> {
 		val p = page + 1
+		if (query.isNullOrEmpty() && filter.tags.isEmpty() && cfg.pagePathTemplate != null) {
+			val path = cfg.pagePathTemplate.replace("{page}", p.toString())
+			return parseMangaList(fetchDoc("https://$domain$path"))
+		}
 		val url = buildString {
 			append("https://").append(domain)
 			if (!query.isNullOrEmpty()) {
@@ -326,6 +330,7 @@ data class GattsuConfig(
 	val tagUrl: String = "generos",
 	/** Whether multiple tags may be selected in the filter UI (UniversoHentai = true). */
 	val multipleTags: Boolean = false,
+	val pagePathTemplate: String? = null,
 
 	// ---- list-page selectors ----
 	val selMangaList: String = "div.lista ul li, div.videos div.video",
@@ -374,6 +379,7 @@ data class GattsuConfig(
 				tagPrefix = raw.str("tagPrefix", d.tagPrefix),
 				tagUrl = raw.str("tagUrl", d.tagUrl),
 				multipleTags = raw.bool("multipleTags", d.multipleTags),
+				pagePathTemplate = raw.strOrNull("pagePathTemplate"),
 				selMangaList = raw.str("selMangaList", d.selMangaList),
 				selMangaListTitle = raw.str("selMangaListTitle", d.selMangaListTitle),
 				anchorLast = raw.bool("anchorLast", d.anchorLast),
