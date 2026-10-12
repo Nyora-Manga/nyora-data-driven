@@ -1,31 +1,34 @@
 {
  "deadDomains": [
-  "asurascans.com.tr",
-  "daycomics.me",
-  "hiper.cool",
-  "jiangzaitoon.top",
-  "mangakita.id",
-  "mangaland.net",
-  "mangatx.cc",
-  "manhuascan.us",
-  "manhwahub.net",
-  "manhwaraw18.com",
-  "myshojo.com"
+  "ghostscan.xyz",
+  "manga-sehri.com",
+  "mangahona.pl",
+  "manhwaz.com",
+  "mantrazscan.org",
+  "neroxus.com.br",
+  "nettruyen1905.com",
+  "reset-scans.org",
+  "skanlacje-feniksy.pl",
+  "yonabar.xyz",
+  "yurilabs.my.id"
  ],
  "deadIds": [
-  "ASURASCANSTR",
-  "DAYCOMICS",
-  "HIPERCOOL",
-  "JIANGZAITOON",
-  "MANGALAND",
-  "MANHWAHUB",
-  "MANHWARAW_COM",
-  "furymanga",
-  "mangakita",
-  "mangatx_cc",
-  "manhuascanus",
-  "myshojo"
+  "GHOSTSCAN",
+  "MANGAHONA",
+  "MANGASEHRI",
+  "MANHWAZ",
+  "MANTRAZSCAN",
+  "NEROXUS",
+  "RESETSCANS",
+  "YONABAR",
+  "YURILAB",
+  "nettruyen1975",
+  "nettruyenfe",
+  "nettruyenll",
+  "nettruyenssr",
+  "nettruyenuu",
+  "skanlacjefeniksy"
  ],
  "deadDomainCount": 11,
- "deadSourceCount": 12
+ "deadSourceCount": 15
 }

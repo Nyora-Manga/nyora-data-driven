@@ -1291,14 +1291,13 @@
    "contentType": "MANGA",
    "engine": "hotcomics",
    "domain": "daycomics.me",
-   "broken": true,
+   "broken": false,
    "pageSize": 24,
    "config": {
     "langPath": "/en",
     "popupLoginChapters": true
    },
-   "needsCustomLogic": true,
-   "brokenReason": "domain does not resolve"
+   "needsCustomLogic": true
   },
   {
    "id": "HOTCOMICS",
@@ -2427,13 +2426,12 @@
    "engine": "madara",
    "domain": "asurascans.com.tr",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
    "config": {
     "tagPrefix": "tur/"
    },
-   "needsCustomLogic": false,
-   "brokenReason": "domain does not resolve"
+   "needsCustomLogic": false
   },
   {
    "id": "ASURASCANS_US",
@@ -3779,12 +3777,13 @@
    "engine": "madara",
    "domain": "ghostscan.xyz",
    "altDomains": [],
-   "broken": false,
+   "broken": true,
    "pageSize": 24,
    "config": {
     "datePattern": "dd 'de' MMMMM 'de' yyyy"
    },
-   "needsCustomLogic": false
+   "needsCustomLogic": false,
+   "brokenReason": "domain does not resolve"
   },
   {
    "id": "GLORYMANGA",
@@ -4308,14 +4307,13 @@
    "engine": "madara",
    "domain": "hiper.cool",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 20,
    "config": {
     "tagPrefix": "manga-tag/",
     "stylePage": ""
    },
-   "needsCustomLogic": false,
-   "brokenReason": "domain does not resolve"
+   "needsCustomLogic": false
   },
   {
    "id": "HIPERDEX",
@@ -4652,14 +4650,13 @@
    "engine": "madara",
    "domain": "jiangzaitoon.top",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
    "config": {
     "datePattern": "d MMMM yyyy",
     "postReq": true
    },
-   "needsCustomLogic": false,
-   "brokenReason": "domain does not resolve"
+   "needsCustomLogic": false
   },
   {
    "id": "JIMANGA",
@@ -5922,14 +5919,15 @@
    "engine": "madara",
    "domain": "mangahona.pl",
    "altDomains": [],
-   "broken": false,
+   "broken": true,
    "pageSize": 12,
    "config": {
     "datePattern": "yyyy-MM-dd"
    },
    "antiBot": "cloudflare",
    "cfWall": "A",
-   "needsCustomLogic": false
+   "needsCustomLogic": false,
+   "brokenReason": "domain does not resolve"
   },
   {
    "id": "MANGAHUB",
@@ -5970,13 +5968,12 @@
    "engine": "madara",
    "domain": "mangaland.net",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
    "config": {},
    "antiBot": "cloudflare",
    "cfWall": "A",
-   "needsCustomLogic": false,
-   "brokenReason": "domain does not resolve"
+   "needsCustomLogic": false
   },
   {
    "id": "MANGALC",
@@ -6523,14 +6520,15 @@
    "engine": "madara",
    "domain": "manga-sehri.com",
    "altDomains": [],
-   "broken": false,
+   "broken": true,
    "pageSize": 18,
    "config": {
     "datePattern": "dd/MM/yyyy"
    },
    "antiBot": "cloudflare",
    "cfWall": "B",
-   "needsCustomLogic": false
+   "needsCustomLogic": false,
+   "brokenReason": "domain does not resolve"
   },
   {
    "id": "MANGASEHRINET",
@@ -7442,7 +7440,7 @@
    "engine": "madara",
    "domain": "manhwahub.net",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 40,
    "config": {
     "tagPrefix": "genre/",
@@ -7457,8 +7455,7 @@
      "UPDATED"
     ]
    },
-   "needsCustomLogic": true,
-   "brokenReason": "domain does not resolve"
+   "needsCustomLogic": true
   },
   {
    "id": "MANHWALATINO",
@@ -7554,15 +7551,14 @@
    "engine": "madara",
    "domain": "manhwaraw18.com",
    "altDomains": [],
-   "broken": true,
+   "broken": false,
    "pageSize": 12,
    "config": {
     "postReq": true,
     "listUrl": "manhwa-raw/",
     "tagPrefix": "manhwa-raw-genre/"
    },
-   "needsCustomLogic": false,
-   "brokenReason": "domain does not resolve"
+   "needsCustomLogic": false
   },
   {
    "id": "MANHWASCO",
@@ -7636,7 +7632,7 @@
    "engine": "madara",
    "domain": "manhwaz.com",
    "altDomains": [],
-   "broken": false,
+   "broken": true,
    "pageSize": 40,
    "config": {
     "listUrl": "genre/manhwa",
@@ -7646,7 +7642,8 @@
      "testAsync": "div.list-chapter"
     }
    },
-   "needsCustomLogic": true
+   "needsCustomLogic": true,
+   "brokenReason": "domain does not resolve"
   },
   {
    "id": "MANHWA_ES",
@@ -7673,7 +7670,7 @@
    "engine": "madara",
    "domain": "mantrazscan.org",
    "altDomains": [],
-   "broken": false,
+   "broken": true,
    "pageSize": 12,
    "config": {
     "datePattern": "dd/MM/yyyy",
@@ -7681,7 +7678,8 @@
    },
    "antiBot": "cloudflare",
    "cfWall": "B",
-   "needsCustomLogic": false
+   "needsCustomLogic": false,
+   "brokenReason": "domain does not resolve"
   },
   {
    "id": "MANWE",
@@ -8191,14 +8189,15 @@
    "engine": "madara",
    "domain": "neroxus.com.br",
    "altDomains": [],
-   "broken": false,
+   "broken": true,
    "pageSize": 10,
    "config": {
     "datePattern": "MMM d, yyyy"
    },
    "antiBot": "cloudflare",
    "cfWall": "A",
-   "needsCustomLogic": false
+   "needsCustomLogic": false,
+   "brokenReason": "domain does not resolve"
   },
   {
    "id": "NEWMANHUA",
@@ -9091,10 +9090,11 @@
    "engine": "madara",
    "domain": "reset-scans.org",
    "altDomains": [],
-   "broken": false,
+   "broken": true,
    "pageSize": 20,
    "config": {},
-   "needsCustomLogic": false
+   "needsCustomLogic": false,
+   "brokenReason": "domain does not resolve"
   },
   {
    "id": "RHPLUSMANGA",
@@ -10704,13 +10704,14 @@
    "engine": "madara",
    "domain": "yonabar.xyz",
    "altDomains": [],
-   "broken": false,
+   "broken": true,
    "pageSize": 10,
    "config": {
     "listUrl": "yaoi/",
     "locale": "en"
    },
-   "needsCustomLogic": false
+   "needsCustomLogic": false,
+   "brokenReason": "domain does not resolve"
   },
   {
    "id": "YUBIKIRI",
@@ -10738,7 +10739,7 @@
    "engine": "madara",
    "domain": "yurilabs.my.id",
    "altDomains": [],
-   "broken": false,
+   "broken": true,
    "pageSize": 30,
    "config": {
     "withoutAjax": true,
@@ -10751,7 +10752,8 @@
      "multipleTags": false
     }
    },
-   "needsCustomLogic": true
+   "needsCustomLogic": true,
+   "brokenReason": "domain does not resolve"
   },
   {
    "id": "YURILIVE",
@@ -12896,7 +12898,7 @@
    "lang": "en",
    "engine": "mangareader",
    "domain": "myshojo.com",
-   "broken": true,
+   "broken": false,
    "pageSize": 30,
    "config": {
     "pageSize": 30,
@@ -12905,8 +12907,7 @@
    },
    "antiBot": "cloudflare",
    "cfWall": "A",
-   "needsCustomLogic": false,
-   "brokenReason": "domain does not resolve"
+   "needsCustomLogic": false
   },
   {
    "id": "futari",
@@ -14273,7 +14274,7 @@
    "lang": "id",
    "engine": "mangareader",
    "domain": "mangakita.id",
-   "broken": true,
+   "broken": false,
    "pageSize": 20,
    "config": {
     "pageSize": 20,
@@ -14285,8 +14286,7 @@
    },
    "antiBot": "cloudflare",
    "cfWall": "B",
-   "needsCustomLogic": false,
-   "brokenReason": "domain does not resolve"
+   "needsCustomLogic": false
   },
   {
    "id": "mangakoleji",
@@ -14557,7 +14557,7 @@
    "lang": "en",
    "engine": "mangareader",
    "domain": "mangatx.cc",
-   "broken": true,
+   "broken": false,
    "pageSize": 30,
    "config": {
     "pageSize": 30,
@@ -14567,8 +14567,7 @@
    },
    "antiBot": "cloudflare",
    "cfWall": "A",
-   "needsCustomLogic": false,
-   "brokenReason": "domain does not resolve"
+   "needsCustomLogic": false
   },
   {
    "id": "mangayaro",
@@ -14594,7 +14593,7 @@
    "contentType": "HENTAI",
    "engine": "mangareader",
    "domain": "manhuascan.us",
-   "broken": true,
+   "broken": false,
    "pageSize": 30,
    "config": {
     "pageSize": 30,
@@ -14604,8 +14603,7 @@
    },
    "antiBot": "cloudflare",
    "cfWall": "A",
-   "needsCustomLogic": false,
-   "brokenReason": "domain does not resolve"
+   "needsCustomLogic": false
   },
   {
    "id": "manhwa_freak",
@@ -15015,7 +15013,7 @@
    "lang": "en",
    "engine": "mangareader",
    "domain": "myshojo.com",
-   "broken": true,
+   "broken": false,
    "pageSize": 20,
    "config": {
     "pageSize": 20,
@@ -15026,8 +15024,7 @@
    },
    "antiBot": "cloudflare",
    "cfWall": "A",
-   "needsCustomLogic": false,
-   "brokenReason": "domain does not resolve"
+   "needsCustomLogic": false
   },
   {
    "id": "ngomik",
@@ -15901,7 +15898,7 @@
    "lang": "pl",
    "engine": "mangareader",
    "domain": "skanlacje-feniksy.pl",
-   "broken": false,
+   "broken": true,
    "pageSize": 10,
    "config": {
     "pageSize": 10,
@@ -15911,7 +15908,8 @@
      "tagsExclusion": false
     }
    },
-   "needsCustomLogic": false
+   "needsCustomLogic": false,
+   "brokenReason": "domain does not resolve"
   },
   {
    "id": "sky_manga",
@@ -18661,7 +18659,7 @@
    "contentType": "MANGA",
    "engine": "wpcomics",
    "domain": "nettruyen1905.com",
-   "broken": false,
+   "broken": true,
    "pageSize": 20,
    "config": {
     "pageSize": 20,
@@ -18686,7 +18684,8 @@
      "search": true
     }
    },
-   "needsCustomLogic": true
+   "needsCustomLogic": true,
+   "brokenReason": "domain does not resolve"
   },
   {
    "id": "nettruyenfe",
@@ -18696,7 +18695,7 @@
    "contentType": "MANGA",
    "engine": "wpcomics",
    "domain": "nettruyen1905.com",
-   "broken": false,
+   "broken": true,
    "pageSize": 20,
    "config": {
     "pageSize": 20,
@@ -18721,7 +18720,8 @@
      "search": true
     }
    },
-   "needsCustomLogic": true
+   "needsCustomLogic": true,
+   "brokenReason": "domain does not resolve"
   },
   {
    "id": "nettruyenhe",
@@ -18768,7 +18768,7 @@
    "contentType": "MANGA",
    "engine": "wpcomics",
    "domain": "nettruyen1905.com",
-   "broken": false,
+   "broken": true,
    "pageSize": 20,
    "config": {
     "pageSize": 20,
@@ -18793,7 +18793,8 @@
      "search": true
     }
    },
-   "needsCustomLogic": true
+   "needsCustomLogic": true,
+   "brokenReason": "domain does not resolve"
   },
   {
    "id": "nettruyenssr",
@@ -18803,7 +18804,7 @@
    "contentType": "MANGA",
    "engine": "wpcomics",
    "domain": "nettruyen1905.com",
-   "broken": false,
+   "broken": true,
    "pageSize": 20,
    "config": {
     "pageSize": 20,
@@ -18828,7 +18829,8 @@
      "search": true
     }
    },
-   "needsCustomLogic": true
+   "needsCustomLogic": true,
+   "brokenReason": "domain does not resolve"
   },
   {
    "id": "nettruyenuu",
@@ -18838,7 +18840,7 @@
    "contentType": "MANGA",
    "engine": "wpcomics",
    "domain": "nettruyen1905.com",
-   "broken": false,
+   "broken": true,
    "pageSize": 20,
    "config": {
     "pageSize": 20,
@@ -18863,7 +18865,8 @@
      "search": true
     }
    },
-   "needsCustomLogic": true
+   "needsCustomLogic": true,
+   "brokenReason": "domain does not resolve"
   },
   {
    "id": "nettruyenvie",
@@ -19867,6 +19870,6 @@
   }
  ],
  "count": 1107,
- "liveCount": 595,
- "hash": "6b23fc28251d5d3e"
+ "liveCount": 592,
+ "hash": "c26e46a7adcbd789"
 }
